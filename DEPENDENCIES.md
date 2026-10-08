@@ -75,7 +75,7 @@ Runtime dependencies of the plugins: `@backstage/backend-plugin-api`, `@backstag
 | `jest` | 30.2.0 | MIT | build/test | Test runner (via Backstage CLI) | OpenJS Foundation |
 | `jsdom` | 27.4.0 | MIT | build/test | DOM implementation for frontend tests | OpenJS Foundation |
 | `knex` | 3.3.0 | MIT | runtime, test | SQL query builder used by Backstage database service; receipt store and migrations |  |
-| `node-gyp` | 10.3.1 | MIT | build/test, demo (lab) | Builds native modules (better-sqlite3) | OpenJS Foundation |
+| `node-gyp` | 13.1.0 | MIT | build/test, demo (lab) | Builds native modules (better-sqlite3) | OpenJS Foundation |
 | `pg` | 8.23.1 | MIT | demo (lab) | Lab: PostgreSQL driver available to the Backstage database service |  |
 | `prettier` | 2.8.8 | MIT | build/test | Formatting |  |
 | `react` | 18.3.1 | MIT | build/test, demo (lab), peer | UI library (frontend plugin, lab app) |  |

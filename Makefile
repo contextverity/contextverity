@@ -49,17 +49,21 @@ test-integration: check-node ## Backend plugin on a test Backstage backend + cor
 test-e2e: check-node ## Scenarios against the running lab (requires make demo-up)
 	source .demo/env && $(TS) scripts/run-scenarios.ts --tier backstage
 
+LAB_UP = curl -sf -o /dev/null http://127.0.0.1:7007/.backstage/health/v1/readiness
+
 test-results: check-node ## Regenerate machine-readable results in test-results/
 	$(TS) scripts/run-scenarios.ts --tier core
-	$(TS) scripts/benchmark.ts --tier core
-	@if curl -sf -o /dev/null http://127.0.0.1:7007/.backstage/health/v1/readiness; then \
+	@if $(LAB_UP); then echo "lab is running: kept existing benchmarks-core.json (run make benchmark with the lab stopped)"; \
+	else $(TS) scripts/benchmark.ts --tier core; fi
+	@if $(LAB_UP); then \
 	  source .demo/env && $(TS) scripts/run-scenarios.ts --tier backstage && $(TS) scripts/benchmark.ts --tier backstage && $(TS) scripts/check-telemetry.ts; \
 	else echo "lab not running: skipped backstage-tier results (make demo-up)"; fi
 	$(NODE) scripts/results-summary.mjs
 	$(NODE) scripts/render-results.mjs
 	$(YARN) prettier --write README.md >/dev/null
 
-benchmark: check-node ## In-process core benchmarks
+benchmark: check-node ## In-process core benchmarks (refuses to run while the lab is up)
+	@if $(LAB_UP); then echo "stop the lab first (make demo-down): it competes for CPU"; exit 1; fi
 	$(TS) scripts/benchmark.ts --tier core
 
 benchmark-live: check-node ## Benchmarks against the running lab

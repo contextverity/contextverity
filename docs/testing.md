@@ -59,5 +59,7 @@ sorting in `canonicalSet` makes exactly S33 (relation order) fail.
 ## Benchmarks
 
 `scripts/benchmark.ts`. Core tier: 2,000 samples per row after 200 warm-up calls,
-p99 reported (≥1,000 samples). Live tier: 300 samples, p99 omitted. Core and live
+p99 reported (≥1,000 samples), measured with the lab stopped so the
+Backstage backend does not compete for CPU (`make benchmark` refuses otherwise).
+Live tier: 300 samples, p99 omitted. Core and live
 numbers are separate files and are never combined. Hardware is recorded in each file.
