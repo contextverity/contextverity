@@ -40,7 +40,9 @@ broken package fails before a release is attempted.
 ## One-time npm setup
 
 1. An npm organization named `contextverity` owns the `@contextverity` scope.
-2. Trusted publishing is configured for each package on npmjs.com (package →
+2. Trusted publishing is configured for each package — either run
+   `npm login && scripts/release/configure-trusted-publishing.sh` (npm ≥ 11.15, 2FA
+   approval in the browser), or set it on npmjs.com (package →
    Settings → Trusted publisher → GitHub Actions): organization `contextverity`,
    repository `contextverity`, workflow `release.yml`, environment `npm`.
 3. npm only offers that setting once a package exists. For the first release only, an
