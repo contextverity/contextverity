@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 640" width="1280" height="640" role="img" aria-labelledby="t d">
+<title id="t">ContextVerity social preview</title>
+<desc id="d">ContextVerity: trust the context before the agent does. Fresh, scoped and verifiable context for AI agents, with VALID, REFRESH and DENY verdict stamps.</desc>
+<defs><linearGradient id="sp-hg" x1="0" x2="1" y1="0" y2="0"><stop offset="0" stop-color="#FFFFFF"/><stop offset="0.55" stop-color="#A3AEFF"/><stop offset="1" stop-color="#7DD3FC"/></linearGradient>
+<radialGradient id="sp-glow" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#6675E6" stop-opacity="0.55"/><stop offset="1" stop-color="#6675E6" stop-opacity="0"/></radialGradient>
+<radialGradient id="sp-wash" cx="0.5" cy="0" r="0.8"><stop offset="0" stop-color="#2B3A8F" stop-opacity="0.55"/><stop offset="1" stop-color="#2B3A8F" stop-opacity="0"/></radialGradient>
+<pattern id="sp-grid" width="32" height="32" patternUnits="userSpaceOnUse"><path d="M32 0H0V32" fill="none" stroke="#FFFFFF" stroke-opacity="0.045"/></pattern></defs>
+<rect width="1280" height="640" fill="#0D1322"/>
+<rect width="1280" height="640" fill="url(#sp-wash)"/>
+<rect width="1280" height="640" fill="url(#sp-grid)"/>
+<defs>
+<mask id="sp-f" maskUnits="userSpaceOnUse" x="0" y="0" width="64" height="64"><rect width="64" height="64" fill="#fff"/><rect x="10.5" y="34" width="20" height="3.2" rx="1.6" fill="#000"/><rect x="10.5" y="42" width="30" height="3.2" rx="1.6" fill="#000"/><rect x="10.5" y="50" width="13" height="3.2" rx="1.6" fill="#000"/></mask>
+<mask id="sp-m" maskUnits="userSpaceOnUse" x="0" y="0" width="64" height="64"><rect width="64" height="64" fill="#fff"/><path d="M8 25H39.6A3.4 3.4 0 0 0 46.4 25H56A4 4 0 0 1 60 29V55A4 4 0 0 1 56 59H8A4 4 0 0 1 4 55V29A4 4 0 0 1 8 25Z" fill="#000" stroke="#000" stroke-width="5"/></mask>
+<mask id="sp-b" maskUnits="userSpaceOnUse" x="0" y="0" width="64" height="64"><rect width="64" height="64" fill="#fff"/><path d="M12.5 17H39.6A3.4 3.4 0 0 0 46.4 17H51.5A4 4 0 0 1 55.5 21V43A4 4 0 0 1 51.5 47H12.5A4 4 0 0 1 8.5 43V21A4 4 0 0 1 12.5 17Z" fill="#000" stroke="#000" stroke-width="5"/></mask>
+</defs>
+<g transform="translate(80 92) scale(1.6)">
+<path d="M17 9H39.6A3.4 3.4 0 0 0 46.4 9H47A4 4 0 0 1 51 13V35A4 4 0 0 1 47 39H17A4 4 0 0 1 13 35V13A4 4 0 0 1 17 9Z" fill="#3A4795" mask="url(#sp-b)"/>
+<path d="M12.5 17H39.6A3.4 3.4 0 0 0 46.4 17H51.5A4 4 0 0 1 55.5 21V43A4 4 0 0 1 51.5 47H12.5A4 4 0 0 1 8.5 43V21A4 4 0 0 1 12.5 17Z" fill="#6675E6" mask="url(#sp-m)"/>
+<path d="M8 25H39.6A3.4 3.4 0 0 0 46.4 25H56A4 4 0 0 1 60 29V55A4 4 0 0 1 56 59H8A4 4 0 0 1 4 55V29A4 4 0 0 1 8 25Z" fill="#A3AEFF" mask="url(#sp-f)"/>
+<path d="M43 1.5V4.5" stroke="#A3AEFF" stroke-width="3" stroke-linecap="round"/>
+</g>
+<text x="196" y="158" font-family="ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="64" font-weight="750" letter-spacing="-1.6" fill="#E5E9F2">ContextVerity</text>
+<text x="84" y="274" font-family="ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="58" font-weight="750" letter-spacing="-1.6" fill="#E5E9F2">Trust the context</text>
+<text x="84" y="342" font-family="ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="58" font-weight="750" letter-spacing="-1.6" fill="url(#sp-hg)">before the agent does.</text>
+<text x="86" y="400" font-family="ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="24" fill="#A6B0C3">Fresh, scoped and verifiable context for AI agents.</text>
+<rect x="84" y="520" width="238.79999999999998" height="40" rx="20" fill="none" stroke="#2A3550" stroke-width="1.5"/>
+<text x="104" y="546" font-family="ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="16" font-weight="700" fill="#E5E9F2">Backstage</text><text x="200.39999999999998" y="546" font-family="ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="13.5" fill="#A6B0C3">context source</text>
+<rect x="374" y="520" width="284.8" height="40" rx="20" fill="none" stroke="#2A3550" stroke-width="1.5"/>
+<text x="394" y="546" font-family="ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="16" font-weight="700" fill="#E5E9F2">OpenTelemetry</text><text x="528.8" y="546" font-family="ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="13.5" fill="#A6B0C3">traces, metrics</text>
+<rect x="692" y="520" width="264.8" height="40" rx="20" fill="none" stroke="#2A3550" stroke-width="1.5"/>
+<text x="712" y="546" font-family="ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="16" font-weight="700" fill="#E5E9F2">MCP</text><text x="750.8" y="546" font-family="ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="13.5" fill="#A6B0C3">via Backstage MCP Actions</text>
+<text x="86" y="600" font-family="ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="15" fill="#A6B0C3">Apache-2.0 open source at github.com/contextverity/contextverity</text>
+<g transform="translate(940 150) rotate(-4)">
+<rect x="0" y="0" width="250" height="62" rx="8" fill="none" stroke="#5BD09A" stroke-width="2.5"/>
+<rect x="5" y="5" width="240" height="52" rx="5" fill="none" stroke="#5BD09A" stroke-width="1"/>
+<g transform="translate(26 31) scale(1.05)"><circle r="8" fill="#5BD09A"/><path d="M-3.6 0.2l2.5 2.6 4.8-5.2" fill="none" stroke="#0D1322" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></g>
+<text x="46" y="31" font-family="ui-monospace, 'SF Mono', 'Cascadia Mono', Menlo, Consolas, monospace" font-size="19" font-weight="800" letter-spacing="1" fill="#5BD09A">VALID</text>
+<text x="46" y="47" font-family="ui-monospace, 'SF Mono', 'Cascadia Mono', Menlo, Consolas, monospace" font-size="10.5" fill="#5BD09A">context still matches</text>
+</g>
+<g transform="translate(950 250) rotate(3)">
+<rect x="0" y="0" width="250" height="62" rx="8" fill="none" stroke="#F2B451" stroke-width="2.5"/>
+<rect x="5" y="5" width="240" height="52" rx="5" fill="none" stroke="#F2B451" stroke-width="1"/>
+<g transform="translate(26 31) scale(1.05)"><path d="M5.8 3.2A6.6 6.6 0 1 1 5.4-3.9" fill="none" stroke="#F2B451" stroke-width="2.3" stroke-linecap="round"/><path d="M7.6-8.2L7.9-2.2 2-3.4Z" fill="#F2B451"/></g>
+<text x="46" y="31" font-family="ui-monospace, 'SF Mono', 'Cascadia Mono', Menlo, Consolas, monospace" font-size="19" font-weight="800" letter-spacing="1" fill="#F2B451">REFRESH</text>
+<text x="46" y="47" font-family="ui-monospace, 'SF Mono', 'Cascadia Mono', Menlo, Consolas, monospace" font-size="10.5" fill="#F2B451">OWNER_CHANGED</text>
+</g>
+<g transform="translate(936 350) rotate(-3)">
+<rect x="0" y="0" width="250" height="62" rx="8" fill="none" stroke="#FF7F9A" stroke-width="2.5"/>
+<rect x="5" y="5" width="240" height="52" rx="5" fill="none" stroke="#FF7F9A" stroke-width="1"/>
+<g transform="translate(26 31) scale(1.05)"><rect x="-7.5" y="-7.5" width="15" height="15" rx="2.5" fill="#FF7F9A"/><rect x="-4.3" y="-1.25" width="8.6" height="2.5" rx="1" fill="#0D1322"/></g>
+<text x="46" y="31" font-family="ui-monospace, 'SF Mono', 'Cascadia Mono', Menlo, Consolas, monospace" font-size="19" font-weight="800" letter-spacing="1" fill="#FF7F9A">DENY</text>
+<text x="46" y="47" font-family="ui-monospace, 'SF Mono', 'Cascadia Mono', Menlo, Consolas, monospace" font-size="10.5" fill="#FF7F9A">CLASSIFICATION_RAISED</text>
+</g>
+
+</svg>

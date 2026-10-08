@@ -1,0 +1,40 @@
+# Seed context policies for the ContextVerity lab.
+# `make demo-up` copies this file to .demo/policies.yaml, which the lab may
+# rewrite at runtime (ContextVerity re-reads it when it changes).
+policies:
+  - id: incident-triage
+    description: Agents and engineers triaging incidents on commerce and platform services
+    consumers:
+      - user:default/alex
+      - service:incident-agent
+    purposes: [incident-triage]
+    subjects:
+      kinds: [component, api, resource, airesource]
+      namespaces: [default]
+    allowedSourceKinds: [CATALOG_ENTITY, API_DEFINITION]
+    allowedCategories:
+      [
+        identity,
+        ownership,
+        lifecycle,
+        dependencies,
+        apis,
+        api-definition,
+        documentation,
+      ]
+    sensitivityCeiling: INTERNAL
+    maxTtlSeconds: 900
+
+  - id: docs-lookup
+    description: Documentation assistants; only ownership must be fresh
+    consumers:
+      - user:default/alex
+      - service:incident-agent
+    purposes: [docs-lookup]
+    subjects:
+      kinds: [component, api]
+    allowedSourceKinds: [CATALOG_ENTITY]
+    allowedCategories: [identity, ownership, documentation]
+    requireFresh: [ownership]
+    sensitivityCeiling: PUBLIC
+    maxTtlSeconds: 3600

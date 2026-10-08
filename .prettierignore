@@ -1,0 +1,14 @@
+dist
+dist-types
+coverage
+.vscode
+.demo
+test-results
+docs/results.md
+DEPENDENCIES.md
+CHANGELOG.md
+CODE_OF_CONDUCT.md
+LICENSE
+docs/assets
+*.svg
+.yarn

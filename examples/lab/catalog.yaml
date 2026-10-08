@@ -1,0 +1,235 @@
+# Synthetic catalog for the ContextVerity lab. All names are fictional.
+# Loaded by the lab entity provider in packages/backend/src/lab.
+---
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata: { name: team-payments }
+spec: { type: team, children: [] }
+---
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata: { name: team-commerce }
+spec: { type: team, children: [] }
+---
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata: { name: team-platform }
+spec: { type: team, children: [] }
+---
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata: { name: team-identity }
+spec: { type: team, children: [] }
+---
+apiVersion: backstage.io/v1alpha1
+kind: User
+metadata: { name: alex }
+spec: { memberOf: [team-platform] }
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata: { name: commerce, description: Online checkout and payments }
+spec: { owner: team-commerce }
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata: { name: platform, description: Shared platform services }
+spec: { owner: team-platform }
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: payments
+  description: Authorizes and captures card payments
+  annotations:
+    contextverity.github.io/classification: INTERNAL
+    backstage.io/techdocs-ref: dir:.
+  tags: [java, pci]
+spec:
+  type: service
+  lifecycle: production
+  owner: team-payments
+  system: commerce
+  providesApis: [payments-api]
+  consumesApis: [identity-api]
+  dependsOn: [resource:payments-db, component:notifications]
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: checkout
+  description: Cart and checkout flow
+  annotations:
+    contextverity.github.io/classification: INTERNAL
+spec:
+  type: service
+  lifecycle: production
+  owner: team-commerce
+  system: commerce
+  providesApis: [checkout-api]
+  consumesApis: [payments-api, inventory-api]
+  dependsOn: [component:payments, component:inventory]
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: inventory
+  description: Stock levels and reservations
+  annotations:
+    contextverity.github.io/classification: PUBLIC
+spec:
+  type: service
+  lifecycle: production
+  owner: team-commerce
+  system: commerce
+  providesApis: [inventory-api]
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: notifications
+  description: Email and push notifications
+spec:
+  type: service
+  lifecycle: experimental
+  owner: team-platform
+  system: platform
+  providesApis: [notifications-api]
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: identity
+  description: Sign-in and token issuance
+  annotations:
+    contextverity.github.io/classification: RESTRICTED
+spec:
+  type: service
+  lifecycle: production
+  owner: team-identity
+  system: platform
+  providesApis: [identity-api]
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata: { name: payments-db, description: Payments ledger database }
+spec: { type: database, owner: team-payments, system: commerce }
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: payments-api
+  annotations:
+    contextverity.github.io/classification: INTERNAL
+spec:
+  type: openapi
+  lifecycle: production
+  owner: team-payments
+  system: commerce
+  definition: |
+    openapi: 3.0.3
+    info: { title: Payments API, version: 2.0.0 }
+    paths:
+      /payments:
+        post:
+          summary: Authorize a payment
+          responses: { '201': { description: Authorized } }
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata: { name: checkout-api }
+spec:
+  type: openapi
+  lifecycle: production
+  owner: team-commerce
+  system: commerce
+  definition: |
+    openapi: 3.0.3
+    info: { title: Checkout API, version: 1.4.0 }
+    paths:
+      /carts/{id}/checkout:
+        post:
+          summary: Check out a cart
+          parameters: [{ name: id, in: path, required: true, schema: { type: string } }]
+          responses: { '200': { description: Order placed } }
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata: { name: inventory-api }
+spec:
+  type: openapi
+  lifecycle: production
+  owner: team-commerce
+  system: commerce
+  definition: |
+    openapi: 3.0.3
+    info: { title: Inventory API, version: 1.0.0 }
+    paths:
+      /items/{sku}:
+        get:
+          summary: Stock level
+          parameters: [{ name: sku, in: path, required: true, schema: { type: string } }]
+          responses: { '200': { description: Stock level } }
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata: { name: notifications-api }
+spec:
+  type: asyncapi
+  lifecycle: experimental
+  owner: team-platform
+  system: platform
+  definition: |
+    asyncapi: 2.6.0
+    info: { title: Notifications, version: 0.3.0 }
+    channels:
+      notification.requested:
+        subscribe: { message: { payload: { type: object } } }
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: identity-api
+  annotations:
+    contextverity.github.io/classification: RESTRICTED
+spec:
+  type: openapi
+  lifecycle: production
+  owner: team-identity
+  system: platform
+  definition: |
+    openapi: 3.0.3
+    info: { title: Identity API, version: 3.1.0 }
+    paths:
+      /token:
+        post:
+          summary: Issue a token
+          responses: { '200': { description: Token } }
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: platform-mcp
+  title: Platform MCP server
+  description: Backstage MCP Actions endpoint of the lab
+spec:
+  type: mcp-server
+  lifecycle: experimental
+  owner: team-platform
+  system: platform
+  remotes:
+    - type: streamable-http
+      url: http://127.0.0.1:7007/api/mcp-actions/v1
+---
+apiVersion: backstage.io/v1alpha1
+kind: AiResource
+metadata:
+  name: incident-triage-skill
+  description: Skill an incident-triage agent uses to page the right owner
+  annotations:
+    contextverity.github.io/classification: INTERNAL
+spec:
+  type: skill
+  lifecycle: production
+  owner: team-platform
+  system: platform

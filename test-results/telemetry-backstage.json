@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "kind": "contextverity.telemetry",
+  "tier": "backstage",
+  "scope": "Live lab with the OpenTelemetry Node SDK loaded via --require (HTTP + undici instrumentation, Prometheus exporter, JSON-lines span file). One run of the reference MCP client.",
+  "generatedAt": "2026-10-08T10:16:44.788Z",
+  "environment": {
+    "contextverityVersion": "0.1.0",
+    "commit": "uncommitted",
+    "dirtyWorkingTree": true,
+    "backstageRelease": "1.55.0",
+    "node": "v22.23.1",
+    "platform": "darwin arm64",
+    "cpu": "Apple M4 Max",
+    "cpuCount": 14,
+    "memoryGiB": 36
+  },
+  "traces": {
+    "contextverityRootSpans": 4,
+    "nestedUnderMcpToolsCall": 4,
+    "exampleChain": [
+      "contextverity.resolve",
+      "POST",
+      "POST",
+      "tools/call contextverity.resolve-context",
+      "POST"
+    ],
+    "spanNames": [
+      "contextverity.drift.compare",
+      "contextverity.permission.check",
+      "contextverity.receipt.issue",
+      "contextverity.receipt.verify",
+      "contextverity.resolve",
+      "contextverity.source.fetch"
+    ],
+    "contextValuesInSpanAttributes": false
+  },
+  "metrics": {
+    "exposedNames": [
+      "contextverity_drift_total",
+      "contextverity_receipts_active",
+      "contextverity_receipts_issued_total",
+      "contextverity_source_fetch_duration_bucket",
+      "contextverity_source_fetch_duration_count",
+      "contextverity_source_fetch_duration_sum",
+      "contextverity_verification_duration_bucket",
+      "contextverity_verification_duration_count",
+      "contextverity_verification_duration_sum",
+      "contextverity_verifications_total"
+    ],
+    "labelKeys": [
+      "drift_type",
+      "le",
+      "otel_scope_name",
+      "provider",
+      "verdict"
+    ]
+  },
+  "pass": true
+}

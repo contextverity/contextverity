@@ -1,0 +1,30 @@
+{
+  "name": "@contextverity/scenarios",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Deterministic context-drift scenarios, executed in-process (core tier) and against a live Backstage lab (backstage tier)",
+  "license": "Apache-2.0",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "backstage": {
+    "role": "node-library"
+  },
+  "scripts": {
+    "lint": "backstage-cli package lint",
+    "test": "backstage-cli package test"
+  },
+  "dependencies": {
+    "@backstage/backend-plugin-api": "^1.10.1",
+    "@backstage/catalog-model": "^1.10.1",
+    "@contextverity/core": "workspace:^",
+    "@contextverity/plugin-contextverity-common": "workspace:^",
+    "@contextverity/plugin-contextverity-node": "workspace:^",
+    "better-sqlite3": "^12.0.0",
+    "knex": "^3.1.0",
+    "yaml": "^2.8.0"
+  },
+  "devDependencies": {
+    "@backstage/cli": "^0.36.6",
+    "@types/better-sqlite3": "^7.6.13"
+  }
+}

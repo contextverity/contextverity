@@ -1,0 +1,4777 @@
+{
+  "schemaVersion": 1,
+  "kind": "contextverity.scenarios",
+  "tier": "core",
+  "scope": "In-process: ContextVerity core + Backstage provider mapping + Knex/SQLite store, against a synthetic in-memory catalog that emulates Backstage relation stitching. Controllable clock. Synthetic data only.",
+  "generatedAt": "2026-10-08T09:47:56.969Z",
+  "environment": {
+    "contextverityVersion": "0.1.0",
+    "commit": "uncommitted",
+    "dirtyWorkingTree": true,
+    "backstageRelease": "1.55.0",
+    "node": "v22.23.1",
+    "platform": "darwin arm64",
+    "cpu": "Apple M4 Max",
+    "cpuCount": 14,
+    "memoryGiB": 36
+  },
+  "summary": {
+    "total": 50,
+    "executed": 50,
+    "passed": 50,
+    "failed": 0,
+    "unsupported": 0,
+    "observedOutcomes": {
+      "VALID": 11,
+      "REFRESH": 18,
+      "DENY": 16,
+      "RESOLVE_DENIED": 5
+    },
+    "metrics": {
+      "staleDetectionRate": {
+        "numerator": 34,
+        "denominator": 34,
+        "value": 1
+      },
+      "falseInvalidationRate": {
+        "numerator": 0,
+        "denominator": 11,
+        "value": 0
+      },
+      "falseAcceptanceRate": {
+        "numerator": 0,
+        "denominator": 34,
+        "value": 0
+      },
+      "denyCorrectness": {
+        "numerator": 16,
+        "denominator": 16,
+        "value": 1
+      },
+      "refreshCorrectness": {
+        "numerator": 18,
+        "denominator": 18,
+        "value": 1
+      },
+      "resolveRefusalCorrectness": {
+        "numerator": 5,
+        "denominator": 5,
+        "value": 1
+      }
+    }
+  },
+  "scenarios": [
+    {
+      "id": "S01",
+      "title": "No change",
+      "group": "baseline",
+      "relevantChange": false,
+      "expect": {
+        "outcome": "VALID",
+        "codes": []
+      },
+      "status": "PASS",
+      "observed": {
+        "outcome": "VALID",
+        "codes": [],
+        "informational": [],
+        "checks": []
+      },
+      "durationMs": 15.33,
+      "replay": {
+        "actor": "alex",
+        "subject": "component:default/payments",
+        "purpose": "incident-triage",
+        "steps": [
+          "resolve component:default/payments for incident-triage as alex",
+          "verify as alex"
+        ],
+        "issued": [
+          {
+            "sourceId": "apidef:api:default/payments-api",
+            "classification": "INTERNAL",
+            "fields": {
+              "apiType": "openapi",
+              "lifecycle": "production",
+              "definitionDigest": "sha256:e1e399f321ab5617737efd9d9f03d5d1949c263482f0485d63d0f95a215a916e"
+            }
+          },
+          {
+            "sourceId": "catalog:component:default/payments",
+            "classification": "INTERNAL",
+            "fields": {
+              "consumesApis": [
+                "api:default/identity-api"
+              ],
+              "dependencyOf": [
+                "component:default/checkout"
+              ],
+              "dependsOn": [
+                "component:default/notifications",
+                "resource:default/payments-db"
+              ],
+              "lifecycle": "production",
+              "owner": "group:default/team-payments",
+              "providesApis": [
+                "api:default/payments-api"
+              ],
+              "system": "system:default/commerce",
+              "techdocsRef": "dir:.",
+              "type": "service"
+            }
+          }
+        ],
+        "current": {
+          "ok": true,
+          "context": [
+            {
+              "sourceId": "apidef:api:default/payments-api",
+              "classification": "INTERNAL",
+              "fields": {
+                "apiType": "openapi",
+                "lifecycle": "production",
+                "definitionDigest": "sha256:e1e399f321ab5617737efd9d9f03d5d1949c263482f0485d63d0f95a215a916e"
+              }
+            },
+            {
+              "sourceId": "catalog:component:default/payments",
+              "classification": "INTERNAL",
+              "fields": {
+                "consumesApis": [
+                  "api:default/identity-api"
+                ],
+                "dependencyOf": [
+                  "component:default/checkout"
+                ],
+                "dependsOn": [
+                  "component:default/notifications",
+                  "resource:default/payments-db"
+                ],
+                "lifecycle": "production",
+                "owner": "group:default/team-payments",
+                "providesApis": [
+                  "api:default/payments-api"
+                ],
+                "system": "system:default/commerce",
+                "techdocsRef": "dir:.",
+                "type": "service"
+              }
+            }
+          ]
+        },
+        "drift": [],
+        "verdict": "VALID"
+      }
+    },
+    {
+      "id": "S02",
+      "title": "Owner changed",
+      "group": "source-drift",
+      "relevantChange": true,
+      "expect": {
+        "outcome": "REFRESH",
+        "codes": [
+          "OWNER_CHANGED"
+        ]
+      },
+      "status": "PASS",
+      "observed": {
+        "outcome": "REFRESH",
+        "codes": [
+          "OWNER_CHANGED"
+        ],
+        "informational": [],
+        "checks": []
+      },
+      "durationMs": 35.99,
+      "replay": {
+        "actor": "alex",
+        "subject": "component:default/payments",
+        "purpose": "incident-triage",
+        "steps": [
+          "resolve component:default/payments for incident-triage as alex",
+          "owner team-payments -> team-commerce",
+          "verify as alex"
+        ],
+        "issued": [
+          {
+            "sourceId": "apidef:api:default/payments-api",
+            "classification": "INTERNAL",
+            "fields": {
+              "apiType": "openapi",
+              "lifecycle": "production",
+              "definitionDigest": "sha256:e1e399f321ab5617737efd9d9f03d5d1949c263482f0485d63d0f95a215a916e"
+            }
+          },
+          {
+            "sourceId": "catalog:component:default/payments",
+            "classification": "INTERNAL",
+            "fields": {
+              "consumesApis": [
+                "api:default/identity-api"
+              ],
+              "dependencyOf": [
+                "component:default/checkout"
+              ],
+              "dependsOn": [
+                "component:default/notifications",
+                "resource:default/payments-db"
+              ],
+              "lifecycle": "production",
+              "owner": "group:default/team-payments",
+              "providesApis": [
+                "api:default/payments-api"
+              ],
+              "system": "system:default/commerce",
+              "techdocsRef": "dir:.",
+              "type": "service"
+            }
+          }
+        ],
+        "current": {
+          "ok": true,
+          "context": [
+            {
+              "sourceId": "apidef:api:default/payments-api",
+              "classification": "INTERNAL",
+              "fields": {
+                "apiType": "openapi",
+                "lifecycle": "production",
+                "definitionDigest": "sha256:e1e399f321ab5617737efd9d9f03d5d1949c263482f0485d63d0f95a215a916e"
+              }
+            },
+            {
+              "sourceId": "catalog:component:default/payments",
+              "classification": "INTERNAL",
+              "fields": {
+                "consumesApis": [
+                  "api:default/identity-api"
+                ],
+                "dependencyOf": [
+                  "component:default/checkout"
+                ],
+                "dependsOn": [
+                  "component:default/notifications",
+                  "resource:default/payments-db"
+                ],
+                "lifecycle": "production",
+                "owner": "group:default/team-commerce",
+                "providesApis": [
+                  "api:default/payments-api"
+                ],
+                "system": "system:default/commerce",
+                "techdocsRef": "dir:.",
+                "type": "service"
+              }
+            }
+          ]
+        },
+        "drift": [
+          {
+            "code": "OWNER_CHANGED",
+            "effect": "REFRESH",
+            "sourceId": "catalog:component:default/payments",
+            "field": "owner",
+            "before": "group:default/team-payments",
+            "after": "group:default/team-commerce",
+            "detail": "owner changed"
+          }
+        ],
+        "verdict": "REFRESH"
+      }
+    },
+    {
+      "id": "S03",
+      "title": "Lifecycle changed",
+      "group": "source-drift",
+      "relevantChange": true,
+      "expect": {
+        "outcome": "REFRESH",
+        "codes": [
+          "LIFECYCLE_CHANGED"
+        ]
+      },
+      "status": "PASS",
+      "observed": {
+        "outcome": "REFRESH",
+        "codes": [
+          "LIFECYCLE_CHANGED"
+        ],
+        "informational": [],
+        "checks": []
+      },
+      "durationMs": 28.01,
+      "replay": {
+        "actor": "alex",
+        "subject": "component:default/payments",
+        "purpose": "incident-triage",
+        "steps": [
+          "resolve component:default/payments for incident-triage as alex",
+          "lifecycle production -> experimental",
+          "verify as alex"
+        ],
+        "issued": [
+          {
+            "sourceId": "apidef:api:default/payments-api",
+            "classification": "INTERNAL",
+            "fields": {
+              "apiType": "openapi",
+              "lifecycle": "production",
+              "definitionDigest": "sha256:e1e399f321ab5617737efd9d9f03d5d1949c263482f0485d63d0f95a215a916e"
+            }
+          },
+          {
+            "sourceId": "catalog:component:default/payments",
+            "classification": "INTERNAL",
+            "fields": {
+              "consumesApis": [
+                "api:default/identity-api"
+              ],
+              "dependencyOf": [
+                "component:default/checkout"
+              ],
+              "dependsOn": [
+                "component:default/notifications",
+                "resource:default/payments-db"
+              ],
+              "lifecycle": "production",
+              "owner": "group:default/team-payments",
+              "providesApis": [
+                "api:default/payments-api"
+              ],
+              "system": "system:default/commerce",
+              "techdocsRef": "dir:.",
+              "type": "service"
+            }
+          }
+        ],
+        "current": {
+          "ok": true,
+          "context": [
+            {
+              "sourceId": "apidef:api:default/payments-api",
+              "classification": "INTERNAL",
+              "fields": {
+                "apiType": "openapi",
+                "lifecycle": "production",
+                "definitionDigest": "sha256:e1e399f321ab5617737efd9d9f03d5d1949c263482f0485d63d0f95a215a916e"
+              }
+            },
+            {
+              "sourceId": "catalog:component:default/payments",
+              "classification": "INTERNAL",
+              "fields": {
+                "consumesApis": [
+                  "api:default/identity-api"
+                ],
+                "dependencyOf": [
+                  "component:default/checkout"
+                ],
+                "dependsOn": [
+                  "component:default/notifications",
+                  "resource:default/payments-db"
+                ],
+                "lifecycle": "experimental",
+                "owner": "group:default/team-payments",
+                "providesApis": [
+                  "api:default/payments-api"
+                ],
+                "system": "system:default/commerce",
+                "techdocsRef": "dir:.",
+                "type": "service"
+              }
+            }
+          ]
+        },
+        "drift": [
+          {
+            "code": "LIFECYCLE_CHANGED",
+            "effect": "REFRESH",
+            "sourceId": "catalog:component:default/payments",
+            "field": "lifecycle",
+            "before": "production",
+            "after": "experimental",
+            "detail": "lifecycle changed"
+          }
+        ],
+        "verdict": "REFRESH"
+      }
+    },
+    {
+      "id": "S04",
+      "title": "API definition changed",
+      "group": "source-drift",
+      "relevantChange": true,
+      "expect": {
+        "outcome": "REFRESH",
+        "codes": [
+          "API_CHANGED"
+        ]
+      },
+      "status": "PASS",
+      "observed": {
+        "outcome": "REFRESH",
+        "codes": [
+          "API_CHANGED"
+        ],
+        "informational": [],
+        "checks": []
+      },
+      "durationMs": 24,
+      "replay": {
+        "actor": "alex",
+        "subject": "component:default/payments",
+        "purpose": "incident-triage",
+        "steps": [
+          "resolve component:default/payments for incident-triage as alex",
+          "payments-api definition: new required field",
+          "verify as alex"
+        ],
+        "issued": [
+          {
+            "sourceId": "apidef:api:default/payments-api",
+            "classification": "INTERNAL",
+            "fields": {
+              "apiType": "openapi",
+              "lifecycle": "production",
+              "definitionDigest": "sha256:e1e399f321ab5617737efd9d9f03d5d1949c263482f0485d63d0f95a215a916e"
+            }
+          },
+          {
+            "sourceId": "catalog:component:default/payments",
+            "classification": "INTERNAL",
+            "fields": {
+              "consumesApis": [
+                "api:default/identity-api"
+              ],
+              "dependencyOf": [
+                "component:default/checkout"
+              ],
+              "dependsOn": [
+                "component:default/notifications",
+                "resource:default/payments-db"
+              ],
+              "lifecycle": "production",
+              "owner": "group:default/team-payments",
+              "providesApis": [
+                "api:default/payments-api"
+              ],
+              "system": "system:default/commerce",
+              "techdocsRef": "dir:.",
+              "type": "service"
+            }
+          }
+        ],
+        "current": {
+          "ok": true,
+          "context": [
+            {
+              "sourceId": "apidef:api:default/payments-api",
+              "classification": "INTERNAL",
+              "fields": {
+                "apiType": "openapi",
+                "lifecycle": "production",
+                "definitionDigest": "sha256:d02ee6903f79ddbe33c6105937b1199d2a8af77a63fd22ad32af74b88cb5eb35"
+              }
+            },
+            {
+              "sourceId": "catalog:component:default/payments",
+              "classification": "INTERNAL",
+              "fields": {
+                "consumesApis": [
+                  "api:default/identity-api"
+                ],
+                "dependencyOf": [
+                  "component:default/checkout"
+                ],
+                "dependsOn": [
+                  "component:default/notifications",
+                  "resource:default/payments-db"
+                ],
+                "lifecycle": "production",
+                "owner": "group:default/team-payments",
+                "providesApis": [
+                  "api:default/payments-api"
+                ],
+                "system": "system:default/commerce",
+                "techdocsRef": "dir:.",
+                "type": "service"
+              }
+            }
+          ]
+        },
+        "drift": [
+          {
+            "code": "API_CHANGED",
+            "effect": "REFRESH",
+            "sourceId": "apidef:api:default/payments-api",
+            "field": "definitionDigest",
+            "before": "sha256:e1e399f321ab5617737efd9d9f03d5d1949c263482f0485d63d0f95a215a916e",
+            "after": "sha256:d02ee6903f79ddbe33c6105937b1199d2a8af77a63fd22ad32af74b88cb5eb35",
+            "detail": "definitionDigest changed"
+          }
+        ],
+        "verdict": "REFRESH"
+      }
+    },
+    {
+      "id": "S05",
+      "title": "Provided API deprecated",
+      "group": "source-drift",
+      "relevantChange": true,
+      "expect": {
+        "outcome": "REFRESH",
+        "codes": [
+          "API_DEPRECATED"
+        ]
+      },
+      "status": "PASS",
+      "observed": {
+        "outcome": "REFRESH",
+        "codes": [
+          "API_DEPRECATED"
+        ],
+        "informational": [],
+        "checks": []
+      },
+      "durationMs": 47.08,
+      "replay": {
+        "actor": "alex",
+        "subject": "component:default/payments",
+        "purpose": "incident-triage",
+        "steps": [
+          "resolve component:default/payments for incident-triage as alex",
+          "payments-api lifecycle production -> deprecated",
+          "verify as alex"
+        ],
+        "issued": [
+          {
+            "sourceId": "apidef:api:default/payments-api",
+            "classification": "INTERNAL",
+            "fields": {
+              "apiType": "openapi",
+              "lifecycle": "production",
+              "definitionDigest": "sha256:e1e399f321ab5617737efd9d9f03d5d1949c263482f0485d63d0f95a215a916e"
+            }
+          },
+          {
+            "sourceId": "catalog:component:default/payments",
+            "classification": "INTERNAL",
+            "fields": {
+              "consumesApis": [
+                "api:default/identity-api"
+              ],
+              "dependencyOf": [
+                "component:default/checkout"
+              ],
+              "dependsOn": [
+                "component:default/notifications",
+                "resource:default/payments-db"
+              ],
+              "lifecycle": "production",
+              "owner": "group:default/team-payments",
+              "providesApis": [
+                "api:default/payments-api"
+              ],
+              "system": "system:default/commerce",
+              "techdocsRef": "dir:.",
+              "type": "service"
+            }
+          }
+        ],
+        "current": {
+          "ok": true,
+          "context": [
+            {
+              "sourceId": "apidef:api:default/payments-api",
+              "classification": "INTERNAL",
+              "fields": {
+                "apiType": "openapi",
+                "lifecycle": "deprecated",
+                "definitionDigest": "sha256:e1e399f321ab5617737efd9d9f03d5d1949c263482f0485d63d0f95a215a916e"
+              }
+            },
+            {
+              "sourceId": "catalog:component:default/payments",
+              "classification": "INTERNAL",
+              "fields": {
+                "consumesApis": [
+                  "api:default/identity-api"
+                ],
+                "dependencyOf": [
+                  "component:default/checkout"
+                ],
+                "dependsOn": [
+                  "component:default/notifications",
+                  "resource:default/payments-db"
+                ],
+                "lifecycle": "production",
+                "owner": "group:default/team-payments",
+                "providesApis": [
+                  "api:default/payments-api"
+                ],
+                "system": "system:default/commerce",
+                "techdocsRef": "dir:.",
+                "type": "service"
+              }
+            }
+          ]
+        },
+        "drift": [
+          {
+            "code": "API_DEPRECATED",
+            "effect": "REFRESH",
+            "sourceId": "apidef:api:default/payments-api",
+            "field": "lifecycle",
+            "before": "production",
+            "after": "deprecated",
+            "detail": "lifecycle changed"
+          }
+        ],
+        "verdict": "REFRESH"
+      }
+    },
+    {
+      "id": "S06",
+      "title": "Dependency added",
+      "group": "source-drift",
+      "relevantChange": true,
+      "expect": {
+        "outcome": "REFRESH",
+        "codes": [
+          "DEPENDENCY_CHANGED"
+        ]
+      },
+      "status": "PASS",
+      "observed": {
+        "outcome": "REFRESH",
+        "codes": [
+          "DEPENDENCY_CHANGED"
+        ],
+        "informational": [],
+        "checks": []
+      },
+      "durationMs": 26.39,
+      "replay": {
+        "actor": "alex",
+        "subject": "component:default/payments",
+        "purpose": "incident-triage",
+        "steps": [
+          "resolve component:default/payments for incident-triage as alex",
+          "payments now depends on inventory",
+          "verify as alex"
+        ],
+        "issued": [
+          {
+            "sourceId": "apidef:api:default/payments-api",
+            "classification": "INTERNAL",
+            "fields": {
+              "apiType": "openapi",
+              "lifecycle": "production",
+              "definitionDigest": "sha256:e1e399f321ab5617737efd9d9f03d5d1949c263482f0485d63d0f95a215a916e"
+            }
+          },
+          {
+            "sourceId": "catalog:component:default/payments",
+            "classification": "INTERNAL",
+            "fields": {
+              "consumesApis": [
+                "api:default/identity-api"
+              ],
+              "dependencyOf": [
+                "component:default/checkout"
+              ],
+              "dependsOn": [
+                "component:default/notifications",
+                "resource:default/payments-db"
+              ],
+              "lifecycle": "production",
+              "owner": "group:default/team-payments",
+              "providesApis": [
+                "api:default/payments-api"
+              ],
+              "system": "system:default/commerce",
+              "techdocsRef": "dir:.",
+              "type": "service"
+            }
+          }
+        ],
+        "current": {
+          "ok": true,
+          "context": [
+            {
+              "sourceId": "apidef:api:default/payments-api",
+              "classification": "INTERNAL",
+              "fields": {
+                "apiType": "openapi",
+                "lifecycle": "production",
+                "definitionDigest": "sha256:e1e399f321ab5617737efd9d9f03d5d1949c263482f0485d63d0f95a215a916e"
+              }
+            },
+            {
+              "sourceId": "catalog:component:default/payments",
+              "classification": "INTERNAL",
+              "fields": {
+                "consumesApis": [
+                  "api:default/identity-api"
+                ],
+                "dependencyOf": [
+                  "component:default/checkout"
+                ],
+                "dependsOn": [
+                  "component:default/inventory",
+                  "component:default/notifications",
+                  "resource:default/payments-db"
+                ],
+                "lifecycle": "production",
+                "owner": "group:default/team-payments",
+                "providesApis": [
+                  "api:default/payments-api"
+                ],
+                "system": "system:default/commerce",
+                "techdocsRef": "dir:.",
+                "type": "service"
+              }
+            }
+          ]
+        },
+        "drift": [
+          {
+            "code": "DEPENDENCY_CHANGED",
+            "effect": "REFRESH",
+            "sourceId": "catalog:component:default/payments",
+            "field": "dependsOn",
+            "before": [
+              "component:default/notifications",
+              "resource:default/payments-db"
+            ],
+            "after": [
+              "component:default/inventory",
+              "component:default/notifications",
+              "resource:default/payments-db"
+            ],
+            "detail": "dependsOn changed"
+          }
+        ],
+        "verdict": "REFRESH"
+      }
+    },
+    {
+      "id": "S07",
+      "title": "Dependency removed",
+      "group": "source-drift",
+      "relevantChange": true,
+      "expect": {
+        "outcome": "REFRESH",
+        "codes": [
+          "DEPENDENCY_CHANGED"
+        ]
+      },
+      "status": "PASS",
+      "observed": {
+        "outcome": "REFRESH",
+        "codes": [
+          "DEPENDENCY_CHANGED"
+        ],
+        "informational": [],
+        "checks": []
+      },
+      "durationMs": 40.22,
+      "replay": {
+        "actor": "alex",
+        "subject": "component:default/payments",
+        "purpose": "incident-triage",
+        "steps": [
+          "resolve component:default/payments for incident-triage as alex",
+          "payments no longer depends on notifications",
+          "verify as alex"
+        ],
+        "issued": [
+          {
+            "sourceId": "apidef:api:default/payments-api",
+            "classification": "INTERNAL",
+            "fields": {
+              "apiType": "openapi",
+              "lifecycle": "production",
+              "definitionDigest": "sha256:e1e399f321ab5617737efd9d9f03d5d1949c263482f0485d63d0f95a215a916e"
+            }
+          },
+          {
+            "sourceId": "catalog:component:default/payments",
+            "classification": "INTERNAL",
+            "fields": {
+              "consumesApis": [
+                "api:default/identity-api"
+              ],
+              "dependencyOf": [
+                "component:default/checkout"
+              ],
+              "dependsOn": [
+                "component:default/notifications",
+                "resource:default/payments-db"
+              ],
+              "lifecycle": "production",
+              "owner": "group:default/team-payments",
+              "providesApis": [
+                "api:default/payments-api"
+              ],
+              "system": "system:default/commerce",
+              "techdocsRef": "dir:.",
+              "type": "service"
+            }
+          }
+        ],
+        "current": {
+          "ok": true,
+          "context": [
+            {
+              "sourceId": "apidef:api:default/payments-api",
+              "classification": "INTERNAL",
+              "fields": {
+                "apiType": "openapi",
+                "lifecycle": "production",
+                "definitionDigest": "sha256:e1e399f321ab5617737efd9d9f03d5d1949c263482f0485d63d0f95a215a916e"
+              }
+            },
+            {
+              "sourceId": "catalog:component:default/payments",
+              "classification": "INTERNAL",
+              "fields": {
+                "consumesApis": [
+                  "api:default/identity-api"
+                ],
+                "dependencyOf": [
+                  "component:default/checkout"
+                ],
+                "dependsOn": [
+                  "resource:default/payments-db"
+                ],
+                "lifecycle": "production",
+                "owner": "group:default/team-payments",
+                "providesApis": [
+                  "api:default/payments-api"
+                ],
+                "system": "system:default/commerce",
+                "techdocsRef": "dir:.",
+                "type": "service"
+              }
+            }
+          ]
+        },
+        "drift": [
+          {
+            "code": "DEPENDENCY_CHANGED",
+            "effect": "REFRESH",
+            "sourceId": "catalog:component:default/payments",
+            "field": "dependsOn",
+            "before": [
+              "component:default/notifications",
+              "resource:default/payments-db"
+            ],
+            "after": [
+              "resource:default/payments-db"
+            ],
+            "detail": "dependsOn changed"
+          }
+        ],
+        "verdict": "REFRESH"
+      }
+    },
+    {
+      "id": "S08",
+      "title": "Classification raised within the grant ceiling",
+      "group": "classification",
+      "relevantChange": true,
+      "expect": {
+        "outcome": "REFRESH",
+        "codes": [
+          "CLASSIFICATION_RAISED"
+        ]
+      },
+      "status": "PASS",
+      "observed": {
+        "outcome": "REFRESH",
+        "codes": [
+          "CLASSIFICATION_RAISED"
+        ],
+        "informational": [],
+        "checks": []
+      },
+      "durationMs": 32.42,
+      "replay": {
+        "actor": "alex",
+        "subject": "component:default/inventory",
+        "purpose": "incident-triage",
+        "steps": [
+          "resolve component:default/inventory for incident-triage as alex",
+          "inventory classification PUBLIC -> INTERNAL (ceiling INTERNAL)",
+          "verify as alex"
+        ],
+        "issued": [
+          {
+            "sourceId": "apidef:api:default/inventory-api",
+            "classification": "INTERNAL",
+            "fields": {
+              "apiType": "openapi",
+              "lifecycle": "production",
+              "definitionDigest": "sha256:c98be0edf519384e6c0c0920f9a0d1cad47b1365f2780b534d84f93c350d58fb"
+            }
+          },
+          {
+            "sourceId": "catalog:component:default/inventory",
+            "classification": "PUBLIC",
+            "fields": {
+              "consumesApis": [],
+              "dependencyOf": [
+                "component:default/checkout"
+              ],
+              "dependsOn": [],
+              "lifecycle": "production",
+              "owner": "group:default/team-commerce",
+              "providesApis": [
+                "api:default/inventory-api"
+              ],
+              "system": "system:default/commerce",
+              "techdocsRef": null,
+              "type": "service"
+            }
+          }
+        ],
+        "current": {
+          "ok": true,
+          "context": [
+            {
+              "sourceId": "apidef:api:default/inventory-api",
+              "classification": "INTERNAL",
+              "fields": {
+                "apiType": "openapi",
+                "lifecycle": "production",
+                "definitionDigest": "sha256:c98be0edf519384e6c0c0920f9a0d1cad47b1365f2780b534d84f93c350d58fb"
+              }
+            },
+            {
+              "sourceId": "catalog:component:default/inventory",
+              "classification": "INTERNAL",
+              "fields": {
+                "consumesApis": [],
+                "dependencyOf": [
+                  "component:default/checkout"
+                ],
+                "dependsOn": [],
+                "lifecycle": "production",
+                "owner": "group:default/team-commerce",
+                "providesApis": [
+                  "api:default/inventory-api"
+                ],
+                "system": "system:default/commerce",
+                "techdocsRef": null,
+                "type": "service"
+              }
+            }
+          ]
+        },
+        "drift": [
+          {
+            "code": "CLASSIFICATION_RAISED",
+            "effect": "REFRESH",
+            "sourceId": "catalog:component:default/inventory",
+            "before": "PUBLIC",
+            "after": "INTERNAL",
+            "detail": "classification raised within the grant ceiling INTERNAL"
+          }
+        ],
+        "verdict": "REFRESH"
+      }
+    },
+    {
+      "id": "S09",
+      "title": "Classification raised above the grant ceiling",
+      "group": "classification",
+      "relevantChange": true,
+      "expect": {
+        "outcome": "DENY",
+        "codes": [
+          "CLASSIFICATION_RAISED"
+        ]
+      },
+      "status": "PASS",
+      "observed": {
+        "outcome": "DENY",
+        "codes": [
+          "CLASSIFICATION_RAISED"
+        ],
+        "informational": [],
+        "checks": []
+      },
+      "durationMs": 40.58,
+      "replay": {
+        "actor": "alex",
+        "subject": "component:default/payments",
+        "purpose": "incident-triage",
+        "steps": [
+          "resolve component:default/payments for incident-triage as alex",
+          "payments classification INTERNAL -> RESTRICTED (ceiling INTERNAL)",
+          "verify as alex"
+        ],
+        "issued": [
+          {
+            "sourceId": "apidef:api:default/payments-api",
+            "classification": "INTERNAL",
+            "fields": {
+              "apiType": "openapi",
+              "lifecycle": "production",
+              "definitionDigest": "sha256:e1e399f321ab5617737efd9d9f03d5d1949c263482f0485d63d0f95a215a916e"
+            }
+          },
+          {
+            "sourceId": "catalog:component:default/payments",
+            "classification": "INTERNAL",
+            "fields": {
+              "consumesApis": [
+                "api:default/identity-api"
+              ],
+              "dependencyOf": [
+                "component:default/checkout"
+              ],
+              "dependsOn": [
+                "component:default/notifications",
+                "resource:default/payments-db"
+              ],
+              "lifecycle": "production",
+              "owner": "group:default/team-payments",
+              "providesApis": [
+                "api:default/payments-api"
+              ],
+              "system": "system:default/commerce",
+              "techdocsRef": "dir:.",
+              "type": "service"
+            }
+          }
+        ],
+        "current": {
+          "ok": false,
+          "code": "CLASSIFICATION_EXCEEDS_GRANT"
+        },
+        "drift": [
+          {
+            "code": "CLASSIFICATION_RAISED",
+            "effect": "DENY",
+            "sourceId": "catalog:component:default/payments",
+            "before": "INTERNAL",
+            "after": "RESTRICTED",
+            "detail": "classification RESTRICTED exceeds the grant ceiling INTERNAL"
+          }
+        ],
+        "verdict": "DENY"
+      }
+    },
+    {
+      "id": "S10",
+      "title": "Consumer's catalog read permission revoked",
+      "group": "authorization",
+      "relevantChange": true,
+      "expect": {
+        "outcome": "DENY",
+        "codes": [
+          "PERMISSION_REVOKED"
+        ]
+      },
+      "status": "PASS",
+      "observed": {
+        "outcome": "DENY",
+        "codes": [
+          "PERMISSION_REVOKED"
+        ],
+        "informational": [],
+        "checks": []
+      },
+      "durationMs": 33.7,
+      "replay": {
+        "actor": "alex",
+        "subject": "component:default/payments",
+        "purpose": "incident-triage",
+        "steps": [
+          "resolve component:default/payments for incident-triage as alex",
+          "permission policy: deny catalog.entity.read on payments for alex",
+          "verify as alex"
+        ],
+        "issued": [
+          {
+            "sourceId": "apidef:api:default/payments-api",
+            "classification": "INTERNAL",
+            "fields": {
+              "apiType": "openapi",
+              "lifecycle": "production",
+              "definitionDigest": "sha256:e1e399f321ab5617737efd9d9f03d5d1949c263482f0485d63d0f95a215a916e"
+            }
+          },
+          {
+            "sourceId": "catalog:component:default/payments",
+            "classification": "INTERNAL",
+            "fields": {
+              "consumesApis": [
+                "api:default/identity-api"
+              ],
+              "dependencyOf": [
+                "component:default/checkout"
+              ],
+              "dependsOn": [
+                "component:default/notifications",
+                "resource:default/payments-db"
+              ],
+              "lifecycle": "production",
+              "owner": "group:default/team-payments",
+              "providesApis": [
+                "api:default/payments-api"
+              ],
+              "system": "system:default/commerce",
+              "techdocsRef": "dir:.",
+              "type": "service"
+            }
+          }
+        ],
+        "current": {
+          "ok": false,
+          "code": "PERMISSION_DENIED"
+        },
+        "drift": [
+          {
+            "code": "PERMISSION_REVOKED",
+            "effect": "DENY",
+            "sourceId": "catalog:component:default/payments",
+            "field": "catalog.entity.read",
+            "before": "ALLOW",
+            "after": "DENY",
+            "detail": "catalog.entity.read is now denied for user:default/alex"
+          }
+        ],
+        "verdict": "DENY"
+      }
+    },
+    {
+      "id": "S11",
+      "title": "Receipt presented by a different consumer",
+      "group": "binding",
+      "relevantChange": true,
+      "expect": {
+        "outcome": "DENY",
+        "codes": [
+          "CONSUMER_MISMATCH"
+        ]
+      },
+      "status": "PASS",
+      "observed": {
+        "outcome": "DENY",
+        "codes": [
+          "CONSUMER_MISMATCH"
+        ],
+        "informational": [],
+        "checks": []
+      },
+      "durationMs": 20.97,
+      "replay": {
+        "actor": "alex",
+        "subject": "component:default/payments",
+        "purpose": "incident-triage",
+        "steps": [
+          "resolve component:default/payments for incident-triage as alex",
+          "verify as agent"
+        ],
+        "issued": [
+          {
+            "sourceId": "apidef:api:default/payments-api",
+            "classification": "INTERNAL",
+            "fields": {
+              "apiType": "openapi",
+              "lifecycle": "production",
+              "definitionDigest": "sha256:e1e399f321ab5617737efd9d9f03d5d1949c263482f0485d63d0f95a215a916e"
+            }
+          },
+          {
+            "sourceId": "catalog:component:default/payments",
+            "classification": "INTERNAL",
+            "fields": {
+              "consumesApis": [
+                "api:default/identity-api"
+              ],
+              "dependencyOf": [
+                "component:default/checkout"
+              ],
+              "dependsOn": [
+                "component:default/notifications",
+                "resource:default/payments-db"
+              ],
+              "lifecycle": "production",
+              "owner": "group:default/team-payments",
+              "providesApis": [
+                "api:default/payments-api"
+              ],
+              "system": "system:default/commerce",
+              "techdocsRef": "dir:.",
+              "type": "service"
+            }
+          }
+        ],
+        "current": {
+          "ok": true,
+          "context": [
+            {
+              "sourceId": "apidef:api:default/payments-api",
+              "classification": "INTERNAL",
+              "fields": {
+                "apiType": "openapi",
+                "lifecycle": "production",
+                "definitionDigest": "sha256:e1e399f321ab5617737efd9d9f03d5d1949c263482f0485d63d0f95a215a916e"
+              }
+            },
+            {
+              "sourceId": "catalog:component:default/payments",
+              "classification": "INTERNAL",
+              "fields": {
+                "consumesApis": [
+                  "api:default/identity-api"
+                ],
+                "dependencyOf": [
+                  "component:default/checkout"
+                ],
+                "dependsOn": [
+                  "component:default/notifications",
+                  "resource:default/payments-db"
+                ],
+                "lifecycle": "production",
+                "owner": "group:default/team-payments",
+                "providesApis": [
+                  "api:default/payments-api"
+                ],
+                "system": "system:default/commerce",
+                "techdocsRef": "dir:.",
+                "type": "service"
+              }
+            }
+          ]
+        },
+        "drift": [
+          {
+            "code": "CONSUMER_MISMATCH",
+            "effect": "DENY",
+            "detail": "receipt is bound to a different consumer"
+          }
+        ],
+        "verdict": "DENY"
+      }
+    },
+    {
+      "id": "S12",
+      "title": "TTL expired",
+      "group": "time",
+      "relevantChange": true,
+      "expect": {
+        "outcome": "REFRESH",
+        "codes": [
+          "TTL_EXPIRED"
+        ]
+      },
+      "status": "PASS",
+      "observed": {
+        "outcome": "REFRESH",
+        "codes": [
+          "TTL_EXPIRED"
+        ],
+        "informational": [],
+        "checks": []
+      },
+      "durationMs": 39.12,
+      "replay": {
+        "actor": "alex",
+        "subject": "component:default/payments",
+        "purpose": "incident-triage",
+        "steps": [
+          "resolve component:default/payments for incident-triage as alex",
+          "wait past validUntil (ttl 2s)",
+          "verify as alex"
+        ],
+        "issued": [
+          {
+            "sourceId": "apidef:api:default/payments-api",
+            "classification": "INTERNAL",
+            "fields": {
+              "apiType": "openapi",
+              "lifecycle": "production",
+              "definitionDigest": "sha256:e1e399f321ab5617737efd9d9f03d5d1949c263482f0485d63d0f95a215a916e"
+            }
+          },
+          {
+            "sourceId": "catalog:component:default/payments",
+            "classification": "INTERNAL",
+            "fields": {
+              "consumesApis": [
+                "api:default/identity-api"
+              ],
+              "dependencyOf": [
+                "component:default/checkout"
+              ],
+              "dependsOn": [
+                "component:default/notifications",
+                "resource:default/payments-db"
+              ],
+              "lifecycle": "production",
+              "owner": "group:default/team-payments",
+              "providesApis": [
+                "api:default/payments-api"
+              ],
+              "system": "system:default/commerce",
+              "techdocsRef": "dir:.",
+              "type": "service"
+            }
+          }
+        ],
+        "current": {
+          "ok": true,
+          "context": [
+            {
+              "sourceId": "apidef:api:default/payments-api",
+              "classification": "INTERNAL",
+              "fields": {
+                "apiType": "openapi",
+                "lifecycle": "production",
+                "definitionDigest": "sha256:e1e399f321ab5617737efd9d9f03d5d1949c263482f0485d63d0f95a215a916e"
+              }
+            },
+            {
+              "sourceId": "catalog:component:default/payments",
+              "classification": "INTERNAL",
+              "fields": {
+                "consumesApis": [
+                  "api:default/identity-api"
+                ],
+                "dependencyOf": [
+                  "component:default/checkout"
+                ],
+                "dependsOn": [
+                  "component:default/notifications",
+                  "resource:default/payments-db"
+                ],
+                "lifecycle": "production",
+                "owner": "group:default/team-payments",
+                "providesApis": [
+                  "api:default/payments-api"
+                ],
+                "system": "system:default/commerce",
+                "techdocsRef": "dir:.",
+                "type": "service"
+              }
+            }
+          ]
+        },
+        "drift": [
+          {
+            "code": "TTL_EXPIRED",
+            "effect": "REFRESH",
+            "before": "2026-01-01T00:00:02.000Z",
+            "after": "2026-01-01T00:00:02.100Z",
+            "detail": "context expired at 2026-01-01T00:00:02.000Z"
+          }
+        ],
+        "verdict": "REFRESH"
+      }
+    },
+    {
+      "id": "S13",
+      "title": "Unrelated entity changed",
+      "group": "false-invalidation",
+      "relevantChange": false,
+      "expect": {
+        "outcome": "VALID",
+        "codes": []
+      },
+      "status": "PASS",
+      "observed": {
+        "outcome": "VALID",
+        "codes": [],
+        "informational": [],
+        "checks": []
+      },
+      "durationMs": 43.95,
+      "replay": {
+        "actor": "alex",
+        "subject": "component:default/payments",
+        "purpose": "incident-triage",
+        "steps": [
+          "resolve component:default/payments for incident-triage as alex",
+          "inventory owner and lifecycle changed (no relation to payments)",
+          "verify as alex"
+        ],
+        "issued": [
+          {
+            "sourceId": "apidef:api:default/payments-api",
+            "classification": "INTERNAL",
+            "fields": {
+              "apiType": "openapi",
+              "lifecycle": "production",
+              "definitionDigest": "sha256:e1e399f321ab5617737efd9d9f03d5d1949c263482f0485d63d0f95a215a916e"
+            }
+          },
+          {
+            "sourceId": "catalog:component:default/payments",
+            "classification": "INTERNAL",
+            "fields": {
+              "consumesApis": [
+                "api:default/identity-api"
+              ],
+              "dependencyOf": [
+                "component:default/checkout"
+              ],
+              "dependsOn": [
+                "component:default/notifications",
+                "resource:default/payments-db"
+              ],
+              "lifecycle": "production",
+              "owner": "group:default/team-payments",
+              "providesApis": [
+                "api:default/payments-api"
+              ],
+              "system": "system:default/commerce",
+              "techdocsRef": "dir:.",
+              "type": "service"
+            }
+          }
+        ],
+        "current": {
+          "ok": true,
+          "context": [
+            {
+              "sourceId": "apidef:api:default/payments-api",
+              "classification": "INTERNAL",
+              "fields": {
+                "apiType": "openapi",
+                "lifecycle": "production",
+                "definitionDigest": "sha256:e1e399f321ab5617737efd9d9f03d5d1949c263482f0485d63d0f95a215a916e"
+              }
+            },
+            {
+              "sourceId": "catalog:component:default/payments",
+              "classification": "INTERNAL",
+              "fields": {
+                "consumesApis": [
+                  "api:default/identity-api"
+                ],
+                "dependencyOf": [
+                  "component:default/checkout"
+                ],
+                "dependsOn": [
+                  "component:default/notifications",
+                  "resource:default/payments-db"
+                ],
+                "lifecycle": "production",
+                "owner": "group:default/team-payments",
+                "providesApis": [
+                  "api:default/payments-api"
+                ],
+                "system": "system:default/commerce",
+                "techdocsRef": "dir:.",
+                "type": "service"
+              }
+            }
+          ]
+        },
+        "drift": [],
+        "verdict": "VALID"
+      }
+    },
+    {
+      "id": "S14",
+      "title": "Unrelated annotation and label added to the subject",
+      "group": "false-invalidation",
+      "relevantChange": false,
+      "expect": {
+        "outcome": "VALID",
+        "codes": []
+      },
+      "status": "PASS",
+      "observed": {
+        "outcome": "VALID",
+        "codes": [],
+        "informational": [],
+        "checks": []
+      },
+      "durationMs": 49.18,
+      "replay": {
+        "actor": "alex",
+        "subject": "component:default/payments",
+        "purpose": "incident-triage",
+        "steps": [
+          "resolve component:default/payments for incident-triage as alex",
+          "add annotation example.com/oncall-rotation and label tier=gold",
+          "verify as alex"
+        ],
+        "issued": [
+          {
+            "sourceId": "apidef:api:default/payments-api",
+            "classification": "INTERNAL",
+            "fields": {
+              "apiType": "openapi",
+              "lifecycle": "production",
+              "definitionDigest": "sha256:e1e399f321ab5617737efd9d9f03d5d1949c263482f0485d63d0f95a215a916e"
+            }
+          },
+          {
+            "sourceId": "catalog:component:default/payments",
+            "classification": "INTERNAL",
+            "fields": {
+              "consumesApis": [
+                "api:default/identity-api"
+              ],
+              "dependencyOf": [
+                "component:default/checkout"
+              ],
+              "dependsOn": [
+                "component:default/notifications",
+                "resource:default/payments-db"
+              ],
+              "lifecycle": "production",
+              "owner": "group:default/team-payments",
+              "providesApis": [
+                "api:default/payments-api"
+              ],
+              "system": "system:default/commerce",
+              "techdocsRef": "dir:.",
+              "type": "service"
+            }
+          }
+        ],
+        "current": {
+          "ok": true,
+          "context": [
+            {
+              "sourceId": "apidef:api:default/payments-api",
+              "classification": "INTERNAL",
+              "fields": {
+                "apiType": "openapi",
+                "lifecycle": "production",
+                "definitionDigest": "sha256:e1e399f321ab5617737efd9d9f03d5d1949c263482f0485d63d0f95a215a916e"
+              }
+            },
+            {
+              "sourceId": "catalog:component:default/payments",
+              "classification": "INTERNAL",
+              "fields": {
+                "consumesApis": [
+                  "api:default/identity-api"
+                ],
+                "dependencyOf": [
+                  "component:default/checkout"
+                ],
+                "dependsOn": [
+                  "component:default/notifications",
+                  "resource:default/payments-db"
+                ],
+                "lifecycle": "production",
+                "owner": "group:default/team-payments",
+                "providesApis": [
+                  "api:default/payments-api"
+                ],
+                "system": "system:default/commerce",
+                "techdocsRef": "dir:.",
+                "type": "service"
+              }
+            }
+          ]
+        },
+        "drift": [],
+        "verdict": "VALID"
+      }
+    },
+    {
+      "id": "S15",
+      "title": "Receipt reused for a different subject",
+      "group": "binding",
+      "relevantChange": true,
+      "expect": {
+        "outcome": "DENY",
+        "codes": [
+          "SUBJECT_MISMATCH"
+        ]
+      },
+      "status": "PASS",
+      "observed": {
+        "outcome": "DENY",
+        "codes": [
+          "SUBJECT_MISMATCH"
+        ],
+        "informational": [],
+        "checks": []
+      },
+      "durationMs": 31.34,
+      "replay": {
+        "actor": "alex",
+        "subject": "component:default/payments",
+        "purpose": "incident-triage",
+        "steps": [
+          "resolve component:default/payments for incident-triage as alex",
+          "verify as alex with intent {\"subject\":\"component:default/checkout\"}"
+        ],
+        "issued": [
+          {
+            "sourceId": "apidef:api:default/payments-api",
+            "classification": "INTERNAL",
+            "fields": {
+              "apiType": "openapi",
+              "lifecycle": "production",
+              "definitionDigest": "sha256:e1e399f321ab5617737efd9d9f03d5d1949c263482f0485d63d0f95a215a916e"
+            }
+          },
+          {
+            "sourceId": "catalog:component:default/payments",
+            "classification": "INTERNAL",
+            "fields": {
+              "consumesApis": [
+                "api:default/identity-api"
+              ],
+              "dependencyOf": [
+                "component:default/checkout"
+              ],
+              "dependsOn": [
+                "component:default/notifications",
+                "resource:default/payments-db"
+              ],
+              "lifecycle": "production",
+              "owner": "group:default/team-payments",
+              "providesApis": [
+                "api:default/payments-api"
+              ],
+              "system": "system:default/commerce",
+              "techdocsRef": "dir:.",
+              "type": "service"
+            }
+          }
+        ],
+        "current": {
+          "ok": true,
+          "context": [
+            {
+              "sourceId": "apidef:api:default/payments-api",
+              "classification": "INTERNAL",
+              "fields": {
+                "apiType": "openapi",
+                "lifecycle": "production",
+                "definitionDigest": "sha256:e1e399f321ab5617737efd9d9f03d5d1949c263482f0485d63d0f95a215a916e"
+              }
+            },
+            {
+              "sourceId": "catalog:component:default/payments",
+              "classification": "INTERNAL",
+              "fields": {
+                "consumesApis": [
+                  "api:default/identity-api"
+                ],
+                "dependencyOf": [
+                  "component:default/checkout"
+                ],
+                "dependsOn": [
+                  "component:default/notifications",
+                  "resource:default/payments-db"
+                ],
+                "lifecycle": "production",
+                "owner": "group:default/team-payments",
+                "providesApis": [
+                  "api:default/payments-api"
+                ],
+                "system": "system:default/commerce",
+                "techdocsRef": "dir:.",
+                "type": "service"
+              }
+            }
+          ]
+        },
+        "drift": [
+          {
+            "code": "SUBJECT_MISMATCH",
+            "effect": "DENY",
+            "before": "component:default/payments",
+            "after": "component:default/checkout",
+            "detail": "receipt describes a different subject"
+          }
+        ],
+        "verdict": "DENY"
+      }
+    },
+    {
+      "id": "S16",
+      "title": "Subject entity deleted",
+      "group": "source-drift",
+      "relevantChange": true,
+      "expect": {
+        "outcome": "REFRESH",
+        "codes": [
+          "SOURCE_DELETED"
+        ]
+      },
+      "status": "PASS",
+      "observed": {
+        "outcome": "REFRESH",
+        "codes": [
+          "SOURCE_DELETED"
+        ],
+        "informational": [],
+        "checks": []
+      },
+      "durationMs": 48.19,
+      "replay": {
+        "actor": "alex",
+        "subject": "component:default/payments",
+        "purpose": "incident-triage",
+        "steps": [
+          "resolve component:default/payments for incident-triage as alex",
+          "delete payments from the catalog",
+          "verify as alex"
+        ],
+        "issued": [
+          {
+            "sourceId": "apidef:api:default/payments-api",
+            "classification": "INTERNAL",
+            "fields": {
+              "apiType": "openapi",
+              "lifecycle": "production",
+              "definitionDigest": "sha256:e1e399f321ab5617737efd9d9f03d5d1949c263482f0485d63d0f95a215a916e"
+            }
+          },
+          {
+            "sourceId": "catalog:component:default/payments",
+            "classification": "INTERNAL",
+            "fields": {
+              "consumesApis": [
+                "api:default/identity-api"
+              ],
+              "dependencyOf": [
+                "component:default/checkout"
+              ],
+              "dependsOn": [
+                "component:default/notifications",
+                "resource:default/payments-db"
+              ],
+              "lifecycle": "production",
+              "owner": "group:default/team-payments",
+              "providesApis": [
+                "api:default/payments-api"
+              ],
+              "system": "system:default/commerce",
+              "techdocsRef": "dir:.",
+              "type": "service"
+            }
+          }
+        ],
+        "current": {
+          "ok": false,
+          "code": "SUBJECT_NOT_FOUND"
+        },
+        "drift": [
+          {
+            "code": "SOURCE_DELETED",
+            "effect": "REFRESH",
+            "sourceId": "catalog:component:default/payments",
+            "detail": "source no longer exists"
+          }
+        ],
+        "verdict": "REFRESH"
+      }
+    },
+    {
+      "id": "S17",
+      "title": "Entity recreated under the same ref (new UID)",
+      "group": "source-drift",
+      "relevantChange": true,
+      "expect": {
+        "outcome": "REFRESH",
+        "codes": [
+          "ENTITY_RECREATED"
+        ]
+      },
+      "status": "PASS",
+      "observed": {
+        "outcome": "REFRESH",
+        "codes": [
+          "ENTITY_RECREATED"
+        ],
+        "informational": [],
+        "checks": []
+      },
+      "durationMs": 26.88,
+      "replay": {
+        "actor": "alex",
+        "subject": "component:default/payments",
+        "purpose": "incident-triage",
+        "steps": [
+          "resolve component:default/payments for incident-triage as alex",
+          "delete and re-add payments with identical content",
+          "verify as alex"
+        ],
+        "issued": [
+          {
+            "sourceId": "apidef:api:default/payments-api",
+            "classification": "INTERNAL",
+            "fields": {
+              "apiType": "openapi",
+              "lifecycle": "production",
+              "definitionDigest": "sha256:e1e399f321ab5617737efd9d9f03d5d1949c263482f0485d63d0f95a215a916e"
+            }
+          },
+          {
+            "sourceId": "catalog:component:default/payments",
+            "classification": "INTERNAL",
+            "fields": {
+              "consumesApis": [
+                "api:default/identity-api"
+              ],
+              "dependencyOf": [
+                "component:default/checkout"
+              ],
+              "dependsOn": [
+                "component:default/notifications",
+                "resource:default/payments-db"
+              ],
+              "lifecycle": "production",
+              "owner": "group:default/team-payments",
+              "providesApis": [
+                "api:default/payments-api"
+              ],
+              "system": "system:default/commerce",
+              "techdocsRef": "dir:.",
+              "type": "service"
+            }
+          }
+        ],
+        "current": {
+          "ok": true,
+          "context": [
+            {
+              "sourceId": "apidef:api:default/payments-api",
+              "classification": "INTERNAL",
+              "fields": {
+                "apiType": "openapi",
+                "lifecycle": "production",
+                "definitionDigest": "sha256:e1e399f321ab5617737efd9d9f03d5d1949c263482f0485d63d0f95a215a916e"
+              }
+            },
+            {
+              "sourceId": "catalog:component:default/payments",
+              "classification": "INTERNAL",
+              "fields": {
+                "consumesApis": [
+                  "api:default/identity-api"
+                ],
+                "dependencyOf": [
+                  "component:default/checkout"
+                ],
+                "dependsOn": [
+                  "component:default/notifications",
+                  "resource:default/payments-db"
+                ],
+                "lifecycle": "production",
+                "owner": "group:default/team-payments",
+                "providesApis": [
+                  "api:default/payments-api"
+                ],
+                "system": "system:default/commerce",
+                "techdocsRef": "dir:.",
+                "type": "service"
+              }
+            }
+          ]
+        },
+        "drift": [
+          {
+            "code": "ENTITY_RECREATED",
+            "effect": "REFRESH",
+            "sourceId": "catalog:component:default/payments",
+            "before": "uid-8",
+            "after": "uid-21",
+            "detail": "same reference now points to a different object (deleted and recreated)"
+          }
+        ],
+        "verdict": "REFRESH"
+      }
+    },
+    {
+      "id": "S18",
+      "title": "Policy rewritten, semantically equivalent",
+      "group": "policy",
+      "relevantChange": false,
+      "expect": {
+        "outcome": "VALID",
+        "codes": []
+      },
+      "status": "PASS",
+      "observed": {
+        "outcome": "VALID",
+        "codes": [],
+        "informational": [],
+        "checks": []
+      },
+      "durationMs": 31.28,
+      "replay": {
+        "actor": "alex",
+        "subject": "component:default/payments",
+        "purpose": "incident-triage",
+        "steps": [
+          "resolve component:default/payments for incident-triage as alex",
+          "reorder lists, duplicate a consumer, reword description",
+          "verify as alex"
+        ],
+        "issued": [
+          {
+            "sourceId": "apidef:api:default/payments-api",
+            "classification": "INTERNAL",
+            "fields": {
+              "apiType": "openapi",
+              "lifecycle": "production",
+              "definitionDigest": "sha256:e1e399f321ab5617737efd9d9f03d5d1949c263482f0485d63d0f95a215a916e"
+            }
+          },
+          {
+            "sourceId": "catalog:component:default/payments",
+            "classification": "INTERNAL",
+            "fields": {
+              "consumesApis": [
+                "api:default/identity-api"
+              ],
+              "dependencyOf": [
+                "component:default/checkout"
+              ],
+              "dependsOn": [
+                "component:default/notifications",
+                "resource:default/payments-db"
+              ],
+              "lifecycle": "production",
+              "owner": "group:default/team-payments",
+              "providesApis": [
+                "api:default/payments-api"
+              ],
+              "system": "system:default/commerce",
+              "techdocsRef": "dir:.",
+              "type": "service"
+            }
+          }
+        ],
+        "current": {
+          "ok": true,
+          "context": [
+            {
+              "sourceId": "apidef:api:default/payments-api",
+              "classification": "INTERNAL",
+              "fields": {
+                "apiType": "openapi",
+                "lifecycle": "production",
+                "definitionDigest": "sha256:e1e399f321ab5617737efd9d9f03d5d1949c263482f0485d63d0f95a215a916e"
+              }
+            },
+            {
+              "sourceId": "catalog:component:default/payments",
+              "classification": "INTERNAL",
+              "fields": {
+                "consumesApis": [
+                  "api:default/identity-api"
+                ],
+                "dependencyOf": [
+                  "component:default/checkout"
+                ],
+                "dependsOn": [
+                  "component:default/notifications",
+                  "resource:default/payments-db"
+                ],
+                "lifecycle": "production",
+                "owner": "group:default/team-payments",
+                "providesApis": [
+                  "api:default/payments-api"
+                ],
+                "system": "system:default/commerce",
+                "techdocsRef": "dir:.",
+                "type": "service"
+              }
+            }
+          ]
+        },
+        "drift": [],
+        "verdict": "VALID"
+      }
+    },
+    {
+      "id": "S19",
+      "title": "Policy narrowed below the receipt",
+      "group": "policy",
+      "relevantChange": true,
+      "expect": {
+        "outcome": "DENY",
+        "codes": [
+          "POLICY_NARROWED"
+        ]
+      },
+      "status": "PASS",
+      "observed": {
+        "outcome": "DENY",
+        "codes": [
+          "POLICY_NARROWED"
+        ],
+        "informational": [],
+        "checks": []
+      },
+      "durationMs": 24.6,
+      "replay": {
+        "actor": "alex",
+        "subject": "component:default/payments",
+        "purpose": "incident-triage",
+        "steps": [
+          "resolve component:default/payments for incident-triage as alex",
+          "remove 'dependencies' from allowedCategories",
+          "verify as alex"
+        ],
+        "issued": [
+          {
+            "sourceId": "apidef:api:default/payments-api",
+            "classification": "INTERNAL",
+            "fields": {
+              "apiType": "openapi",
+              "lifecycle": "production",
+              "definitionDigest": "sha256:e1e399f321ab5617737efd9d9f03d5d1949c263482f0485d63d0f95a215a916e"
+            }
+          },
+          {
+            "sourceId": "catalog:component:default/payments",
+            "classification": "INTERNAL",
+            "fields": {
+              "consumesApis": [
+                "api:default/identity-api"
+              ],
+              "dependencyOf": [
+                "component:default/checkout"
+              ],
+              "dependsOn": [
+                "component:default/notifications",
+                "resource:default/payments-db"
+              ],
+              "lifecycle": "production",
+              "owner": "group:default/team-payments",
+              "providesApis": [
+                "api:default/payments-api"
+              ],
+              "system": "system:default/commerce",
+              "techdocsRef": "dir:.",
+              "type": "service"
+            }
+          }
+        ],
+        "current": {
+          "ok": false,
+          "code": "CATEGORY_NOT_GRANTED"
+        },
+        "drift": [
+          {
+            "code": "POLICY_NARROWED",
+            "effect": "DENY",
+            "before": "sha256:42eaa68d9b18079c392a9b77a4c848c35ae92adce9025f8b5929f175aefa9ad9",
+            "after": "sha256:ad7b49369cc896db4b0ee1be6a2f617258f542f7fbfd3876ebe0153a3a0b937f",
+            "detail": "current policy no longer covers this receipt: categories no longer allowed: dependencies"
+          }
+        ],
+        "verdict": "DENY"
+      }
+    },
+    {
+      "id": "S20",
+      "title": "Policy broadened: receipt keeps its original grant",
+      "group": "policy",
+      "relevantChange": false,
+      "expect": {
+        "outcome": "VALID",
+        "codes": [],
+        "informational": [
+          "POLICY_CHANGED"
+        ]
+      },
+      "status": "PASS",
+      "observed": {
+        "outcome": "VALID",
+        "codes": [],
+        "informational": [
+          "POLICY_CHANGED"
+        ],
+        "checks": [
+          {
+            "name": "grant ceiling unchanged",
+            "ok": true,
+            "detail": "INTERNAL"
+          },
+          {
+            "name": "wider intent still SCOPE_EXCEEDED",
+            "ok": true
+          }
+        ]
+      },
+      "durationMs": 102.03,
+      "replay": {
+        "actor": "alex",
+        "subject": "component:default/payments",
+        "purpose": "incident-triage",
+        "steps": [
+          "resolve component:default/payments for incident-triage as alex",
+          "raise ceiling to RESTRICTED",
+          "verify as alex"
+        ],
+        "issued": [
+          {
+            "sourceId": "catalog:component:default/payments",
+            "classification": "INTERNAL",
+            "fields": {
+              "owner": "group:default/team-payments"
+            }
+          }
+        ],
+        "current": {
+          "ok": true,
+          "context": [
+            {
+              "sourceId": "catalog:component:default/payments",
+              "classification": "INTERNAL",
+              "fields": {
+                "owner": "group:default/team-payments"
+              }
+            }
+          ]
+        },
+        "drift": [
+          {
+            "code": "POLICY_CHANGED",
+            "effect": "NONE",
+            "before": "sha256:42eaa68d9b18079c392a9b77a4c848c35ae92adce9025f8b5929f175aefa9ad9",
+            "after": "sha256:85644655d882c52fe29227a4b95220df9e740e9bac2a7720ecb8df289014b11f",
+            "detail": "policy changed but still covers this receipt; the receipt keeps its original grant"
+          }
+        ],
+        "verdict": "VALID"
+      }
+    },
+    {
+      "id": "S21",
+      "title": "Required source unavailable",
+      "group": "availability",
+      "relevantChange": true,
+      "expect": {
+        "outcome": "REFRESH",
+        "codes": [
+          "SOURCE_UNAVAILABLE"
+        ]
+      },
+      "status": "PASS",
+      "observed": {
+        "outcome": "REFRESH",
+        "codes": [
+          "SOURCE_UNAVAILABLE"
+        ],
+        "informational": [],
+        "checks": []
+      },
+      "durationMs": 17.45,
+      "replay": {
+        "actor": "alex",
+        "subject": "component:default/payments",
+        "purpose": "incident-triage",
+        "steps": [
+          "resolve component:default/payments for incident-triage as alex",
+          "catalog unavailable",
+          "verify as alex"
+        ],
+        "issued": [
+          {
+            "sourceId": "apidef:api:default/payments-api",
+            "classification": "INTERNAL",
+            "fields": {
+              "apiType": "openapi",
+              "lifecycle": "production",
+              "definitionDigest": "sha256:e1e399f321ab5617737efd9d9f03d5d1949c263482f0485d63d0f95a215a916e"
+            }
+          },
+          {
+            "sourceId": "catalog:component:default/payments",
+            "classification": "INTERNAL",
+            "fields": {
+              "consumesApis": [
+                "api:default/identity-api"
+              ],
+              "dependencyOf": [
+                "component:default/checkout"
+              ],
+              "dependsOn": [
+                "component:default/notifications",
+                "resource:default/payments-db"
+              ],
+              "lifecycle": "production",
+              "owner": "group:default/team-payments",
+              "providesApis": [
+                "api:default/payments-api"
+              ],
+              "system": "system:default/commerce",
+              "techdocsRef": "dir:.",
+              "type": "service"
+            }
+          }
+        ],
+        "current": {
+          "ok": false,
+          "code": "SOURCE_UNAVAILABLE"
+        },
+        "drift": [
+          {
+            "code": "SOURCE_UNAVAILABLE",
+            "effect": "REFRESH",
+            "sourceId": "apidef:api:default/payments-api",
+            "detail": "required source could not be checked: Error: synthetic catalog unavailable"
+          },
+          {
+            "code": "SOURCE_UNAVAILABLE",
+            "effect": "REFRESH",
+            "sourceId": "catalog:component:default/payments",
+            "detail": "required source could not be checked: Error: synthetic catalog unavailable"
+          }
+        ],
+        "verdict": "REFRESH"
+      }
+    },
+    {
+      "id": "S22",
+      "title": "Source unavailable under a strict policy (denyOn)",
+      "group": "availability",
+      "relevantChange": true,
+      "expect": {
+        "outcome": "DENY",
+        "codes": [
+          "SOURCE_UNAVAILABLE"
+        ]
+      },
+      "status": "PASS",
+      "observed": {
+        "outcome": "DENY",
+        "codes": [
+          "SOURCE_UNAVAILABLE"
+        ],
+        "informational": [],
+        "checks": []
+      },
+      "durationMs": 14.39,
+      "replay": {
+        "actor": "alex",
+        "subject": "component:default/payments",
+        "purpose": "incident-triage",
+        "steps": [
+          "resolve component:default/payments for incident-triage as alex",
+          "catalog unavailable",
+          "verify as alex"
+        ],
+        "issued": [
+          {
+            "sourceId": "apidef:api:default/payments-api",
+            "classification": "INTERNAL",
+            "fields": {
+              "apiType": "openapi",
+              "lifecycle": "production",
+              "definitionDigest": "sha256:e1e399f321ab5617737efd9d9f03d5d1949c263482f0485d63d0f95a215a916e"
+            }
+          },
+          {
+            "sourceId": "catalog:component:default/payments",
+            "classification": "INTERNAL",
+            "fields": {
+              "consumesApis": [
+                "api:default/identity-api"
+              ],
+              "dependencyOf": [
+                "component:default/checkout"
+              ],
+              "dependsOn": [
+                "component:default/notifications",
+                "resource:default/payments-db"
+              ],
+              "lifecycle": "production",
+              "owner": "group:default/team-payments",
+              "providesApis": [
+                "api:default/payments-api"
+              ],
+              "system": "system:default/commerce",
+              "techdocsRef": "dir:.",
+              "type": "service"
+            }
+          }
+        ],
+        "current": {
+          "ok": false,
+          "code": "SOURCE_UNAVAILABLE"
+        },
+        "drift": [
+          {
+            "code": "SOURCE_UNAVAILABLE",
+            "effect": "DENY",
+            "sourceId": "apidef:api:default/payments-api",
+            "detail": "required source could not be checked: Error: synthetic catalog unavailable"
+          },
+          {
+            "code": "SOURCE_UNAVAILABLE",
+            "effect": "DENY",
+            "sourceId": "catalog:component:default/payments",
+            "detail": "required source could not be checked: Error: synthetic catalog unavailable"
+          }
+        ],
+        "verdict": "DENY"
+      }
+    },
+    {
+      "id": "S23",
+      "title": "Malformed classification on the subject",
+      "group": "availability",
+      "relevantChange": true,
+      "expect": {
+        "outcome": "DENY",
+        "codes": [
+          "SOURCE_MALFORMED"
+        ]
+      },
+      "status": "PASS",
+      "observed": {
+        "outcome": "DENY",
+        "codes": [
+          "SOURCE_MALFORMED"
+        ],
+        "informational": [],
+        "checks": []
+      },
+      "durationMs": 17.36,
+      "replay": {
+        "actor": "alex",
+        "subject": "component:default/payments",
+        "purpose": "incident-triage",
+        "steps": [
+          "resolve component:default/payments for incident-triage as alex",
+          "classification annotation set to 'SECRET' (not a known level)",
+          "verify as alex"
+        ],
+        "issued": [
+          {
+            "sourceId": "apidef:api:default/payments-api",
+            "classification": "INTERNAL",
+            "fields": {
+              "apiType": "openapi",
+              "lifecycle": "production",
+              "definitionDigest": "sha256:e1e399f321ab5617737efd9d9f03d5d1949c263482f0485d63d0f95a215a916e"
+            }
+          },
+          {
+            "sourceId": "catalog:component:default/payments",
+            "classification": "INTERNAL",
+            "fields": {
+              "consumesApis": [
+                "api:default/identity-api"
+              ],
+              "dependencyOf": [
+                "component:default/checkout"
+              ],
+              "dependsOn": [
+                "component:default/notifications",
+                "resource:default/payments-db"
+              ],
+              "lifecycle": "production",
+              "owner": "group:default/team-payments",
+              "providesApis": [
+                "api:default/payments-api"
+              ],
+              "system": "system:default/commerce",
+              "techdocsRef": "dir:.",
+              "type": "service"
+            }
+          }
+        ],
+        "current": {
+          "ok": false,
+          "code": "SOURCE_MALFORMED"
+        },
+        "drift": [
+          {
+            "code": "SOURCE_MALFORMED",
+            "effect": "DENY",
+            "sourceId": "catalog:component:default/payments",
+            "detail": "source could not be normalized, so classification and scope cannot be checked: component:default/payments has invalid contextverity.github.io/classification 'SECRET'"
+          }
+        ],
+        "verdict": "DENY"
+      }
+    },
+    {
+      "id": "S24",
+      "title": "Category not granted by the policy",
+      "group": "resolve",
+      "relevantChange": true,
+      "expect": {
+        "outcome": "RESOLVE_DENIED",
+        "denialCode": "CATEGORY_NOT_GRANTED"
+      },
+      "status": "PASS",
+      "observed": {
+        "outcome": "RESOLVE_DENIED",
+        "codes": [],
+        "informational": [],
+        "denialCode": "CATEGORY_NOT_GRANTED",
+        "checks": []
+      },
+      "durationMs": 0.34,
+      "replay": {
+        "actor": "alex",
+        "subject": "component:default/inventory",
+        "purpose": "docs-lookup",
+        "steps": [
+          "resolve component:default/inventory for docs-lookup as alex"
+        ],
+        "current": {
+          "ok": false,
+          "code": "CATEGORY_NOT_GRANTED"
+        },
+        "drift": []
+      }
+    },
+    {
+      "id": "S25",
+      "title": "Source kind not permitted by the policy",
+      "group": "resolve",
+      "relevantChange": true,
+      "expect": {
+        "outcome": "RESOLVE_DENIED",
+        "denialCode": "SOURCE_NOT_PERMITTED"
+      },
+      "status": "PASS",
+      "observed": {
+        "outcome": "RESOLVE_DENIED",
+        "codes": [],
+        "informational": [],
+        "denialCode": "SOURCE_NOT_PERMITTED",
+        "checks": []
+      },
+      "durationMs": 1.14,
+      "replay": {
+        "actor": "alex",
+        "subject": "component:default/payments",
+        "purpose": "incident-triage",
+        "steps": [
+          "resolve component:default/payments for incident-triage as alex"
+        ],
+        "current": {
+          "ok": false,
+          "code": "SOURCE_NOT_PERMITTED"
+        },
+        "drift": []
+      }
+    },
+    {
+      "id": "S26",
+      "title": "Related API classification raised above the ceiling",
+      "group": "classification",
+      "relevantChange": true,
+      "expect": {
+        "outcome": "DENY",
+        "codes": [
+          "CLASSIFICATION_RAISED"
+        ]
+      },
+      "status": "PASS",
+      "observed": {
+        "outcome": "DENY",
+        "codes": [
+          "CLASSIFICATION_RAISED"
+        ],
+        "informational": [],
+        "checks": []
+      },
+      "durationMs": 10.54,
+      "replay": {
+        "actor": "alex",
+        "subject": "component:default/payments",
+        "purpose": "incident-triage",
+        "steps": [
+          "resolve component:default/payments for incident-triage as alex",
+          "payments-api classification INTERNAL -> RESTRICTED",
+          "verify as alex"
+        ],
+        "issued": [
+          {
+            "sourceId": "apidef:api:default/payments-api",
+            "classification": "INTERNAL",
+            "fields": {
+              "apiType": "openapi",
+              "lifecycle": "production",
+              "definitionDigest": "sha256:e1e399f321ab5617737efd9d9f03d5d1949c263482f0485d63d0f95a215a916e"
+            }
+          },
+          {
+            "sourceId": "catalog:component:default/payments",
+            "classification": "INTERNAL",
+            "fields": {
+              "consumesApis": [
+                "api:default/identity-api"
+              ],
+              "dependencyOf": [
+                "component:default/checkout"
+              ],
+              "dependsOn": [
+                "component:default/notifications",
+                "resource:default/payments-db"
+              ],
+              "lifecycle": "production",
+              "owner": "group:default/team-payments",
+              "providesApis": [
+                "api:default/payments-api"
+              ],
+              "system": "system:default/commerce",
+              "techdocsRef": "dir:.",
+              "type": "service"
+            }
+          }
+        ],
+        "current": {
+          "ok": false,
+          "code": "CLASSIFICATION_EXCEEDS_GRANT"
+        },
+        "drift": [
+          {
+            "code": "CLASSIFICATION_RAISED",
+            "effect": "DENY",
+            "sourceId": "apidef:api:default/payments-api",
+            "before": "INTERNAL",
+            "after": "RESTRICTED",
+            "detail": "classification RESTRICTED exceeds the grant ceiling INTERNAL"
+          }
+        ],
+        "verdict": "DENY"
+      }
+    },
+    {
+      "id": "S27",
+      "title": "Classification lowered: receipt stays bounded by its grant",
+      "group": "classification",
+      "relevantChange": true,
+      "expect": {
+        "outcome": "REFRESH",
+        "codes": [
+          "CLASSIFICATION_LOWERED"
+        ]
+      },
+      "status": "PASS",
+      "observed": {
+        "outcome": "REFRESH",
+        "codes": [
+          "CLASSIFICATION_LOWERED"
+        ],
+        "informational": [],
+        "checks": [
+          {
+            "name": "receipt classification unchanged",
+            "ok": true
+          }
+        ]
+      },
+      "durationMs": 32.18,
+      "replay": {
+        "actor": "alex",
+        "subject": "component:default/payments",
+        "purpose": "incident-triage",
+        "steps": [
+          "resolve component:default/payments for incident-triage as alex",
+          "payments classification INTERNAL -> PUBLIC",
+          "verify as alex"
+        ],
+        "issued": [
+          {
+            "sourceId": "apidef:api:default/payments-api",
+            "classification": "INTERNAL",
+            "fields": {
+              "apiType": "openapi",
+              "lifecycle": "production",
+              "definitionDigest": "sha256:e1e399f321ab5617737efd9d9f03d5d1949c263482f0485d63d0f95a215a916e"
+            }
+          },
+          {
+            "sourceId": "catalog:component:default/payments",
+            "classification": "INTERNAL",
+            "fields": {
+              "consumesApis": [
+                "api:default/identity-api"
+              ],
+              "dependencyOf": [
+                "component:default/checkout"
+              ],
+              "dependsOn": [
+                "component:default/notifications",
+                "resource:default/payments-db"
+              ],
+              "lifecycle": "production",
+              "owner": "group:default/team-payments",
+              "providesApis": [
+                "api:default/payments-api"
+              ],
+              "system": "system:default/commerce",
+              "techdocsRef": "dir:.",
+              "type": "service"
+            }
+          }
+        ],
+        "current": {
+          "ok": true,
+          "context": [
+            {
+              "sourceId": "apidef:api:default/payments-api",
+              "classification": "INTERNAL",
+              "fields": {
+                "apiType": "openapi",
+                "lifecycle": "production",
+                "definitionDigest": "sha256:e1e399f321ab5617737efd9d9f03d5d1949c263482f0485d63d0f95a215a916e"
+              }
+            },
+            {
+              "sourceId": "catalog:component:default/payments",
+              "classification": "PUBLIC",
+              "fields": {
+                "consumesApis": [
+                  "api:default/identity-api"
+                ],
+                "dependencyOf": [
+                  "component:default/checkout"
+                ],
+                "dependsOn": [
+                  "component:default/notifications",
+                  "resource:default/payments-db"
+                ],
+                "lifecycle": "production",
+                "owner": "group:default/team-payments",
+                "providesApis": [
+                  "api:default/payments-api"
+                ],
+                "system": "system:default/commerce",
+                "techdocsRef": "dir:.",
+                "type": "service"
+              }
+            }
+          ]
+        },
+        "drift": [
+          {
+            "code": "CLASSIFICATION_LOWERED",
+            "effect": "REFRESH",
+            "sourceId": "catalog:component:default/payments",
+            "before": "INTERNAL",
+            "after": "PUBLIC",
+            "detail": "classification lowered; the receipt stays bounded by its original grant"
+          }
+        ],
+        "verdict": "REFRESH"
+      }
+    },
+    {
+      "id": "S28",
+      "title": "Concurrent verification of the same receipt",
+      "group": "determinism",
+      "relevantChange": true,
+      "expect": {
+        "outcome": "REFRESH",
+        "codes": [
+          "OWNER_CHANGED"
+        ]
+      },
+      "status": "PASS",
+      "observed": {
+        "outcome": "REFRESH",
+        "codes": [
+          "OWNER_CHANGED"
+        ],
+        "informational": [],
+        "checks": [
+          {
+            "name": "all 25 results identical",
+            "ok": true,
+            "detail": "1 distinct"
+          }
+        ]
+      },
+      "durationMs": 197.47,
+      "replay": {
+        "actor": "alex",
+        "subject": "component:default/payments",
+        "purpose": "incident-triage",
+        "steps": [
+          "resolve component:default/payments for incident-triage as alex",
+          "owner changed; 25 verifications in parallel"
+        ],
+        "issued": [
+          {
+            "sourceId": "apidef:api:default/payments-api",
+            "classification": "INTERNAL",
+            "fields": {
+              "apiType": "openapi",
+              "lifecycle": "production",
+              "definitionDigest": "sha256:e1e399f321ab5617737efd9d9f03d5d1949c263482f0485d63d0f95a215a916e"
+            }
+          },
+          {
+            "sourceId": "catalog:component:default/payments",
+            "classification": "INTERNAL",
+            "fields": {
+              "consumesApis": [
+                "api:default/identity-api"
+              ],
+              "dependencyOf": [
+                "component:default/checkout"
+              ],
+              "dependsOn": [
+                "component:default/notifications",
+                "resource:default/payments-db"
+              ],
+              "lifecycle": "production",
+              "owner": "group:default/team-payments",
+              "providesApis": [
+                "api:default/payments-api"
+              ],
+              "system": "system:default/commerce",
+              "techdocsRef": "dir:.",
+              "type": "service"
+            }
+          }
+        ],
+        "current": {
+          "ok": true,
+          "context": [
+            {
+              "sourceId": "apidef:api:default/payments-api",
+              "classification": "INTERNAL",
+              "fields": {
+                "apiType": "openapi",
+                "lifecycle": "production",
+                "definitionDigest": "sha256:e1e399f321ab5617737efd9d9f03d5d1949c263482f0485d63d0f95a215a916e"
+              }
+            },
+            {
+              "sourceId": "catalog:component:default/payments",
+              "classification": "INTERNAL",
+              "fields": {
+                "consumesApis": [
+                  "api:default/identity-api"
+                ],
+                "dependencyOf": [
+                  "component:default/checkout"
+                ],
+                "dependsOn": [
+                  "component:default/notifications",
+                  "resource:default/payments-db"
+                ],
+                "lifecycle": "production",
+                "owner": "group:default/team-commerce",
+                "providesApis": [
+                  "api:default/payments-api"
+                ],
+                "system": "system:default/commerce",
+                "techdocsRef": "dir:.",
+                "type": "service"
+              }
+            }
+          ]
+        },
+        "drift": [
+          {
+            "code": "OWNER_CHANGED",
+            "effect": "REFRESH",
+            "sourceId": "catalog:component:default/payments",
+            "field": "owner",
+            "before": "group:default/team-payments",
+            "after": "group:default/team-commerce",
+            "detail": "owner changed"
+          }
+        ],
+        "verdict": "REFRESH"
+      }
+    },
+    {
+      "id": "S29",
+      "title": "Service restart: authoritative receipt survives",
+      "group": "integrity",
+      "relevantChange": false,
+      "expect": {
+        "outcome": "VALID",
+        "codes": []
+      },
+      "status": "PASS",
+      "observed": {
+        "outcome": "VALID",
+        "codes": [],
+        "informational": [],
+        "checks": []
+      },
+      "durationMs": 35.33,
+      "replay": {
+        "actor": "alex",
+        "subject": "component:default/payments",
+        "purpose": "incident-triage",
+        "steps": [
+          "resolve component:default/payments for incident-triage as alex",
+          "restart ContextVerity (same database)",
+          "verify as alex"
+        ],
+        "issued": [
+          {
+            "sourceId": "apidef:api:default/payments-api",
+            "classification": "INTERNAL",
+            "fields": {
+              "apiType": "openapi",
+              "lifecycle": "production",
+              "definitionDigest": "sha256:e1e399f321ab5617737efd9d9f03d5d1949c263482f0485d63d0f95a215a916e"
+            }
+          },
+          {
+            "sourceId": "catalog:component:default/payments",
+            "classification": "INTERNAL",
+            "fields": {
+              "consumesApis": [
+                "api:default/identity-api"
+              ],
+              "dependencyOf": [
+                "component:default/checkout"
+              ],
+              "dependsOn": [
+                "component:default/notifications",
+                "resource:default/payments-db"
+              ],
+              "lifecycle": "production",
+              "owner": "group:default/team-payments",
+              "providesApis": [
+                "api:default/payments-api"
+              ],
+              "system": "system:default/commerce",
+              "techdocsRef": "dir:.",
+              "type": "service"
+            }
+          }
+        ],
+        "current": {
+          "ok": true,
+          "context": [
+            {
+              "sourceId": "apidef:api:default/payments-api",
+              "classification": "INTERNAL",
+              "fields": {
+                "apiType": "openapi",
+                "lifecycle": "production",
+                "definitionDigest": "sha256:e1e399f321ab5617737efd9d9f03d5d1949c263482f0485d63d0f95a215a916e"
+              }
+            },
+            {
+              "sourceId": "catalog:component:default/payments",
+              "classification": "INTERNAL",
+              "fields": {
+                "consumesApis": [
+                  "api:default/identity-api"
+                ],
+                "dependencyOf": [
+                  "component:default/checkout"
+                ],
+                "dependsOn": [
+                  "component:default/notifications",
+                  "resource:default/payments-db"
+                ],
+                "lifecycle": "production",
+                "owner": "group:default/team-payments",
+                "providesApis": [
+                  "api:default/payments-api"
+                ],
+                "system": "system:default/commerce",
+                "techdocsRef": "dir:.",
+                "type": "service"
+              }
+            }
+          ]
+        },
+        "drift": [],
+        "verdict": "VALID"
+      }
+    },
+    {
+      "id": "S30",
+      "title": "Stored receipt tampered with",
+      "group": "integrity",
+      "relevantChange": true,
+      "expect": {
+        "outcome": "DENY",
+        "codes": [
+          "RECEIPT_INTEGRITY_FAILED"
+        ]
+      },
+      "status": "PASS",
+      "observed": {
+        "outcome": "DENY",
+        "codes": [
+          "RECEIPT_INTEGRITY_FAILED"
+        ],
+        "informational": [],
+        "checks": [
+          {
+            "name": "no source state disclosed",
+            "ok": true
+          }
+        ]
+      },
+      "durationMs": 9.15,
+      "replay": {
+        "actor": "alex",
+        "subject": "component:default/payments",
+        "purpose": "incident-triage",
+        "steps": [
+          "resolve component:default/payments for incident-triage as alex",
+          "edit stored receipt body: ceiling INTERNAL -> RESTRICTED",
+          "verify as alex"
+        ],
+        "issued": [
+          {
+            "sourceId": "apidef:api:default/payments-api",
+            "classification": "INTERNAL",
+            "fields": {
+              "apiType": "openapi",
+              "lifecycle": "production",
+              "definitionDigest": "sha256:e1e399f321ab5617737efd9d9f03d5d1949c263482f0485d63d0f95a215a916e"
+            }
+          },
+          {
+            "sourceId": "catalog:component:default/payments",
+            "classification": "INTERNAL",
+            "fields": {
+              "consumesApis": [
+                "api:default/identity-api"
+              ],
+              "dependencyOf": [
+                "component:default/checkout"
+              ],
+              "dependsOn": [
+                "component:default/notifications",
+                "resource:default/payments-db"
+              ],
+              "lifecycle": "production",
+              "owner": "group:default/team-payments",
+              "providesApis": [
+                "api:default/payments-api"
+              ],
+              "system": "system:default/commerce",
+              "techdocsRef": "dir:.",
+              "type": "service"
+            }
+          }
+        ],
+        "current": {
+          "ok": true,
+          "context": [
+            {
+              "sourceId": "apidef:api:default/payments-api",
+              "classification": "INTERNAL",
+              "fields": {
+                "apiType": "openapi",
+                "lifecycle": "production",
+                "definitionDigest": "sha256:e1e399f321ab5617737efd9d9f03d5d1949c263482f0485d63d0f95a215a916e"
+              }
+            },
+            {
+              "sourceId": "catalog:component:default/payments",
+              "classification": "INTERNAL",
+              "fields": {
+                "consumesApis": [
+                  "api:default/identity-api"
+                ],
+                "dependencyOf": [
+                  "component:default/checkout"
+                ],
+                "dependsOn": [
+                  "component:default/notifications",
+                  "resource:default/payments-db"
+                ],
+                "lifecycle": "production",
+                "owner": "group:default/team-payments",
+                "providesApis": [
+                  "api:default/payments-api"
+                ],
+                "system": "system:default/commerce",
+                "techdocsRef": "dir:.",
+                "type": "service"
+              }
+            }
+          ]
+        },
+        "drift": [
+          {
+            "code": "RECEIPT_INTEGRITY_FAILED",
+            "effect": "DENY",
+            "detail": "stored receipt does not match its integrity tag"
+          }
+        ],
+        "verdict": "DENY"
+      }
+    },
+    {
+      "id": "S31",
+      "title": "Permission revoked on a related API only",
+      "group": "authorization",
+      "relevantChange": true,
+      "expect": {
+        "outcome": "DENY",
+        "codes": [
+          "PERMISSION_REVOKED"
+        ]
+      },
+      "status": "PASS",
+      "observed": {
+        "outcome": "DENY",
+        "codes": [
+          "PERMISSION_REVOKED"
+        ],
+        "informational": [],
+        "checks": []
+      },
+      "durationMs": 8.76,
+      "replay": {
+        "actor": "alex",
+        "subject": "component:default/payments",
+        "purpose": "incident-triage",
+        "steps": [
+          "resolve component:default/payments for incident-triage as alex",
+          "deny catalog.entity.read on payments-api for alex",
+          "verify as alex"
+        ],
+        "issued": [
+          {
+            "sourceId": "apidef:api:default/payments-api",
+            "classification": "INTERNAL",
+            "fields": {
+              "apiType": "openapi",
+              "lifecycle": "production",
+              "definitionDigest": "sha256:e1e399f321ab5617737efd9d9f03d5d1949c263482f0485d63d0f95a215a916e"
+            }
+          },
+          {
+            "sourceId": "catalog:component:default/payments",
+            "classification": "INTERNAL",
+            "fields": {
+              "consumesApis": [
+                "api:default/identity-api"
+              ],
+              "dependencyOf": [
+                "component:default/checkout"
+              ],
+              "dependsOn": [
+                "component:default/notifications",
+                "resource:default/payments-db"
+              ],
+              "lifecycle": "production",
+              "owner": "group:default/team-payments",
+              "providesApis": [
+                "api:default/payments-api"
+              ],
+              "system": "system:default/commerce",
+              "techdocsRef": "dir:.",
+              "type": "service"
+            }
+          }
+        ],
+        "current": {
+          "ok": false,
+          "code": "PERMISSION_DENIED"
+        },
+        "drift": [
+          {
+            "code": "PERMISSION_REVOKED",
+            "effect": "DENY",
+            "sourceId": "apidef:api:default/payments-api",
+            "field": "catalog.entity.read",
+            "before": "ALLOW",
+            "after": "DENY",
+            "detail": "catalog.entity.read is now denied for user:default/alex"
+          }
+        ],
+        "verdict": "DENY"
+      }
+    },
+    {
+      "id": "S32",
+      "title": "Source changed and changed back",
+      "group": "false-invalidation",
+      "relevantChange": false,
+      "expect": {
+        "outcome": "VALID",
+        "codes": []
+      },
+      "status": "PASS",
+      "observed": {
+        "outcome": "VALID",
+        "codes": [],
+        "informational": [],
+        "checks": []
+      },
+      "durationMs": 9.11,
+      "replay": {
+        "actor": "alex",
+        "subject": "component:default/payments",
+        "purpose": "incident-triage",
+        "steps": [
+          "resolve component:default/payments for incident-triage as alex",
+          "owner -> team-commerce -> team-payments",
+          "verify as alex"
+        ],
+        "issued": [
+          {
+            "sourceId": "apidef:api:default/payments-api",
+            "classification": "INTERNAL",
+            "fields": {
+              "apiType": "openapi",
+              "lifecycle": "production",
+              "definitionDigest": "sha256:e1e399f321ab5617737efd9d9f03d5d1949c263482f0485d63d0f95a215a916e"
+            }
+          },
+          {
+            "sourceId": "catalog:component:default/payments",
+            "classification": "INTERNAL",
+            "fields": {
+              "consumesApis": [
+                "api:default/identity-api"
+              ],
+              "dependencyOf": [
+                "component:default/checkout"
+              ],
+              "dependsOn": [
+                "component:default/notifications",
+                "resource:default/payments-db"
+              ],
+              "lifecycle": "production",
+              "owner": "group:default/team-payments",
+              "providesApis": [
+                "api:default/payments-api"
+              ],
+              "system": "system:default/commerce",
+              "techdocsRef": "dir:.",
+              "type": "service"
+            }
+          }
+        ],
+        "current": {
+          "ok": true,
+          "context": [
+            {
+              "sourceId": "apidef:api:default/payments-api",
+              "classification": "INTERNAL",
+              "fields": {
+                "apiType": "openapi",
+                "lifecycle": "production",
+                "definitionDigest": "sha256:e1e399f321ab5617737efd9d9f03d5d1949c263482f0485d63d0f95a215a916e"
+              }
+            },
+            {
+              "sourceId": "catalog:component:default/payments",
+              "classification": "INTERNAL",
+              "fields": {
+                "consumesApis": [
+                  "api:default/identity-api"
+                ],
+                "dependencyOf": [
+                  "component:default/checkout"
+                ],
+                "dependsOn": [
+                  "component:default/notifications",
+                  "resource:default/payments-db"
+                ],
+                "lifecycle": "production",
+                "owner": "group:default/team-payments",
+                "providesApis": [
+                  "api:default/payments-api"
+                ],
+                "system": "system:default/commerce",
+                "techdocsRef": "dir:.",
+                "type": "service"
+              }
+            }
+          ]
+        },
+        "drift": [],
+        "verdict": "VALID"
+      }
+    },
+    {
+      "id": "S33",
+      "title": "Relation order changed only",
+      "group": "false-invalidation",
+      "relevantChange": false,
+      "expect": {
+        "outcome": "VALID",
+        "codes": []
+      },
+      "status": "PASS",
+      "observed": {
+        "outcome": "VALID",
+        "codes": [],
+        "informational": [],
+        "checks": []
+      },
+      "durationMs": 9.11,
+      "replay": {
+        "actor": "alex",
+        "subject": "component:default/payments",
+        "purpose": "incident-triage",
+        "steps": [
+          "resolve component:default/payments for incident-triage as alex",
+          "dependsOn listed in reverse order",
+          "verify as alex"
+        ],
+        "issued": [
+          {
+            "sourceId": "apidef:api:default/payments-api",
+            "classification": "INTERNAL",
+            "fields": {
+              "apiType": "openapi",
+              "lifecycle": "production",
+              "definitionDigest": "sha256:e1e399f321ab5617737efd9d9f03d5d1949c263482f0485d63d0f95a215a916e"
+            }
+          },
+          {
+            "sourceId": "catalog:component:default/payments",
+            "classification": "INTERNAL",
+            "fields": {
+              "consumesApis": [
+                "api:default/identity-api"
+              ],
+              "dependencyOf": [
+                "component:default/checkout"
+              ],
+              "dependsOn": [
+                "component:default/notifications",
+                "resource:default/payments-db"
+              ],
+              "lifecycle": "production",
+              "owner": "group:default/team-payments",
+              "providesApis": [
+                "api:default/payments-api"
+              ],
+              "system": "system:default/commerce",
+              "techdocsRef": "dir:.",
+              "type": "service"
+            }
+          }
+        ],
+        "current": {
+          "ok": true,
+          "context": [
+            {
+              "sourceId": "apidef:api:default/payments-api",
+              "classification": "INTERNAL",
+              "fields": {
+                "apiType": "openapi",
+                "lifecycle": "production",
+                "definitionDigest": "sha256:e1e399f321ab5617737efd9d9f03d5d1949c263482f0485d63d0f95a215a916e"
+              }
+            },
+            {
+              "sourceId": "catalog:component:default/payments",
+              "classification": "INTERNAL",
+              "fields": {
+                "consumesApis": [
+                  "api:default/identity-api"
+                ],
+                "dependencyOf": [
+                  "component:default/checkout"
+                ],
+                "dependsOn": [
+                  "component:default/notifications",
+                  "resource:default/payments-db"
+                ],
+                "lifecycle": "production",
+                "owner": "group:default/team-payments",
+                "providesApis": [
+                  "api:default/payments-api"
+                ],
+                "system": "system:default/commerce",
+                "techdocsRef": "dir:.",
+                "type": "service"
+              }
+            }
+          ]
+        },
+        "drift": [],
+        "verdict": "VALID"
+      }
+    },
+    {
+      "id": "S34",
+      "title": "Irrelevant metadata changed (title, description, tags)",
+      "group": "false-invalidation",
+      "relevantChange": false,
+      "expect": {
+        "outcome": "VALID",
+        "codes": []
+      },
+      "status": "PASS",
+      "observed": {
+        "outcome": "VALID",
+        "codes": [],
+        "informational": [],
+        "checks": []
+      },
+      "durationMs": 12.57,
+      "replay": {
+        "actor": "alex",
+        "subject": "component:default/payments",
+        "purpose": "incident-triage",
+        "steps": [
+          "resolve component:default/payments for incident-triage as alex",
+          "title, description and tags changed",
+          "verify as alex"
+        ],
+        "issued": [
+          {
+            "sourceId": "apidef:api:default/payments-api",
+            "classification": "INTERNAL",
+            "fields": {
+              "apiType": "openapi",
+              "lifecycle": "production",
+              "definitionDigest": "sha256:e1e399f321ab5617737efd9d9f03d5d1949c263482f0485d63d0f95a215a916e"
+            }
+          },
+          {
+            "sourceId": "catalog:component:default/payments",
+            "classification": "INTERNAL",
+            "fields": {
+              "consumesApis": [
+                "api:default/identity-api"
+              ],
+              "dependencyOf": [
+                "component:default/checkout"
+              ],
+              "dependsOn": [
+                "component:default/notifications",
+                "resource:default/payments-db"
+              ],
+              "lifecycle": "production",
+              "owner": "group:default/team-payments",
+              "providesApis": [
+                "api:default/payments-api"
+              ],
+              "system": "system:default/commerce",
+              "techdocsRef": "dir:.",
+              "type": "service"
+            }
+          }
+        ],
+        "current": {
+          "ok": true,
+          "context": [
+            {
+              "sourceId": "apidef:api:default/payments-api",
+              "classification": "INTERNAL",
+              "fields": {
+                "apiType": "openapi",
+                "lifecycle": "production",
+                "definitionDigest": "sha256:e1e399f321ab5617737efd9d9f03d5d1949c263482f0485d63d0f95a215a916e"
+              }
+            },
+            {
+              "sourceId": "catalog:component:default/payments",
+              "classification": "INTERNAL",
+              "fields": {
+                "consumesApis": [
+                  "api:default/identity-api"
+                ],
+                "dependencyOf": [
+                  "component:default/checkout"
+                ],
+                "dependsOn": [
+                  "component:default/notifications",
+                  "resource:default/payments-db"
+                ],
+                "lifecycle": "production",
+                "owner": "group:default/team-payments",
+                "providesApis": [
+                  "api:default/payments-api"
+                ],
+                "system": "system:default/commerce",
+                "techdocsRef": "dir:.",
+                "type": "service"
+              }
+            }
+          ]
+        },
+        "drift": [],
+        "verdict": "VALID"
+      }
+    },
+    {
+      "id": "S35",
+      "title": "Clock exactly at validUntil",
+      "group": "time",
+      "relevantChange": true,
+      "expect": {
+        "outcome": "REFRESH",
+        "codes": [
+          "TTL_EXPIRED"
+        ]
+      },
+      "status": "PASS",
+      "observed": {
+        "outcome": "REFRESH",
+        "codes": [
+          "TTL_EXPIRED"
+        ],
+        "informational": [],
+        "checks": [
+          {
+            "name": "1 ms before validUntil is VALID",
+            "ok": true
+          }
+        ]
+      },
+      "durationMs": 11.36,
+      "replay": {
+        "actor": "alex",
+        "subject": "component:default/payments",
+        "purpose": "incident-triage",
+        "steps": [
+          "resolve component:default/payments for incident-triage as alex",
+          "clock set to validUntil (2026-01-01T00:01:00.000Z)",
+          "verify as alex"
+        ],
+        "issued": [
+          {
+            "sourceId": "apidef:api:default/payments-api",
+            "classification": "INTERNAL",
+            "fields": {
+              "apiType": "openapi",
+              "lifecycle": "production",
+              "definitionDigest": "sha256:e1e399f321ab5617737efd9d9f03d5d1949c263482f0485d63d0f95a215a916e"
+            }
+          },
+          {
+            "sourceId": "catalog:component:default/payments",
+            "classification": "INTERNAL",
+            "fields": {
+              "consumesApis": [
+                "api:default/identity-api"
+              ],
+              "dependencyOf": [
+                "component:default/checkout"
+              ],
+              "dependsOn": [
+                "component:default/notifications",
+                "resource:default/payments-db"
+              ],
+              "lifecycle": "production",
+              "owner": "group:default/team-payments",
+              "providesApis": [
+                "api:default/payments-api"
+              ],
+              "system": "system:default/commerce",
+              "techdocsRef": "dir:.",
+              "type": "service"
+            }
+          }
+        ],
+        "current": {
+          "ok": true,
+          "context": [
+            {
+              "sourceId": "apidef:api:default/payments-api",
+              "classification": "INTERNAL",
+              "fields": {
+                "apiType": "openapi",
+                "lifecycle": "production",
+                "definitionDigest": "sha256:e1e399f321ab5617737efd9d9f03d5d1949c263482f0485d63d0f95a215a916e"
+              }
+            },
+            {
+              "sourceId": "catalog:component:default/payments",
+              "classification": "INTERNAL",
+              "fields": {
+                "consumesApis": [
+                  "api:default/identity-api"
+                ],
+                "dependencyOf": [
+                  "component:default/checkout"
+                ],
+                "dependsOn": [
+                  "component:default/notifications",
+                  "resource:default/payments-db"
+                ],
+                "lifecycle": "production",
+                "owner": "group:default/team-payments",
+                "providesApis": [
+                  "api:default/payments-api"
+                ],
+                "system": "system:default/commerce",
+                "techdocsRef": "dir:.",
+                "type": "service"
+              }
+            }
+          ]
+        },
+        "drift": [
+          {
+            "code": "TTL_EXPIRED",
+            "effect": "REFRESH",
+            "before": "2026-01-01T00:01:00.000Z",
+            "after": "2026-01-01T00:01:00.000Z",
+            "detail": "context expired at 2026-01-01T00:01:00.000Z"
+          }
+        ],
+        "verdict": "REFRESH"
+      }
+    },
+    {
+      "id": "S36",
+      "title": "Receipt presented to another issuer",
+      "group": "binding",
+      "relevantChange": true,
+      "expect": {
+        "outcome": "DENY",
+        "codes": [
+          "ISSUER_MISMATCH"
+        ]
+      },
+      "status": "PASS",
+      "observed": {
+        "outcome": "DENY",
+        "codes": [
+          "ISSUER_MISMATCH"
+        ],
+        "informational": [],
+        "checks": []
+      },
+      "durationMs": 6.02,
+      "replay": {
+        "actor": "alex",
+        "subject": "component:default/payments",
+        "purpose": "incident-triage",
+        "steps": [
+          "resolve component:default/payments for incident-triage as alex",
+          "verify at an instance with issuer other-environment"
+        ],
+        "issued": [
+          {
+            "sourceId": "apidef:api:default/payments-api",
+            "classification": "INTERNAL",
+            "fields": {
+              "apiType": "openapi",
+              "lifecycle": "production",
+              "definitionDigest": "sha256:e1e399f321ab5617737efd9d9f03d5d1949c263482f0485d63d0f95a215a916e"
+            }
+          },
+          {
+            "sourceId": "catalog:component:default/payments",
+            "classification": "INTERNAL",
+            "fields": {
+              "consumesApis": [
+                "api:default/identity-api"
+              ],
+              "dependencyOf": [
+                "component:default/checkout"
+              ],
+              "dependsOn": [
+                "component:default/notifications",
+                "resource:default/payments-db"
+              ],
+              "lifecycle": "production",
+              "owner": "group:default/team-payments",
+              "providesApis": [
+                "api:default/payments-api"
+              ],
+              "system": "system:default/commerce",
+              "techdocsRef": "dir:.",
+              "type": "service"
+            }
+          }
+        ],
+        "current": {
+          "ok": true,
+          "context": [
+            {
+              "sourceId": "apidef:api:default/payments-api",
+              "classification": "INTERNAL",
+              "fields": {
+                "apiType": "openapi",
+                "lifecycle": "production",
+                "definitionDigest": "sha256:e1e399f321ab5617737efd9d9f03d5d1949c263482f0485d63d0f95a215a916e"
+              }
+            },
+            {
+              "sourceId": "catalog:component:default/payments",
+              "classification": "INTERNAL",
+              "fields": {
+                "consumesApis": [
+                  "api:default/identity-api"
+                ],
+                "dependencyOf": [
+                  "component:default/checkout"
+                ],
+                "dependsOn": [
+                  "component:default/notifications",
+                  "resource:default/payments-db"
+                ],
+                "lifecycle": "production",
+                "owner": "group:default/team-payments",
+                "providesApis": [
+                  "api:default/payments-api"
+                ],
+                "system": "system:default/commerce",
+                "techdocsRef": "dir:.",
+                "type": "service"
+              }
+            }
+          ]
+        },
+        "drift": [
+          {
+            "code": "ISSUER_MISMATCH",
+            "effect": "DENY",
+            "before": "lab-local",
+            "after": "other-environment",
+            "detail": "receipt was issued by a different ContextVerity instance"
+          }
+        ],
+        "verdict": "DENY"
+      }
+    },
+    {
+      "id": "S37",
+      "title": "Receipt reused for a different purpose",
+      "group": "binding",
+      "relevantChange": true,
+      "expect": {
+        "outcome": "DENY",
+        "codes": [
+          "PURPOSE_MISMATCH"
+        ]
+      },
+      "status": "PASS",
+      "observed": {
+        "outcome": "DENY",
+        "codes": [
+          "PURPOSE_MISMATCH"
+        ],
+        "informational": [],
+        "checks": []
+      },
+      "durationMs": 12.89,
+      "replay": {
+        "actor": "alex",
+        "subject": "component:default/payments",
+        "purpose": "incident-triage",
+        "steps": [
+          "resolve component:default/payments for incident-triage as alex",
+          "verify as alex with intent {\"purpose\":\"deploy\"}"
+        ],
+        "issued": [
+          {
+            "sourceId": "apidef:api:default/payments-api",
+            "classification": "INTERNAL",
+            "fields": {
+              "apiType": "openapi",
+              "lifecycle": "production",
+              "definitionDigest": "sha256:e1e399f321ab5617737efd9d9f03d5d1949c263482f0485d63d0f95a215a916e"
+            }
+          },
+          {
+            "sourceId": "catalog:component:default/payments",
+            "classification": "INTERNAL",
+            "fields": {
+              "consumesApis": [
+                "api:default/identity-api"
+              ],
+              "dependencyOf": [
+                "component:default/checkout"
+              ],
+              "dependsOn": [
+                "component:default/notifications",
+                "resource:default/payments-db"
+              ],
+              "lifecycle": "production",
+              "owner": "group:default/team-payments",
+              "providesApis": [
+                "api:default/payments-api"
+              ],
+              "system": "system:default/commerce",
+              "techdocsRef": "dir:.",
+              "type": "service"
+            }
+          }
+        ],
+        "current": {
+          "ok": true,
+          "context": [
+            {
+              "sourceId": "apidef:api:default/payments-api",
+              "classification": "INTERNAL",
+              "fields": {
+                "apiType": "openapi",
+                "lifecycle": "production",
+                "definitionDigest": "sha256:e1e399f321ab5617737efd9d9f03d5d1949c263482f0485d63d0f95a215a916e"
+              }
+            },
+            {
+              "sourceId": "catalog:component:default/payments",
+              "classification": "INTERNAL",
+              "fields": {
+                "consumesApis": [
+                  "api:default/identity-api"
+                ],
+                "dependencyOf": [
+                  "component:default/checkout"
+                ],
+                "dependsOn": [
+                  "component:default/notifications",
+                  "resource:default/payments-db"
+                ],
+                "lifecycle": "production",
+                "owner": "group:default/team-payments",
+                "providesApis": [
+                  "api:default/payments-api"
+                ],
+                "system": "system:default/commerce",
+                "techdocsRef": "dir:.",
+                "type": "service"
+              }
+            }
+          ]
+        },
+        "drift": [
+          {
+            "code": "PURPOSE_MISMATCH",
+            "effect": "DENY",
+            "before": "incident-triage",
+            "after": "deploy",
+            "detail": "receipt was issued for a different purpose"
+          }
+        ],
+        "verdict": "DENY"
+      }
+    },
+    {
+      "id": "S38",
+      "title": "Requested context expands beyond the receipt",
+      "group": "binding",
+      "relevantChange": true,
+      "expect": {
+        "outcome": "DENY",
+        "codes": [
+          "SCOPE_EXCEEDED"
+        ]
+      },
+      "status": "PASS",
+      "observed": {
+        "outcome": "DENY",
+        "codes": [
+          "SCOPE_EXCEEDED"
+        ],
+        "informational": [],
+        "checks": []
+      },
+      "durationMs": 16.15,
+      "replay": {
+        "actor": "alex",
+        "subject": "component:default/payments",
+        "purpose": "incident-triage",
+        "steps": [
+          "resolve component:default/payments for incident-triage as alex",
+          "verify as alex with intent {\"categories\":[\"ownership\",\"dependencies\"]}"
+        ],
+        "issued": [
+          {
+            "sourceId": "catalog:component:default/payments",
+            "classification": "INTERNAL",
+            "fields": {
+              "owner": "group:default/team-payments"
+            }
+          }
+        ],
+        "current": {
+          "ok": true,
+          "context": [
+            {
+              "sourceId": "catalog:component:default/payments",
+              "classification": "INTERNAL",
+              "fields": {
+                "owner": "group:default/team-payments"
+              }
+            }
+          ]
+        },
+        "drift": [
+          {
+            "code": "SCOPE_EXCEEDED",
+            "effect": "DENY",
+            "before": [
+              "ownership"
+            ],
+            "after": [
+              "dependencies"
+            ],
+            "detail": "requested categories are outside this receipt; resolve a new receipt"
+          }
+        ],
+        "verdict": "DENY"
+      }
+    },
+    {
+      "id": "S39",
+      "title": "TechDocs reference annotation changed",
+      "group": "source-drift",
+      "relevantChange": true,
+      "expect": {
+        "outcome": "REFRESH",
+        "codes": [
+          "DOCUMENTATION_CHANGED"
+        ]
+      },
+      "status": "PASS",
+      "observed": {
+        "outcome": "REFRESH",
+        "codes": [
+          "DOCUMENTATION_CHANGED"
+        ],
+        "informational": [],
+        "checks": []
+      },
+      "durationMs": 27.06,
+      "replay": {
+        "actor": "alex",
+        "subject": "component:default/payments",
+        "purpose": "incident-triage",
+        "steps": [
+          "resolve component:default/payments for incident-triage as alex",
+          "backstage.io/techdocs-ref dir:. -> url:https://example.invalid/payments-docs",
+          "verify as alex"
+        ],
+        "issued": [
+          {
+            "sourceId": "apidef:api:default/payments-api",
+            "classification": "INTERNAL",
+            "fields": {
+              "apiType": "openapi",
+              "lifecycle": "production",
+              "definitionDigest": "sha256:e1e399f321ab5617737efd9d9f03d5d1949c263482f0485d63d0f95a215a916e"
+            }
+          },
+          {
+            "sourceId": "catalog:component:default/payments",
+            "classification": "INTERNAL",
+            "fields": {
+              "consumesApis": [
+                "api:default/identity-api"
+              ],
+              "dependencyOf": [
+                "component:default/checkout"
+              ],
+              "dependsOn": [
+                "component:default/notifications",
+                "resource:default/payments-db"
+              ],
+              "lifecycle": "production",
+              "owner": "group:default/team-payments",
+              "providesApis": [
+                "api:default/payments-api"
+              ],
+              "system": "system:default/commerce",
+              "techdocsRef": "dir:.",
+              "type": "service"
+            }
+          }
+        ],
+        "current": {
+          "ok": true,
+          "context": [
+            {
+              "sourceId": "apidef:api:default/payments-api",
+              "classification": "INTERNAL",
+              "fields": {
+                "apiType": "openapi",
+                "lifecycle": "production",
+                "definitionDigest": "sha256:e1e399f321ab5617737efd9d9f03d5d1949c263482f0485d63d0f95a215a916e"
+              }
+            },
+            {
+              "sourceId": "catalog:component:default/payments",
+              "classification": "INTERNAL",
+              "fields": {
+                "consumesApis": [
+                  "api:default/identity-api"
+                ],
+                "dependencyOf": [
+                  "component:default/checkout"
+                ],
+                "dependsOn": [
+                  "component:default/notifications",
+                  "resource:default/payments-db"
+                ],
+                "lifecycle": "production",
+                "owner": "group:default/team-payments",
+                "providesApis": [
+                  "api:default/payments-api"
+                ],
+                "system": "system:default/commerce",
+                "techdocsRef": "url:https://example.invalid/payments-docs",
+                "type": "service"
+              }
+            }
+          ]
+        },
+        "drift": [
+          {
+            "code": "DOCUMENTATION_CHANGED",
+            "effect": "REFRESH",
+            "sourceId": "catalog:component:default/payments",
+            "field": "techdocsRef",
+            "before": "dir:.",
+            "after": "url:https://example.invalid/payments-docs",
+            "detail": "techdocsRef changed"
+          }
+        ],
+        "verdict": "REFRESH"
+      }
+    },
+    {
+      "id": "S40",
+      "title": "TOCTOU: change between a VALID verdict and the action",
+      "group": "toctou",
+      "relevantChange": true,
+      "expect": {
+        "outcome": "REFRESH",
+        "codes": [
+          "OWNER_CHANGED"
+        ]
+      },
+      "status": "PASS",
+      "observed": {
+        "outcome": "REFRESH",
+        "codes": [
+          "OWNER_CHANGED"
+        ],
+        "informational": [],
+        "checks": [
+          {
+            "name": "first verification VALID",
+            "ok": true
+          },
+          {
+            "name": "the earlier VALID verdict is now stale (characterized, not prevented)",
+            "ok": true
+          }
+        ]
+      },
+      "durationMs": 12.63,
+      "replay": {
+        "actor": "alex",
+        "subject": "component:default/payments",
+        "purpose": "incident-triage",
+        "steps": [
+          "resolve component:default/payments for incident-triage as alex",
+          "verify as alex",
+          "owner changes after the VALID verdict, before the agent acts",
+          "verify as alex"
+        ],
+        "issued": [
+          {
+            "sourceId": "apidef:api:default/payments-api",
+            "classification": "INTERNAL",
+            "fields": {
+              "apiType": "openapi",
+              "lifecycle": "production",
+              "definitionDigest": "sha256:e1e399f321ab5617737efd9d9f03d5d1949c263482f0485d63d0f95a215a916e"
+            }
+          },
+          {
+            "sourceId": "catalog:component:default/payments",
+            "classification": "INTERNAL",
+            "fields": {
+              "consumesApis": [
+                "api:default/identity-api"
+              ],
+              "dependencyOf": [
+                "component:default/checkout"
+              ],
+              "dependsOn": [
+                "component:default/notifications",
+                "resource:default/payments-db"
+              ],
+              "lifecycle": "production",
+              "owner": "group:default/team-payments",
+              "providesApis": [
+                "api:default/payments-api"
+              ],
+              "system": "system:default/commerce",
+              "techdocsRef": "dir:.",
+              "type": "service"
+            }
+          }
+        ],
+        "current": {
+          "ok": true,
+          "context": [
+            {
+              "sourceId": "apidef:api:default/payments-api",
+              "classification": "INTERNAL",
+              "fields": {
+                "apiType": "openapi",
+                "lifecycle": "production",
+                "definitionDigest": "sha256:e1e399f321ab5617737efd9d9f03d5d1949c263482f0485d63d0f95a215a916e"
+              }
+            },
+            {
+              "sourceId": "catalog:component:default/payments",
+              "classification": "INTERNAL",
+              "fields": {
+                "consumesApis": [
+                  "api:default/identity-api"
+                ],
+                "dependencyOf": [
+                  "component:default/checkout"
+                ],
+                "dependsOn": [
+                  "component:default/notifications",
+                  "resource:default/payments-db"
+                ],
+                "lifecycle": "production",
+                "owner": "group:default/team-commerce",
+                "providesApis": [
+                  "api:default/payments-api"
+                ],
+                "system": "system:default/commerce",
+                "techdocsRef": "dir:.",
+                "type": "service"
+              }
+            }
+          ]
+        },
+        "drift": [
+          {
+            "code": "OWNER_CHANGED",
+            "effect": "REFRESH",
+            "sourceId": "catalog:component:default/payments",
+            "field": "owner",
+            "before": "group:default/team-payments",
+            "after": "group:default/team-commerce",
+            "detail": "owner changed"
+          }
+        ],
+        "verdict": "REFRESH"
+      }
+    },
+    {
+      "id": "S41",
+      "title": "Policy removed",
+      "group": "policy",
+      "relevantChange": true,
+      "expect": {
+        "outcome": "DENY",
+        "codes": [
+          "POLICY_REMOVED"
+        ]
+      },
+      "status": "PASS",
+      "observed": {
+        "outcome": "DENY",
+        "codes": [
+          "POLICY_REMOVED"
+        ],
+        "informational": [],
+        "checks": []
+      },
+      "durationMs": 9.19,
+      "replay": {
+        "actor": "alex",
+        "subject": "component:default/payments",
+        "purpose": "incident-triage",
+        "steps": [
+          "resolve component:default/payments for incident-triage as alex",
+          "delete policy incident-triage",
+          "verify as alex"
+        ],
+        "issued": [
+          {
+            "sourceId": "apidef:api:default/payments-api",
+            "classification": "INTERNAL",
+            "fields": {
+              "apiType": "openapi",
+              "lifecycle": "production",
+              "definitionDigest": "sha256:e1e399f321ab5617737efd9d9f03d5d1949c263482f0485d63d0f95a215a916e"
+            }
+          },
+          {
+            "sourceId": "catalog:component:default/payments",
+            "classification": "INTERNAL",
+            "fields": {
+              "consumesApis": [
+                "api:default/identity-api"
+              ],
+              "dependencyOf": [
+                "component:default/checkout"
+              ],
+              "dependsOn": [
+                "component:default/notifications",
+                "resource:default/payments-db"
+              ],
+              "lifecycle": "production",
+              "owner": "group:default/team-payments",
+              "providesApis": [
+                "api:default/payments-api"
+              ],
+              "system": "system:default/commerce",
+              "techdocsRef": "dir:.",
+              "type": "service"
+            }
+          }
+        ],
+        "current": {
+          "ok": false,
+          "code": "NO_MATCHING_POLICY"
+        },
+        "drift": [
+          {
+            "code": "POLICY_REMOVED",
+            "effect": "DENY",
+            "before": "incident-triage",
+            "detail": "policy 'incident-triage' no longer exists"
+          }
+        ],
+        "verdict": "DENY"
+      }
+    },
+    {
+      "id": "S42",
+      "title": "Service consumer removed from the policy",
+      "group": "authorization",
+      "relevantChange": true,
+      "expect": {
+        "outcome": "DENY",
+        "codes": [
+          "POLICY_NARROWED"
+        ]
+      },
+      "status": "PASS",
+      "observed": {
+        "outcome": "DENY",
+        "codes": [
+          "POLICY_NARROWED"
+        ],
+        "informational": [],
+        "checks": []
+      },
+      "durationMs": 5.46,
+      "replay": {
+        "actor": "agent",
+        "subject": "component:default/payments",
+        "purpose": "incident-triage",
+        "steps": [
+          "resolve component:default/payments for incident-triage as agent",
+          "remove service:incident-agent from consumers",
+          "verify as agent"
+        ],
+        "issued": [
+          {
+            "sourceId": "apidef:api:default/payments-api",
+            "classification": "INTERNAL",
+            "fields": {
+              "apiType": "openapi",
+              "lifecycle": "production",
+              "definitionDigest": "sha256:e1e399f321ab5617737efd9d9f03d5d1949c263482f0485d63d0f95a215a916e"
+            }
+          },
+          {
+            "sourceId": "catalog:component:default/payments",
+            "classification": "INTERNAL",
+            "fields": {
+              "consumesApis": [
+                "api:default/identity-api"
+              ],
+              "dependencyOf": [
+                "component:default/checkout"
+              ],
+              "dependsOn": [
+                "component:default/notifications",
+                "resource:default/payments-db"
+              ],
+              "lifecycle": "production",
+              "owner": "group:default/team-payments",
+              "providesApis": [
+                "api:default/payments-api"
+              ],
+              "system": "system:default/commerce",
+              "techdocsRef": "dir:.",
+              "type": "service"
+            }
+          }
+        ],
+        "current": {
+          "ok": false,
+          "code": "NO_MATCHING_POLICY"
+        },
+        "drift": [
+          {
+            "code": "POLICY_NARROWED",
+            "effect": "DENY",
+            "before": "sha256:42eaa68d9b18079c392a9b77a4c848c35ae92adce9025f8b5929f175aefa9ad9",
+            "after": "sha256:5c96e613a17a76d2656aa09396e4621c1c627326e7d72f9049806a32af7be31a",
+            "detail": "current policy no longer covers this receipt: consumer no longer allowed"
+          }
+        ],
+        "verdict": "DENY"
+      }
+    },
+    {
+      "id": "S43",
+      "title": "Drift in a category the policy does not require fresh",
+      "group": "policy",
+      "relevantChange": false,
+      "expect": {
+        "outcome": "VALID",
+        "codes": [],
+        "informational": [
+          "DOCUMENTATION_CHANGED"
+        ]
+      },
+      "status": "PASS",
+      "observed": {
+        "outcome": "VALID",
+        "codes": [],
+        "informational": [
+          "DOCUMENTATION_CHANGED"
+        ],
+        "checks": []
+      },
+      "durationMs": 1.04,
+      "replay": {
+        "actor": "alex",
+        "subject": "component:default/inventory",
+        "purpose": "docs-lookup",
+        "steps": [
+          "resolve component:default/inventory for docs-lookup as alex",
+          "inventory techdocs-ref added (docs-lookup requires only ownership fresh)",
+          "verify as alex"
+        ],
+        "issued": [
+          {
+            "sourceId": "catalog:component:default/inventory",
+            "classification": "PUBLIC",
+            "fields": {
+              "owner": "group:default/team-commerce",
+              "techdocsRef": null
+            }
+          }
+        ],
+        "current": {
+          "ok": true,
+          "context": [
+            {
+              "sourceId": "catalog:component:default/inventory",
+              "classification": "PUBLIC",
+              "fields": {
+                "owner": "group:default/team-commerce",
+                "techdocsRef": "dir:."
+              }
+            }
+          ]
+        },
+        "drift": [
+          {
+            "code": "DOCUMENTATION_CHANGED",
+            "effect": "NONE",
+            "sourceId": "catalog:component:default/inventory",
+            "field": "techdocsRef",
+            "before": null,
+            "after": "dir:.",
+            "detail": "techdocsRef changed; category 'documentation' is not required to be fresh by policy"
+          }
+        ],
+        "verdict": "VALID"
+      }
+    },
+    {
+      "id": "S44",
+      "title": "Policy escalates a drift code to DENY",
+      "group": "policy",
+      "relevantChange": true,
+      "expect": {
+        "outcome": "DENY",
+        "codes": [
+          "OWNER_CHANGED"
+        ]
+      },
+      "status": "PASS",
+      "observed": {
+        "outcome": "DENY",
+        "codes": [
+          "OWNER_CHANGED"
+        ],
+        "informational": [],
+        "checks": []
+      },
+      "durationMs": 1.5,
+      "replay": {
+        "actor": "alex",
+        "subject": "component:default/payments",
+        "purpose": "incident-triage",
+        "steps": [
+          "resolve component:default/payments for incident-triage as alex",
+          "owner changed under denyOn: [OWNER_CHANGED]",
+          "verify as alex"
+        ],
+        "issued": [
+          {
+            "sourceId": "apidef:api:default/payments-api",
+            "classification": "INTERNAL",
+            "fields": {
+              "apiType": "openapi",
+              "lifecycle": "production",
+              "definitionDigest": "sha256:e1e399f321ab5617737efd9d9f03d5d1949c263482f0485d63d0f95a215a916e"
+            }
+          },
+          {
+            "sourceId": "catalog:component:default/payments",
+            "classification": "INTERNAL",
+            "fields": {
+              "consumesApis": [
+                "api:default/identity-api"
+              ],
+              "dependencyOf": [
+                "component:default/checkout"
+              ],
+              "dependsOn": [
+                "component:default/notifications",
+                "resource:default/payments-db"
+              ],
+              "lifecycle": "production",
+              "owner": "group:default/team-payments",
+              "providesApis": [
+                "api:default/payments-api"
+              ],
+              "system": "system:default/commerce",
+              "techdocsRef": "dir:.",
+              "type": "service"
+            }
+          }
+        ],
+        "current": {
+          "ok": true,
+          "context": [
+            {
+              "sourceId": "apidef:api:default/payments-api",
+              "classification": "INTERNAL",
+              "fields": {
+                "apiType": "openapi",
+                "lifecycle": "production",
+                "definitionDigest": "sha256:e1e399f321ab5617737efd9d9f03d5d1949c263482f0485d63d0f95a215a916e"
+              }
+            },
+            {
+              "sourceId": "catalog:component:default/payments",
+              "classification": "INTERNAL",
+              "fields": {
+                "consumesApis": [
+                  "api:default/identity-api"
+                ],
+                "dependencyOf": [
+                  "component:default/checkout"
+                ],
+                "dependsOn": [
+                  "component:default/notifications",
+                  "resource:default/payments-db"
+                ],
+                "lifecycle": "production",
+                "owner": "group:default/team-commerce",
+                "providesApis": [
+                  "api:default/payments-api"
+                ],
+                "system": "system:default/commerce",
+                "techdocsRef": "dir:.",
+                "type": "service"
+              }
+            }
+          ]
+        },
+        "drift": [
+          {
+            "code": "OWNER_CHANGED",
+            "effect": "DENY",
+            "sourceId": "catalog:component:default/payments",
+            "field": "owner",
+            "before": "group:default/team-payments",
+            "after": "group:default/team-commerce",
+            "detail": "owner changed"
+          }
+        ],
+        "verdict": "DENY"
+      }
+    },
+    {
+      "id": "S45",
+      "title": "Resolve above the classification ceiling",
+      "group": "resolve",
+      "relevantChange": true,
+      "expect": {
+        "outcome": "RESOLVE_DENIED",
+        "denialCode": "CLASSIFICATION_EXCEEDS_GRANT"
+      },
+      "status": "PASS",
+      "observed": {
+        "outcome": "RESOLVE_DENIED",
+        "codes": [],
+        "informational": [],
+        "denialCode": "CLASSIFICATION_EXCEEDS_GRANT",
+        "checks": []
+      },
+      "durationMs": 0.13,
+      "replay": {
+        "actor": "alex",
+        "subject": "component:default/identity",
+        "purpose": "incident-triage",
+        "steps": [
+          "resolve component:default/identity for incident-triage as alex"
+        ],
+        "current": {
+          "ok": false,
+          "code": "CLASSIFICATION_EXCEEDS_GRANT"
+        },
+        "drift": []
+      }
+    },
+    {
+      "id": "S46",
+      "title": "Consumer without any policy",
+      "group": "resolve",
+      "relevantChange": true,
+      "expect": {
+        "outcome": "RESOLVE_DENIED",
+        "denialCode": "NO_MATCHING_POLICY"
+      },
+      "status": "PASS",
+      "observed": {
+        "outcome": "RESOLVE_DENIED",
+        "codes": [],
+        "informational": [],
+        "denialCode": "NO_MATCHING_POLICY",
+        "checks": []
+      },
+      "durationMs": 0.04,
+      "replay": {
+        "actor": "other",
+        "subject": "component:default/payments",
+        "purpose": "incident-triage",
+        "steps": [
+          "resolve component:default/payments for incident-triage as other"
+        ],
+        "current": {
+          "ok": false,
+          "code": "NO_MATCHING_POLICY"
+        },
+        "drift": []
+      }
+    },
+    {
+      "id": "S47",
+      "title": "Resolve without catalog read permission",
+      "group": "resolve",
+      "relevantChange": true,
+      "expect": {
+        "outcome": "RESOLVE_DENIED",
+        "denialCode": "PERMISSION_DENIED"
+      },
+      "status": "PASS",
+      "observed": {
+        "outcome": "RESOLVE_DENIED",
+        "codes": [],
+        "informational": [],
+        "denialCode": "PERMISSION_DENIED",
+        "checks": []
+      },
+      "durationMs": 0.07,
+      "replay": {
+        "actor": "alex",
+        "subject": "component:default/payments",
+        "purpose": "incident-triage",
+        "steps": [
+          "deny catalog.entity.read on payments for alex",
+          "resolve component:default/payments for incident-triage as alex"
+        ],
+        "current": {
+          "ok": false,
+          "code": "PERMISSION_DENIED"
+        },
+        "drift": []
+      }
+    },
+    {
+      "id": "S48",
+      "title": "AiResource owner changed",
+      "group": "ai-catalog",
+      "relevantChange": true,
+      "expect": {
+        "outcome": "REFRESH",
+        "codes": [
+          "OWNER_CHANGED"
+        ]
+      },
+      "status": "PASS",
+      "observed": {
+        "outcome": "REFRESH",
+        "codes": [
+          "OWNER_CHANGED"
+        ],
+        "informational": [],
+        "checks": []
+      },
+      "durationMs": 1.09,
+      "replay": {
+        "actor": "alex",
+        "subject": "airesource:default/incident-triage-skill",
+        "purpose": "incident-triage",
+        "steps": [
+          "resolve airesource:default/incident-triage-skill for incident-triage as alex",
+          "incident-triage-skill owner team-platform -> team-commerce",
+          "verify as alex"
+        ],
+        "issued": [
+          {
+            "sourceId": "catalog:airesource:default/incident-triage-skill",
+            "classification": "INTERNAL",
+            "fields": {
+              "consumesApis": [],
+              "dependencyOf": [],
+              "dependsOn": [],
+              "lifecycle": "production",
+              "owner": "group:default/team-platform",
+              "system": "system:default/platform"
+            }
+          }
+        ],
+        "current": {
+          "ok": true,
+          "context": [
+            {
+              "sourceId": "catalog:airesource:default/incident-triage-skill",
+              "classification": "INTERNAL",
+              "fields": {
+                "consumesApis": [],
+                "dependencyOf": [],
+                "dependsOn": [],
+                "lifecycle": "production",
+                "owner": "group:default/team-commerce",
+                "system": "system:default/platform"
+              }
+            }
+          ]
+        },
+        "drift": [
+          {
+            "code": "OWNER_CHANGED",
+            "effect": "REFRESH",
+            "sourceId": "catalog:airesource:default/incident-triage-skill",
+            "field": "owner",
+            "before": "group:default/team-platform",
+            "after": "group:default/team-commerce",
+            "detail": "owner changed"
+          }
+        ],
+        "verdict": "REFRESH"
+      }
+    },
+    {
+      "id": "S49",
+      "title": "MCP server API remote endpoint changed",
+      "group": "ai-catalog",
+      "relevantChange": true,
+      "expect": {
+        "outcome": "REFRESH",
+        "codes": [
+          "API_CHANGED"
+        ]
+      },
+      "status": "PASS",
+      "observed": {
+        "outcome": "REFRESH",
+        "codes": [
+          "API_CHANGED"
+        ],
+        "informational": [],
+        "checks": []
+      },
+      "durationMs": 1.07,
+      "replay": {
+        "actor": "alex",
+        "subject": "api:default/platform-mcp",
+        "purpose": "incident-triage",
+        "steps": [
+          "resolve api:default/platform-mcp for incident-triage as alex",
+          "platform-mcp remotes url changed",
+          "verify as alex"
+        ],
+        "issued": [
+          {
+            "sourceId": "apidef:api:default/platform-mcp",
+            "classification": "INTERNAL",
+            "fields": {
+              "apiType": "mcp-server",
+              "lifecycle": "experimental",
+              "definitionDigest": "sha256:51accba5c316b240992239144e87c4fcfea8dd558fc72d11a7173dc98a513b6c"
+            }
+          },
+          {
+            "sourceId": "catalog:api:default/platform-mcp",
+            "classification": "INTERNAL",
+            "fields": {
+              "owner": "group:default/team-platform"
+            }
+          }
+        ],
+        "current": {
+          "ok": true,
+          "context": [
+            {
+              "sourceId": "apidef:api:default/platform-mcp",
+              "classification": "INTERNAL",
+              "fields": {
+                "apiType": "mcp-server",
+                "lifecycle": "experimental",
+                "definitionDigest": "sha256:498a68fe60c234935ed40103ae0a6cea958897765f14b64b6f80caa5257a73c9"
+              }
+            },
+            {
+              "sourceId": "catalog:api:default/platform-mcp",
+              "classification": "INTERNAL",
+              "fields": {
+                "owner": "group:default/team-platform"
+              }
+            }
+          ]
+        },
+        "drift": [
+          {
+            "code": "API_CHANGED",
+            "effect": "REFRESH",
+            "sourceId": "apidef:api:default/platform-mcp",
+            "field": "definitionDigest",
+            "before": "sha256:51accba5c316b240992239144e87c4fcfea8dd558fc72d11a7173dc98a513b6c",
+            "after": "sha256:498a68fe60c234935ed40103ae0a6cea958897765f14b64b6f80caa5257a73c9",
+            "detail": "definitionDigest changed"
+          }
+        ],
+        "verdict": "REFRESH"
+      }
+    },
+    {
+      "id": "S50",
+      "title": "Service principal: permission basis recorded",
+      "group": "authorization",
+      "relevantChange": false,
+      "expect": {
+        "outcome": "VALID",
+        "codes": []
+      },
+      "status": "PASS",
+      "observed": {
+        "outcome": "VALID",
+        "codes": [],
+        "informational": [],
+        "checks": [
+          {
+            "name": "issue-time decisions recorded with basis 'service-principal'",
+            "ok": true
+          },
+          {
+            "name": "verify-time decisions recorded with basis 'service-principal'",
+            "ok": true
+          }
+        ]
+      },
+      "durationMs": 1.05,
+      "replay": {
+        "actor": "agent",
+        "subject": "component:default/payments",
+        "purpose": "incident-triage",
+        "steps": [
+          "resolve component:default/payments for incident-triage as agent",
+          "verify as agent"
+        ],
+        "issued": [
+          {
+            "sourceId": "apidef:api:default/payments-api",
+            "classification": "INTERNAL",
+            "fields": {
+              "apiType": "openapi",
+              "lifecycle": "production",
+              "definitionDigest": "sha256:e1e399f321ab5617737efd9d9f03d5d1949c263482f0485d63d0f95a215a916e"
+            }
+          },
+          {
+            "sourceId": "catalog:component:default/payments",
+            "classification": "INTERNAL",
+            "fields": {
+              "consumesApis": [
+                "api:default/identity-api"
+              ],
+              "dependencyOf": [
+                "component:default/checkout"
+              ],
+              "dependsOn": [
+                "component:default/notifications",
+                "resource:default/payments-db"
+              ],
+              "lifecycle": "production",
+              "owner": "group:default/team-payments",
+              "providesApis": [
+                "api:default/payments-api"
+              ],
+              "system": "system:default/commerce",
+              "techdocsRef": "dir:.",
+              "type": "service"
+            }
+          }
+        ],
+        "current": {
+          "ok": true,
+          "context": [
+            {
+              "sourceId": "apidef:api:default/payments-api",
+              "classification": "INTERNAL",
+              "fields": {
+                "apiType": "openapi",
+                "lifecycle": "production",
+                "definitionDigest": "sha256:e1e399f321ab5617737efd9d9f03d5d1949c263482f0485d63d0f95a215a916e"
+              }
+            },
+            {
+              "sourceId": "catalog:component:default/payments",
+              "classification": "INTERNAL",
+              "fields": {
+                "consumesApis": [
+                  "api:default/identity-api"
+                ],
+                "dependencyOf": [
+                  "component:default/checkout"
+                ],
+                "dependsOn": [
+                  "component:default/notifications",
+                  "resource:default/payments-db"
+                ],
+                "lifecycle": "production",
+                "owner": "group:default/team-payments",
+                "providesApis": [
+                  "api:default/payments-api"
+                ],
+                "system": "system:default/commerce",
+                "techdocsRef": "dir:.",
+                "type": "service"
+              }
+            }
+          ]
+        },
+        "drift": [],
+        "verdict": "VALID"
+      }
+    }
+  ]
+}
