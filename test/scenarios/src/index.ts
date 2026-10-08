@@ -6,6 +6,7 @@
 export * from './harness/types';
 export { CoreHarness } from './harness/CoreHarness';
 export { BackstageHarness } from './harness/BackstageHarness';
+export { KubernetesHarness } from './harness/KubernetesHarness';
 export { SyntheticCatalog } from './harness/SyntheticCatalog';
 export * from './scenarios';
 export * from './runner';

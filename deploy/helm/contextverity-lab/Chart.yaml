@@ -1,0 +1,15 @@
+apiVersion: v2
+name: contextverity-lab
+description: >-
+  The ContextVerity lab on Kubernetes - a demo Backstage backend with the
+  ContextVerity plugins, synthetic catalog data and the demo-only lab API.
+  For evaluation, not production.
+type: application
+version: 0.1.0
+appVersion: '0.1.0'
+kubeVersion: '>=1.29.0-0'
+home: https://contextverity.github.io/
+sources:
+  - https://github.com/contextverity/contextverity
+annotations:
+  licenses: Apache-2.0

@@ -1,0 +1,47 @@
+# Values for the ContextVerity lab. Synthetic data, demo-only control API and
+# guest sign-in: never expose this release outside a local or test cluster.
+
+image:
+  repository: localhost/contextverity-lab
+  tag: '0.1.0'
+  pullPolicy: IfNotPresent
+
+# External URL users and the frontend reach the backend at (for example a
+# `kubectl port-forward`). Internal plugin-to-plugin calls use the listen port.
+baseUrl: http://127.0.0.1:7017
+
+contextverity:
+  issuer: lab-kubernetes
+  defaultClassification: INTERNAL
+
+# Existing Secret with keys CV_AGENT_TOKEN, CV_OTHER_AGENT_TOKEN and
+# CV_INTEGRITY_SECRET. When empty, the chart generates one and keeps it across
+# upgrades.
+existingSecret: ''
+
+persistence:
+  enabled: true
+  size: 1Gi
+  storageClass: ''
+
+resources:
+  requests:
+    cpu: 250m
+    memory: 512Mi
+  limits:
+    cpu: '1'
+    memory: 1Gi
+
+service:
+  port: 7007
+  metricsPort: 9464
+
+networkPolicy:
+  # Allow ingress to the HTTP and metrics ports; allow egress to DNS only.
+  # The backend calls its own plugins over loopback, which policies do not affect.
+  enabled: true
+
+podAnnotations: {}
+nodeSelector: {}
+tolerations: []
+affinity: {}

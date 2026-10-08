@@ -11,7 +11,7 @@ import type {
   VerifyIntent,
 } from '@contextverity/plugin-contextverity-common';
 
-export type Tier = 'core' | 'backstage';
+export type Tier = 'core' | 'backstage' | 'kubernetes';
 
 /** Synthetic actors. `alex` is a user; the agents are service principals. */
 export type Actor = 'alex' | 'agent' | 'other';

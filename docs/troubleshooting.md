@@ -38,3 +38,14 @@ missing or invalid; the backend log lists every problem. ContextVerity fails clo
 
 **Lab scenarios time out waiting for the catalog.** The lab waits up to 60 s for the
 catalog to reflect a change; check `.demo/backend.log` for processing errors.
+
+**`kind get clusters` fails with Podman 6** (`cannot index slice/array with type
+string`). The Podman 6 `ps` template output is not what kind 0.32 expects. Creating,
+loading images into and deleting clusters still work; `scripts/k8s/up.sh` checks for the
+`<cluster>-control-plane` container instead.
+
+**Init container: `Permission denied` reading `/app/...` in the lab image.** Some
+builders create `WORKDIR` as root with mode 0700; the Containerfile sets `/app` to 0755.
+
+**Chart test pod cannot reach the service.** Pods matching the chart's NetworkPolicy
+selector get DNS-only egress; the test pod uses distinct labels on purpose.

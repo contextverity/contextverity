@@ -1,0 +1,7 @@
+ContextVerity lab (synthetic data, demo-only lab API, guest sign-in).
+
+  kubectl -n {{ .Release.Namespace }} port-forward svc/{{ include "cv.fullname" . }} 7017:{{ .Values.service.port }}
+
+Then open {{ .Values.baseUrl }} (sign in as guest) and {{ .Values.baseUrl }}/contextverity.
+Agent tokens are in the Secret {{ include "cv.secretName" . }}.
+Do not expose this release outside a local or test cluster.

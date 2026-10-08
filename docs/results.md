@@ -82,6 +82,82 @@ Generated 2026-10-08T10:59:44.779Z. ContextVerity 0.1.0 · commit [`3066e49849ca
 
 </details>
 
+## Scenarios — Kubernetes (kind on Podman, Helm chart)
+
+_Live on Kubernetes: the lab image (built with Podman) deployed by the Helm chart to a single-node kind cluster running on Podman; non-root, read-only root filesystem, NetworkPolicy, SQLite on a persistent volume. Driven over kubectl port-forward. Restarts delete the pod; storage tampering edits the row inside the pod. Synthetic data only; single machine._
+
+Generated 2026-10-08T11:44:43.398Z. ContextVerity 0.1.0 · commit [`e67e8f711727`](https://github.com/contextverity/contextverity/commit/e67e8f711727958c486807174a05151d0098ee2e) (with uncommitted changes) · Backstage 1.55.0 · Node v22.23.1 · darwin arm64 · Apple M4 Max (14 cores, 36 GiB)
+
+| Measure | Value |
+| --- | --- |
+| Scenarios defined | 50 |
+| Executed / passed / failed | 46 / 46 / 0 |
+| Not applicable in this tier | 4 |
+| Observed VALID / REFRESH / DENY / resolve refused | 11 / 16 / 14 / 5 |
+| Stale-context detection rate | 100.0% (30/30) |
+| False invalidation rate | 0.0% (0/11) |
+| False acceptance rate | 0.0% (0/30) |
+| DENY correctness | 100.0% (14/14) |
+| REFRESH correctness | 100.0% (16/16) |
+| Resolve refusal correctness | 100.0% (5/5) |
+
+<details><summary>All scenarios</summary>
+
+| ID | Scenario | Group | Expected | Observed | Drift codes | Status |
+| --- | --- | --- | --- | --- | --- | --- |
+| S01 | No change | baseline | VALID | VALID | — | PASS |
+| S02 | Owner changed | source-drift | REFRESH | REFRESH | OWNER_CHANGED | PASS |
+| S03 | Lifecycle changed | source-drift | REFRESH | REFRESH | LIFECYCLE_CHANGED | PASS |
+| S04 | API definition changed | source-drift | REFRESH | REFRESH | API_CHANGED | PASS |
+| S05 | Provided API deprecated | source-drift | REFRESH | REFRESH | API_DEPRECATED | PASS |
+| S06 | Dependency added | source-drift | REFRESH | REFRESH | DEPENDENCY_CHANGED | PASS |
+| S07 | Dependency removed | source-drift | REFRESH | REFRESH | DEPENDENCY_CHANGED | PASS |
+| S08 | Classification raised within the grant ceiling | classification | REFRESH | REFRESH | CLASSIFICATION_RAISED | PASS |
+| S09 | Classification raised above the grant ceiling | classification | DENY | DENY | CLASSIFICATION_RAISED | PASS |
+| S10 | Consumer's catalog read permission revoked | authorization | DENY | DENY | PERMISSION_REVOKED | PASS |
+| S11 | Receipt presented by a different consumer | binding | DENY | DENY | CONSUMER_MISMATCH | PASS |
+| S12 | TTL expired | time | REFRESH | REFRESH | TTL_EXPIRED | PASS |
+| S13 | Unrelated entity changed | false-invalidation | VALID | VALID | — | PASS |
+| S14 | Unrelated annotation and label added to the subject | false-invalidation | VALID | VALID | — | PASS |
+| S15 | Receipt reused for a different subject | binding | DENY | DENY | SUBJECT_MISMATCH | PASS |
+| S16 | Subject entity deleted | source-drift | REFRESH | REFRESH | SOURCE_DELETED | PASS |
+| S17 | Entity recreated under the same ref (new UID) | source-drift | REFRESH | REFRESH | ENTITY_RECREATED | PASS |
+| S18 | Policy rewritten, semantically equivalent | policy | VALID | VALID | — | PASS |
+| S19 | Policy narrowed below the receipt | policy | DENY | DENY | POLICY_NARROWED | PASS |
+| S20 | Policy broadened: receipt keeps its original grant | policy | VALID | VALID | POLICY_CHANGED (info) | PASS |
+| S21 | Required source unavailable | availability | REFRESH | — | — | N/A — tier 'kubernetes' lacks: outage |
+| S22 | Source unavailable under a strict policy (denyOn) | availability | DENY | — | — | N/A — tier 'kubernetes' lacks: outage |
+| S23 | Malformed classification on the subject | availability | DENY | DENY | SOURCE_MALFORMED | PASS |
+| S24 | Category not granted by the policy | resolve | CATEGORY_NOT_GRANTED | CATEGORY_NOT_GRANTED | — | PASS |
+| S25 | Source kind not permitted by the policy | resolve | SOURCE_NOT_PERMITTED | SOURCE_NOT_PERMITTED | — | PASS |
+| S26 | Related API classification raised above the ceiling | classification | DENY | DENY | CLASSIFICATION_RAISED | PASS |
+| S27 | Classification lowered: receipt stays bounded by its grant | classification | REFRESH | REFRESH | CLASSIFICATION_LOWERED | PASS |
+| S28 | Concurrent verification of the same receipt | determinism | REFRESH | REFRESH | OWNER_CHANGED | PASS |
+| S29 | Service restart: authoritative receipt survives | integrity | VALID | VALID | — | PASS |
+| S30 | Stored receipt tampered with | integrity | DENY | DENY | RECEIPT_INTEGRITY_FAILED | PASS |
+| S31 | Permission revoked on a related API only | authorization | DENY | DENY | PERMISSION_REVOKED | PASS |
+| S32 | Source changed and changed back | false-invalidation | VALID | VALID | — | PASS |
+| S33 | Relation order changed only | false-invalidation | VALID | VALID | — | PASS |
+| S34 | Irrelevant metadata changed (title, description, tags) | false-invalidation | VALID | VALID | — | PASS |
+| S35 | Clock exactly at validUntil | time | REFRESH | — | — | N/A — tier 'kubernetes' lacks: clock |
+| S36 | Receipt presented to another issuer | binding | DENY | — | — | N/A — tier 'kubernetes' lacks: issuer |
+| S37 | Receipt reused for a different purpose | binding | DENY | DENY | PURPOSE_MISMATCH | PASS |
+| S38 | Requested context expands beyond the receipt | binding | DENY | DENY | SCOPE_EXCEEDED | PASS |
+| S39 | TechDocs reference annotation changed | source-drift | REFRESH | REFRESH | DOCUMENTATION_CHANGED | PASS |
+| S40 | TOCTOU: change between a VALID verdict and the action | toctou | REFRESH | REFRESH | OWNER_CHANGED | PASS |
+| S41 | Policy removed | policy | DENY | DENY | POLICY_REMOVED | PASS |
+| S42 | Service consumer removed from the policy | authorization | DENY | DENY | POLICY_NARROWED | PASS |
+| S43 | Drift in a category the policy does not require fresh | policy | VALID | VALID | DOCUMENTATION_CHANGED (info) | PASS |
+| S44 | Policy escalates a drift code to DENY | policy | DENY | DENY | OWNER_CHANGED | PASS |
+| S45 | Resolve above the classification ceiling | resolve | CLASSIFICATION_EXCEEDS_GRANT | CLASSIFICATION_EXCEEDS_GRANT | — | PASS |
+| S46 | Consumer without any policy | resolve | NO_MATCHING_POLICY | NO_MATCHING_POLICY | — | PASS |
+| S47 | Resolve without catalog read permission | resolve | PERMISSION_DENIED | PERMISSION_DENIED | — | PASS |
+| S48 | AiResource owner changed | ai-catalog | REFRESH | REFRESH | OWNER_CHANGED | PASS |
+| S49 | MCP server API remote endpoint changed | ai-catalog | REFRESH | REFRESH | API_CHANGED | PASS |
+| S50 | Service principal: permission basis recorded | authorization | VALID | VALID | — | PASS |
+
+</details>
+
 ## Scenarios — In-process core
 
 _In-process: ContextVerity core + Backstage provider mapping + Knex/SQLite store, against a synthetic in-memory catalog that emulates Backstage relation stitching. Controllable clock. Synthetic data only._

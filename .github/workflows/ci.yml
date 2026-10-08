@@ -86,6 +86,10 @@ jobs:
           node-version: 22
       - run: make install
       - run: make build
+      - name: Package tarballs are publishable
+        run: scripts/release/pack.sh
+      - name: Helm chart lints and renders
+        run: make helm-lint
 
   supply-chain:
     runs-on: ubuntu-24.04

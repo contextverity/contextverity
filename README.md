@@ -104,6 +104,8 @@ statistical confidence. Full tables: [docs/results.md](docs/results.md) and the
 
 **Live Backstage lab** (Backstage 1.55.0, synthetic data): 45/45 executed scenarios passed (5 of 50 need a controllable clock, outage injection, restart or second issuer and run in-process only). Stale-context detection 100.0% (30/30), false invalidation 0.0% (0/10), false acceptance 0.0% (0/30).
 
+**On Kubernetes** (Helm chart on kind v0.32.0 with Podman, Kubernetes v1.36.1): 46/46 executed scenarios passed, including a pod restart with the receipt surviving on the persistent volume (4 need a controllable clock, outage injection or second issuer). Stale-context detection 100.0% (30/30), false invalidation 0.0% (0/11), false acceptance 0.0% (0/30).
+
 **In-process core** (synthetic catalog, Knex/SQLite store): 50/50 scenarios passed. Stale-context detection 100.0% (34/34), false invalidation 0.0% (0/11), false acceptance 0.0% (0/34).
 
 **In-process verification latency** (p50 / p95): 1 source 0.395 / 0.622 ms; 5 sources 0.51 / 0.747 ms; 10 sources 0.518 / 0.803 ms.
@@ -130,6 +132,19 @@ make demo-down
 
 Then open <http://127.0.0.1:3000/contextverity>, sign in as guest, and inspect the
 receipts the demo created.
+
+**On Kubernetes, with Podman** (kind's Podman provider, Helm 3.8+ or 4, kubectl
+within one minor version of the cluster):
+
+```sh
+make k8s-up         # podman build, kind cluster on Podman, helm install, helm test
+make k8s-test       # the scenarios against the cluster
+make k8s-down
+```
+
+The chart (`deploy/helm/contextverity-lab`) runs non-root with a read-only root
+filesystem, probes, resource limits, a NetworkPolicy and no RBAC; see
+[docs/deployment.md](docs/deployment.md).
 
 ```text
 [1] Resolve context for component:default/payments (purpose: incident-triage)

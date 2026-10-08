@@ -16,6 +16,7 @@ const read = f => {
 };
 const core = read('scenarios-core.json');
 const live = read('scenarios-backstage.json');
+const k8s = read('scenarios-kubernetes.json');
 const benchCore = read('benchmarks-core.json');
 const benchLive = read('benchmarks-backstage.json');
 const telemetry = read('telemetry-backstage.json');
@@ -109,6 +110,7 @@ const out = [
 
 for (const [title, r] of [
   ['Live Backstage lab', live],
+  ['Kubernetes (kind on Podman, Helm chart)', k8s],
   ['In-process core', core],
 ]) {
   if (!r) continue;
@@ -193,6 +195,23 @@ if (live) {
     } of ${
       s.total
     } need a controllable clock, outage injection, restart or second issuer and run in-process only). Stale-context detection ${pct(
+      s.metrics.staleDetectionRate,
+    )}, false invalidation ${pct(
+      s.metrics.falseInvalidationRate,
+    )}, false acceptance ${pct(s.metrics.falseAcceptanceRate)}.`,
+  );
+}
+if (k8s) {
+  const s = k8s.summary;
+  const e = k8s.environment;
+  block.push(
+    `**On Kubernetes** (Helm chart on kind ${
+      e.kind ?? ''
+    } with Podman, Kubernetes ${e.kubernetes ?? ''}): ${s.passed}/${
+      s.executed
+    } executed scenarios passed, including a pod restart with the receipt surviving on the persistent volume (${
+      s.unsupported
+    } need a controllable clock, outage injection or second issuer). Stale-context detection ${pct(
       s.metrics.staleDetectionRate,
     )}, false invalidation ${pct(
       s.metrics.falseInvalidationRate,

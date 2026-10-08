@@ -1,0 +1,12 @@
+# The container build context is an allowlist: only what the image needs.
+*
+!.yarn/releases
+!.yarnrc.yml
+!backstage.json
+!package.json
+!yarn.lock
+!app-config.yaml
+!packages/backend/dist/bundle.tar.gz
+!packages/backend/dist/skeleton.tar.gz
+!packages/backend/src/instrumentation.js
+!examples/lab

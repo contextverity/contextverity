@@ -56,3 +56,4 @@ e2e-test-report/
 # Local demo state
 /.demo/
 /packages/backend/data/
+/dist-packages/

@@ -34,6 +34,6 @@ below applies to v0.1 as implemented.
     instance; there are no signed, independently verifiable receipts yet.
 12. **One provider.** Only the Backstage catalog is implemented.
 13. **Measured scope.** Results come from synthetic data on a single machine; the live
-    lab runs a development-mode backend on SQLite. No production deployment or
-    adopter exists yet.
+    lab runs a development-mode backend on SQLite, and the Kubernetes tier is a
+    single-node kind cluster. No production deployment or adopter exists yet.
 14. **No rate limiting** of verify calls beyond Backstage authentication.

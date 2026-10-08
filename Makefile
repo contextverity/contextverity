@@ -9,7 +9,8 @@ TS    := $(NODE) --require @backstage/cli/config/nodeTransform.cjs
 
 .PHONY: help check-node install build lint typecheck format format-check test test-unit \
         test-integration test-e2e test-results benchmark benchmark-live verify site-check \
-        docs-check telemetry-check audit secret-scan sbom demo demo-up demo-run demo-down demo-mcp clean
+        docs-check telemetry-check audit secret-scan sbom demo demo-up demo-run demo-down demo-mcp \
+        k8s-up k8s-test k8s-down helm-lint clean
 
 help: ## List targets
 	@grep -E '^[a-z-]+:.*## ' $(MAKEFILE_LIST) | awk -F':.*## ' '{printf "  %-18s %s\n", $$1, $$2}'
@@ -58,6 +59,9 @@ test-results: check-node ## Regenerate machine-readable results in test-results/
 	@if $(LAB_UP); then \
 	  source .demo/env && $(TS) scripts/run-scenarios.ts --tier backstage && $(TS) scripts/benchmark.ts --tier backstage && $(TS) scripts/check-telemetry.ts; \
 	else echo "lab not running: skipped backstage-tier results (make demo-up)"; fi
+	@if kubectl --context kind-contextverity -n contextverity get deploy lab-contextverity-lab >/dev/null 2>&1; then \
+	  $(TS) scripts/run-scenarios.ts --tier kubernetes; \
+	else echo "Kubernetes lab not deployed: kept existing scenarios-kubernetes.json (make k8s-up)"; fi
 	$(NODE) scripts/results-summary.mjs
 	$(NODE) scripts/render-results.mjs
 	$(YARN) prettier --write README.md >/dev/null
@@ -103,6 +107,19 @@ demo-mcp: check-node ## Same flow through the official Backstage MCP Actions end
 
 demo-down: ## Stop the lab
 	scripts/demo/down.sh
+
+helm-lint: ## Lint and render the Helm chart
+	helm lint deploy/helm/contextverity-lab
+	helm template lab deploy/helm/contextverity-lab >/dev/null
+
+k8s-up: check-node ## Build with Podman, deploy the lab to kind (Podman provider) with Helm
+	scripts/k8s/up.sh
+
+k8s-test: check-node ## Scenarios against the lab on Kubernetes (requires make k8s-up)
+	$(TS) scripts/run-scenarios.ts --tier kubernetes
+
+k8s-down: ## Delete the kind cluster
+	KIND_EXPERIMENTAL_PROVIDER=podman kind delete cluster --name contextverity
 
 clean: ## Remove build output and demo state
 	$(YARN) backstage-cli repo clean

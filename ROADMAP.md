@@ -12,9 +12,9 @@ implemented**. Priorities follow user feedback.
   detected from content, not just the `backstage.io/techdocs-ref` annotation.
 - **Production-mode benchmarks** on PostgreSQL and a built (non-development)
   backend, published separately from the development-lab numbers.
-- **Kubernetes deployment example** (Helm chart, non-root, probes, NetworkPolicy)
-  once validated end to end on kind.
 - **Entity-scoped receipt views** in the Backstage entity page.
+- **Production Helm values**: PostgreSQL, multiple replicas, ingress, and ContextVerity
+  added to an existing Backstage chart rather than the lab image.
 
 ## Later
 

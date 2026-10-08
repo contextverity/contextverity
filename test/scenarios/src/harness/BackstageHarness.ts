@@ -19,6 +19,7 @@ import {
   EntityPatch,
   Harness,
   ResolveOutcome,
+  Tier,
   UnsupportedError,
 } from './types';
 
@@ -27,7 +28,8 @@ export interface BackstageHarnessOptions {
   baseUrl: string;
   agentToken: string;
   otherAgentToken: string;
-  dataDir: string;
+  /** Lab data directory on this machine (for storage-tamper scenarios). */
+  dataDir?: string;
 }
 
 /**
@@ -36,11 +38,13 @@ export interface BackstageHarnessOptions {
  * change waits until the real catalog reflects it.
  */
 export class BackstageHarness implements Harness {
-  readonly tier = 'backstage' as const;
-  readonly capabilities: ReadonlySet<Capability> = new Set(['storage-tamper']);
-  private userToken?: string;
+  readonly tier: Tier = 'backstage';
+  readonly capabilities: ReadonlySet<Capability> = new Set<Capability>([
+    'storage-tamper',
+  ]);
+  protected userToken?: string;
 
-  constructor(private readonly options: BackstageHarnessOptions) {}
+  constructor(protected readonly options: BackstageHarnessOptions) {}
 
   seedPolicies(): unknown[] {
     return (
@@ -188,7 +192,9 @@ export class BackstageHarness implements Harness {
   }
 
   async tamperStoredReceipt(receiptId: string) {
-    const db = new Database(join(this.options.dataDir, 'contextverity.sqlite'));
+    const db = new Database(
+      join(this.options.dataDir ?? '', 'contextverity.sqlite'),
+    );
     try {
       const row = db
         .prepare('select body from contextverity_receipts where receipt_id = ?')

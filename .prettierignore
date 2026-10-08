@@ -12,3 +12,4 @@ LICENSE
 docs/assets
 *.svg
 .yarn
+deploy/helm/*/templates

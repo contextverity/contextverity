@@ -12,7 +12,14 @@
   },
   "backstage": {
     "role": "node-library",
-    "pluginId": "contextverity"
+    "pluginId": "contextverity",
+    "pluginPackages": [
+      "@contextverity/core",
+      "@contextverity/plugin-contextverity",
+      "@contextverity/plugin-contextverity-backend",
+      "@contextverity/plugin-contextverity-common",
+      "@contextverity/plugin-contextverity-node"
+    ]
   },
   "repository": {
     "type": "git",

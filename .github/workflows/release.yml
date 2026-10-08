@@ -1,0 +1,43 @@
+# Publishes the ContextVerity packages to npm when a version tag is pushed.
+# Preferred: npm trusted publishing (OIDC, no long-lived token). For the very
+# first release, before trusted publishing can be configured on npmjs.com, an
+# NPM_TOKEN repository secret may be used once and then deleted.
+name: Release
+
+on:
+  push:
+    tags: ['v*.*.*']
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-24.04
+    environment: npm
+    permissions:
+      contents: read
+      id-token: write # OIDC for trusted publishing and provenance
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 22
+          registry-url: https://registry.npmjs.org
+      - name: npm with trusted publishing support (>= 11.5.1)
+        run: npm install -g npm@11.21.0
+      - run: make install
+      - run: make typecheck
+      - run: make test
+      - name: Build, pack and check the tarballs
+        run: scripts/release/pack.sh
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+      - name: Publish
+        run: scripts/release/publish.sh
+        env:
+          # Empty unless the one-time NPM_TOKEN secret exists; trusted
+          # publishing needs no token.
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

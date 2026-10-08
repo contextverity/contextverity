@@ -20,11 +20,45 @@ deploy.
   from the shared database, and the retention task is coordinated by the Backstage
   scheduler.
 
-## Kubernetes
+## Kubernetes (lab)
 
-Not provided in v0.1. A Helm example is on the [roadmap](../ROADMAP.md) once it has
-been validated end to end; it is not required, since ContextVerity is deployed as part
-of Backstage.
+`deploy/helm/contextverity-lab` deploys the lab — the demo Backstage backend with the
+ContextVerity plugins, the bundled frontend, synthetic data and the demo-only lab API —
+to Kubernetes. It is validated end to end on a single-node kind cluster running on
+**Podman**; the image is built with **Podman** from `deploy/container/Containerfile`.
+
+```sh
+make k8s-up      # host build, podman build, kind (Podman provider), helm install, helm test
+make k8s-test    # the scenarios against the cluster (writes test-results/scenarios-kubernetes.json)
+make k8s-down    # delete the kind cluster
+```
+
+Requirements: Podman (rootful machine on macOS), kind ≥ 0.32, Helm ≥ 3.8, and kubectl
+within one minor version of the cluster (kind 0.32 runs Kubernetes 1.36).
+
+What the chart does:
+
+| Concern      | Choice                                                                                                                                 |
+| ------------ | -------------------------------------------------------------------------------------------------------------------------------------- |
+| Identity     | Dedicated ServiceAccount, `automountServiceAccountToken: false`; no Role or ClusterRole (ContextVerity never calls the Kubernetes API) |
+| Pod security | `runAsNonRoot`, uid/gid 1000, `readOnlyRootFilesystem`, all capabilities dropped, no privilege escalation, `RuntimeDefault` seccomp    |
+| Health       | startup, liveness and readiness probes on `/.backstage/health/v1/*`                                                                    |
+| Resources    | requests 250m / 512Mi, limits 1 CPU / 1Gi (values)                                                                                     |
+| Storage      | SQLite on a ReadWriteOnce PersistentVolumeClaim; one replica, `Recreate` strategy                                                      |
+| Network      | NetworkPolicy: ingress to the HTTP and metrics ports, egress to DNS only (the backend calls its own plugins over loopback)             |
+| Secrets      | Agent tokens and the integrity secret generated once into a Secret (kept across upgrades), or supplied via `existingSecret`            |
+| Supply chain | Node 22 base image pinned by digest; build context is an allowlist (`.containerignore`)                                                |
+| Test         | `helm test` checks readiness from inside the cluster                                                                                   |
+
+Verified in the lab: `helm test` passes; the backend pod cannot open outbound HTTPS
+connections while DNS resolves (the NetworkPolicy is enforced by kind's CNI); and the
+scenario suite passes against the cluster, including **S29** (the pod is deleted and the
+receipt survives on the volume) and **S30** (a row edited inside the pod verifies as
+`DENY`). See [results.md](results.md).
+
+This chart is for evaluation. It enables guest sign-in outside development and the lab
+control API. A production deployment adds ContextVerity to your own Backstage image and
+chart, uses PostgreSQL, and keeps the lab out.
 
 ## Local lab
 

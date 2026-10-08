@@ -21,6 +21,9 @@ Scenarios are defined once (`test/scenarios/src/scenarios.ts`) and run through a
   real Knex/SQLite store, against a synthetic catalog that emulates Backstage relation
   stitching and UID assignment. Controllable clock; outages, restarts and a second
   issuer can be simulated.
+- **kubernetes** — the same live checks against the lab deployed by the Helm chart on
+  kind (Podman). It can also restart the pod (S29) and edit the stored receipt inside
+  it (S30); clock control, outages and a second issuer remain N/A.
 - **backstage** — a live Backstage backend over HTTP. World changes go through the
   lab's entity provider and permission policy and are awaited until the real catalog
   reflects them (about 1–2 s each). Scenarios needing a controllable clock, catalog

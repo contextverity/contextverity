@@ -17,11 +17,20 @@ repositories, CNCF project pages, official documentation).
 | Node.js                                         | OpenJS Foundation                                                           | 22 LTS (24 also supported by Backstage)                                                                                                                          | —                                                                                                       | runtime                                      | LTS                                                    | [nodejs.org](https://nodejs.org/)                                                        | Node 26 is not supported by Backstage 1.55                                                                        |
 | Yarn                                            | —                                                                           | 4.13.0 (pinned in `.yarn/releases`)                                                                                                                              | —                                                                                                       | package manager                              | stable                                                 | [yarnpkg.com](https://yarnpkg.com/)                                                      | `@yarnpkg/core` 4.9.2 has an unresolvable patch dependency; pinned to 4.9.1                                       |
 
+## Deployment tooling (lab on Kubernetes)
+
+| Project    | Governance / maturity                                                    | Version used                          | Purpose                         |
+| ---------- | ------------------------------------------------------------------------ | ------------------------------------- | ------------------------------- |
+| Kubernetes | CNCF **Graduated** ([cncf.io](https://www.cncf.io/projects/kubernetes/)) | v1.36.1 (kind node image)             | lab deployment target           |
+| kind       | Kubernetes SIG Testing                                                   | v0.32.0, experimental Podman provider | local cluster                   |
+| Helm       | CNCF **Graduated** ([cncf.io](https://www.cncf.io/projects/helm/))       | v4.1.1                                | chart packaging and `helm test` |
+| Podman     | Containers project (open source)                                         | 6.0.2                                 | image build and kind provider   |
+
 ## Not integrated (and why)
 
 - **SPIFFE/SPIRE** (CNCF Graduated) — v0.1 uses Backstage identities; workload
   identity is not needed for an in-Backstage plugin.
 - **OpenFGA** (CNCF Incubating) — the Backstage Permission Framework covers v0.1;
   an OpenFGA authorizer is on the roadmap only if it solves a real provider problem.
-- **Kubernetes** (CNCF Graduated) — not required; a deployment example is on the
-  roadmap after validation.
+- **Kubernetes** (CNCF Graduated) — not required by ContextVerity itself; the lab ships
+  a Helm chart validated on kind (above).

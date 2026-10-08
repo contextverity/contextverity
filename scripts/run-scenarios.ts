@@ -6,12 +6,14 @@
 // Runs the context-drift scenarios and writes test-results/scenarios-<tier>.json.
 // Usage: node --require @backstage/cli/config/nodeTransform.cjs scripts/run-scenarios.ts --tier core|backstage
 
+import { execFileSync } from 'node:child_process';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import {
   BackstageHarness,
   CoreHarness,
   Harness,
+  KubernetesHarness,
   runAll,
 } from '@contextverity/scenarios';
 
@@ -52,6 +54,33 @@ async function main() {
         /\/\/[^/]+/,
         '//127.0.0.1',
       ),
+    };
+  } else if (tier === 'kubernetes') {
+    const kubeContext = process.env.CV_KUBE_CONTEXT ?? 'kind-contextverity';
+    const namespace = process.env.CV_KUBE_NAMESPACE ?? 'contextverity';
+    harness = await KubernetesHarness.create({
+      rootDir,
+      kubeContext,
+      namespace,
+      release: process.env.CV_HELM_RELEASE ?? 'lab',
+      localPort: Number(process.env.CV_KUBE_PORT ?? 7017),
+    });
+    scope =
+      'Live on Kubernetes: the lab image (built with Podman) deployed by the Helm chart to a single-node kind cluster running on Podman; non-root, read-only root filesystem, NetworkPolicy, SQLite on a persistent volume. Driven over kubectl port-forward. Restarts delete the pod; storage tampering edits the row inside the pod. Synthetic data only; single machine.';
+    const version = (cmd: string[]) => {
+      try {
+        return execFileSync(cmd[0], cmd.slice(1), { encoding: 'utf8' }).trim();
+      } catch {
+        return 'unknown';
+      }
+    };
+    extra = {
+      kubernetes: serverVersion(
+        version(['kubectl', '--context', kubeContext, 'version', '-o', 'json']),
+      ),
+      kind: version(['kind', 'version']).split(' ')[1] ?? 'unknown',
+      podman: version(['podman', '--version']).replace('podman version ', ''),
+      helmChart: 'deploy/helm/contextverity-lab 0.1.0',
     };
   } else {
     throw new Error(`unknown tier ${tier}`);
@@ -102,3 +131,11 @@ main().catch(e => {
   console.error(e);
   process.exit(1);
 });
+
+function serverVersion(json: string): string {
+  try {
+    return JSON.parse(json).serverVersion?.gitVersion ?? 'unknown';
+  } catch {
+    return 'unknown';
+  }
+}

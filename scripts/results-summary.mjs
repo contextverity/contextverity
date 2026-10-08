@@ -19,6 +19,7 @@ const read = f =>
 const files = {
   scenariosCore: read('scenarios-core.json'),
   scenariosBackstage: read('scenarios-backstage.json'),
+  scenariosKubernetes: read('scenarios-kubernetes.json'),
   benchmarksCore: read('benchmarks-core.json'),
   benchmarksBackstage: read('benchmarks-backstage.json'),
   telemetryBackstage: read('telemetry-backstage.json'),
@@ -61,6 +62,7 @@ const summary = {
   scenarios: {
     core: tier(files.scenariosCore),
     backstage: tier(files.scenariosBackstage),
+    kubernetes: tier(files.scenariosKubernetes),
   },
   benchmarks: {
     core: files.benchmarksCore && {
@@ -77,7 +79,7 @@ const summary = {
     traces: files.telemetryBackstage.traces,
     metrics: files.telemetryBackstage.metrics,
   },
-  note: 'Synthetic data on a single machine. Core and live-lab results are separate measurements and must not be combined.',
+  note: 'Synthetic data on a single machine. Core, live-lab and Kubernetes results are separate measurements and must not be combined.',
 };
 writeFileSync(
   join(dir, 'summary.json'),

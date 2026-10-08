@@ -87,7 +87,8 @@ function setup() {
       resource: resourceFromAttributes({ 'service.name': serviceName }),
       readers: [
         new PrometheusExporter({
-          host: '127.0.0.1',
+          // Loopback by default; containers set CV_METRICS_HOST=0.0.0.0.
+          host: process.env.CV_METRICS_HOST ?? '127.0.0.1',
           port: Number(process.env.CV_METRICS_PORT ?? 9464),
         }),
       ],
