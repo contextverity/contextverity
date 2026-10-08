@@ -34,6 +34,8 @@ export interface RouterOptions {
   httpAuth: HttpAuthService;
   permissions: PermissionsService;
   logger: LoggerService;
+  /** Service principal refs allowed to read receipts issued to others. */
+  receiptReaders?: string[];
 }
 
 /**
@@ -51,6 +53,9 @@ export async function createRouter(
   options: RouterOptions,
 ): Promise<express.Router> {
   const { service, httpAuth, permissions, logger } = options;
+  const receiptReaders = (options.receiptReaders ?? []).map(r =>
+    r.toLowerCase(),
+  );
   const router = Router();
   router.use(express.json({ limit: '64kb' }));
 
@@ -61,9 +66,18 @@ export async function createRouter(
     return { credentials, principal: principalFromCredentials(credentials) };
   };
 
+  /**
+   * Whether the caller may read receipts issued to others. Backstage allows
+   * every service principal without consulting the permission policy, so a
+   * service gets this only when listed in `contextverity.receiptReaders`.
+   */
   const canReadAll = async (
     credentials: Awaited<ReturnType<typeof principalOf>>['credentials'],
+    principalRef: string,
   ) => {
+    if ((credentials.principal as { type?: string }).type === 'service') {
+      return receiptReaders.includes(principalRef);
+    }
     const [d] = await permissions.authorize(
       [{ permission: contextverityReceiptReadPermission }],
       { credentials },
@@ -97,7 +111,7 @@ export async function createRouter(
 
   router.get('/v1/receipts', async (req, res) => {
     const { credentials, principal } = await principalOf(req);
-    const all = await canReadAll(credentials);
+    const all = await canReadAll(credentials, principal.ref);
     const limit = Number(req.query.limit ?? 50);
     if (!Number.isFinite(limit)) throw new InputError('limit must be a number');
     const consumer = all
@@ -115,15 +129,11 @@ export async function createRouter(
   router.get('/v1/receipts/:id', async (req, res) => {
     const { credentials, principal } = await principalOf(req);
     try {
-      const detail = await service.getReceipt(req.params.id);
-      if (
-        detail.receipt.consumer !== principal.ref &&
-        !(await canReadAll(credentials))
-      ) {
-        // Same response as a missing receipt: do not reveal that it exists.
-        throw new ReceiptNotFoundError(req.params.id);
-      }
-      res.json(detail);
+      res.json(
+        await service.getReceiptForReader(principal, req.params.id, {
+          canReadAll: await canReadAll(credentials, principal.ref),
+        }),
+      );
     } catch (e) {
       throw mapError(e);
     }
@@ -131,7 +141,7 @@ export async function createRouter(
 
   router.post('/v1/receipts/:id/inspect', async (req, res) => {
     const { credentials, principal } = await principalOf(req);
-    if (!(await canReadAll(credentials)))
+    if (!(await canReadAll(credentials, principal.ref)))
       throw new NotAllowedError('contextverity.receipt.read is required');
     try {
       res.json(await service.inspect(principal, req.params.id));

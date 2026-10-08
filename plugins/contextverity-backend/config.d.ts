@@ -23,6 +23,12 @@ export interface Config {
      * @visibility secret
      */
     integritySecret?: string;
+    /**
+     * Service principal refs (e.g. `service:ops-bot`) allowed to read receipts
+     * issued to others. Backstage does not apply permission policies to
+     * services, so `contextverity.receipt.read` alone cannot grant this.
+     */
+    receiptReaders?: string[];
     retention?: {
       /** Delete receipts issued more than this many days ago. @default 30 */
       days?: number;

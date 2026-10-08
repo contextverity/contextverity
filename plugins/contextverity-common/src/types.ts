@@ -275,6 +275,8 @@ export interface ContextVerification {
    * checked but the consumer's permissions could not be re-evaluated.
    */
   mode: 'verify' | 'inspect';
+  /** Principal that requested this verification or inspection. */
+  principal: string;
   verifiedAt: string;
   verdict: Verdict;
   /** Sorted deterministically: effect (DENY first), code, sourceId, field. */

@@ -57,6 +57,7 @@ test-results: check-node ## Regenerate machine-readable results in test-results/
 	else echo "lab not running: skipped backstage-tier results (make demo-up)"; fi
 	$(NODE) scripts/results-summary.mjs
 	$(NODE) scripts/render-results.mjs
+	$(YARN) prettier --write README.md >/dev/null
 
 benchmark: check-node ## In-process core benchmarks
 	$(TS) scripts/benchmark.ts --tier core

@@ -103,7 +103,15 @@ export const contextverityPlugin = createBackendPlugin({
         permissionsRegistry.addPermissions(contextverityPermissions);
         registerActions(actionsRegistry, service);
         httpRouter.use(
-          await createRouter({ service, httpAuth, permissions, logger }),
+          await createRouter({
+            service,
+            httpAuth,
+            permissions,
+            logger,
+            receiptReaders: config.getOptionalStringArray(
+              'contextverity.receiptReaders',
+            ),
+          }),
         );
 
         metrics

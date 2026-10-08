@@ -28,6 +28,7 @@ contextverity:
   integritySecret: ${CONTEXTVERITY_INTEGRITY_SECRET} # optional, enables HMAC tags
   retention:
     days: 30
+  receiptReaders: [] # service principals allowed to read others' receipts
   policyFile: /etc/backstage/context-policies.yaml # and/or inline `policies:`
 
 backend:
@@ -56,13 +57,13 @@ closed). ContextVerity does not infer classification from content.
 Mounted at `/api/contextverity`. All endpoints require a Backstage user or service
 token.
 
-| Method | Path                       | Who                                                          | Body / result                                                                                                                                        |
-| ------ | -------------------------- | ------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| POST   | `/v1/resolve`              | consumer                                                     | `{subject, purpose, categories, ttlSeconds?, policyId?}` → `201 {receipt, context}` or `403/404/503 {error: {name: "ResolveDenied", code, message}}` |
-| POST   | `/v1/receipts/:id/verify`  | consumer                                                     | `{subject?, purpose?, categories?}` → `ContextVerification`                                                                                          |
-| GET    | `/v1/receipts`             | anyone (own receipts) / `contextverity.receipt.read` (all)   | `?limit&consumer&subject` → `{items}`                                                                                                                |
-| GET    | `/v1/receipts/:id`         | consumer or `contextverity.receipt.read`                     | `ReceiptDetail` (others get 404)                                                                                                                     |
-| POST   | `/v1/receipts/:id/inspect` | `contextverity.receipt.read` and read access to every source | `ContextVerification` with `mode: inspect`                                                                                                           |
+| Method | Path                       | Who                                                                        | Body / result                                                                                                                                        |
+| ------ | -------------------------- | -------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| POST   | `/v1/resolve`              | consumer                                                                   | `{subject, purpose, categories, ttlSeconds?, policyId?}` → `201 {receipt, context}` or `403/404/503 {error: {name: "ResolveDenied", code, message}}` |
+| POST   | `/v1/receipts/:id/verify`  | consumer                                                                   | `{subject?, purpose?, categories?}` → `ContextVerification`                                                                                          |
+| GET    | `/v1/receipts`             | anyone (own receipts) / `contextverity.receipt.read` (all)                 | `?limit&consumer&subject` → `{items}`                                                                                                                |
+| GET    | `/v1/receipts/:id`         | consumer, or `contextverity.receipt.read` plus read access to every source | `ReceiptDetail` (others get 404)                                                                                                                     |
+| POST   | `/v1/receipts/:id/inspect` | `contextverity.receipt.read` and read access to every source               | `ContextVerification` with `mode: inspect`                                                                                                           |
 
 Backstage's own readiness endpoint (`/.backstage/health/v1/readiness`) covers health.
 

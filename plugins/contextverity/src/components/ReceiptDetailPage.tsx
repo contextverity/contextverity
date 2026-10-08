@@ -425,9 +425,10 @@ export function ReceiptDetailPage() {
           ) : (
             <Table
               label="Verification history"
-              head={['Verified', 'Verdict', 'Reasons']}
+              head={['Verified', 'By', 'Verdict', 'Reasons']}
               rows={verifications.map(v => [
                 formatTime(v.verifiedAt),
+                <span style={monoNoWrap}>{v.principal ?? '—'}</span>,
                 <VerdictLabel verdict={v.verdict} />,
                 <span style={monoStyle}>
                   {v.drift

@@ -379,6 +379,7 @@ export class ContextVerity {
           verification = {
             receiptId,
             mode: 'verify',
+            principal: principal.ref,
             verifiedAt: now.toISOString(),
             verdict: verdictOf(binding),
             drift: binding,
@@ -426,6 +427,7 @@ export class ContextVerity {
           verification = {
             receiptId,
             mode: 'verify',
+            principal: principal.ref,
             verifiedAt: now.toISOString(),
             verdict: result.verdict,
             drift: result.drift,
@@ -443,8 +445,10 @@ export class ContextVerity {
           [ATTR.verdict]: verification.verdict,
         });
 
-        // Only verifications of intact receipts are recorded against them.
-        if (integrityOk)
+        // Only verifications by the bound consumer of an intact receipt from
+        // this issuer are recorded. Failed binding (another consumer, another
+        // issuer, broken integrity) must not alter the receipt's history.
+        if (binding.length === 0)
           await this.options.store.appendVerification(verification);
 
         const inst = getInstruments();
@@ -493,6 +497,7 @@ export class ContextVerity {
           return {
             receiptId,
             mode: 'inspect',
+            principal: operator.ref,
             verifiedAt: now.toISOString(),
             verdict: verdictOf(binding),
             drift: binding,
@@ -539,6 +544,7 @@ export class ContextVerity {
         return {
           receiptId,
           mode: 'inspect',
+          principal: operator.ref,
           verifiedAt: now.toISOString(),
           verdict: result.verdict,
           drift: result.drift,
@@ -547,6 +553,28 @@ export class ContextVerity {
         };
       },
     );
+  }
+
+  /**
+   * Receipt detail for a reader. The consumer always sees its own receipts.
+   * Anyone else needs `canReadAll` (decided by the caller from platform
+   * permissions) AND read access to every source of the receipt; otherwise the
+   * receipt is reported as not found, so its existence is not revealed.
+   */
+  async getReceiptForReader(
+    reader: Principal,
+    receiptId: string,
+    options: { canReadAll: boolean },
+  ): Promise<ReceiptDetail> {
+    const detail = await this.getReceipt(receiptId);
+    if (detail.receipt.consumer === reader.ref.toLowerCase()) return detail;
+    if (!options.canReadAll) throw new ReceiptNotFoundError(receiptId);
+    const sources = (detail.receipt.sources ?? []).map(s => s.sourceId);
+    const access = sources.length ? await this.authorize(reader, sources) : [];
+    if (access.some(a => a.result !== 'ALLOW')) {
+      throw new ReceiptNotFoundError(receiptId);
+    }
+    return detail;
   }
 
   async getReceipt(

@@ -45,4 +45,11 @@ remove it from the context policy (`POLICY_NARROWED`, S42) or use
 `contextverity.receipt.read` (basic permission, registered via
 `coreServices.permissionsRegistry`) allows listing all receipts, reading receipts
 issued to others, and running operator drift checks. Without it, callers see only
-their own receipts.
+their own receipts. Two extra rules apply:
+
+- **Service principals** never get this through the permission framework, because
+  Backstage allows every service without consulting the policy. A service may read
+  others' receipts only if its principal ref is listed in
+  `contextverity.receiptReaders` (empty by default).
+- **Source access.** A non-consumer reader must also be allowed `catalog.entity.read`
+  on every source of the receipt; otherwise the receipt is reported as not found.

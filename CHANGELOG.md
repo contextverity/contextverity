@@ -18,5 +18,9 @@ follow [Semantic Versioning](https://semver.org/) once it reaches 1.0.
   Actions Registry actions `resolve-context` and `verify-receipt`.
 - `@contextverity/plugin-contextverity`: receipts list and receipt detail
   (provenance, permissions, drift, operator drift check).
+- Verifications record the verifying principal; attempts that fail binding are not
+  recorded. Service principals can read others' receipts only via
+  `contextverity.receiptReaders`, and non-consumer readers need read access to every
+  source.
 - Backstage lab, 50 deterministic scenarios in two tiers, benchmarks, telemetry
   check, reference MCP client, generated results.

@@ -3,10 +3,10 @@
   "kind": "contextverity.telemetry",
   "tier": "backstage",
   "scope": "Live lab with the OpenTelemetry Node SDK loaded via --require (HTTP + undici instrumentation, Prometheus exporter, JSON-lines span file). One run of the reference MCP client.",
-  "generatedAt": "2026-10-08T10:16:44.788Z",
+  "generatedAt": "2026-10-08T10:35:41.731Z",
   "environment": {
     "contextverityVersion": "0.1.0",
-    "commit": "uncommitted",
+    "commit": "f40f4629cfe9163d291bdfb7e062216c4e966bf2",
     "dirtyWorkingTree": true,
     "backstageRelease": "1.55.0",
     "node": "v22.23.1",

@@ -225,6 +225,69 @@ describe('contextverity backend plugin', () => {
     expect([401, 403]).toContain(anon.status);
   });
 
+  it('does not record verifications that fail binding', async () => {
+    const { server } = await start();
+    const { body } = await request(server)
+      .post('/api/contextverity/v1/resolve')
+      .set('Authorization', ALEX)
+      .send(RESOLVE);
+    const id = body.receipt.receiptId;
+    await request(server)
+      .post(`/api/contextverity/v1/receipts/${id}/verify`)
+      .set('Authorization', ALEX)
+      .send({});
+    await request(server)
+      .post(`/api/contextverity/v1/receipts/${id}/verify`)
+      .set('Authorization', BOB)
+      .send({});
+    const detail = await request(server)
+      .get(`/api/contextverity/v1/receipts/${id}`)
+      .set('Authorization', ALEX);
+    expect(detail.body.verifications).toHaveLength(1);
+    expect(detail.body.verifications[0]).toMatchObject({
+      verdict: 'VALID',
+      principal: 'user:default/alex',
+    });
+  });
+
+  it("never lets service principals read others' receipts through the permission bypass", async () => {
+    const { server } = await start();
+    const { body } = await request(server)
+      .post('/api/contextverity/v1/resolve')
+      .set('Authorization', ALEX)
+      .send(RESOLVE);
+    // Backstage allows services without consulting the policy; emulate that.
+    receiptRead = AuthorizeResult.ALLOW;
+    const service = mockCredentials.service.header(); // external:test-service
+    const list = await request(server)
+      .get('/api/contextverity/v1/receipts')
+      .set('Authorization', service);
+    expect(list.body.items).toHaveLength(0);
+    const id = body.receipt.receiptId;
+    const detail = await request(server)
+      .get(`/api/contextverity/v1/receipts/${id}`)
+      .set('Authorization', service);
+    expect(detail.status).toBe(404);
+    const inspect = await request(server)
+      .post(`/api/contextverity/v1/receipts/${id}/inspect`)
+      .set('Authorization', service);
+    expect(inspect.status).toBe(403);
+  });
+
+  it('hides a receipt from a reader who may not read its sources', async () => {
+    const { server } = await start();
+    const { body } = await request(server)
+      .post('/api/contextverity/v1/resolve')
+      .set('Authorization', ALEX)
+      .send(RESOLVE);
+    receiptRead = AuthorizeResult.ALLOW;
+    catalogRead = AuthorizeResult.DENY;
+    const detail = await request(server)
+      .get(`/api/contextverity/v1/receipts/${body.receipt.receiptId}`)
+      .set('Authorization', BOB);
+    expect(detail.status).toBe(404);
+  });
+
   it("lists only the caller's receipts without contextverity.receipt.read", async () => {
     const { server } = await start();
     await request(server)

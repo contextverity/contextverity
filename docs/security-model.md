@@ -11,14 +11,19 @@
 ## Guarantees (and their limits)
 
 1. **Only the consumer verifies.** Verification by anyone else returns
-   `CONSUMER_MISMATCH` without reading source state.
-2. **No context outside the grant.** Resolve refuses categories, source kinds or
+   `CONSUMER_MISMATCH` without reading source state and is not recorded in the
+   receipt's history.
+2. **Reading others' receipts needs more than a permission bypass.** Users need
+   `contextverity.receipt.read`; services must be listed in
+   `contextverity.receiptReaders`; either way the reader must be allowed to read every
+   source of the receipt.
+3. **No context outside the grant.** Resolve refuses categories, source kinds or
    classifications beyond the matching policy; receipts record only granted
    categories; a broader policy later does not widen a receipt.
-3. **Current authorization wins.** Every verify re-evaluates permissions and policy.
-4. **Receipts are authoritative server-side.** Integrity-tagged; HMAC with a
+4. **Current authorization wins.** Every verify re-evaluates permissions and policy.
+5. **Receipts are authoritative server-side.** Integrity-tagged; HMAC with a
    configured secret.
-5. **Point-in-time.** `VALID` describes verification time only.
+6. **Point-in-time.** `VALID` describes verification time only.
 
 ## Configuration guidance
 

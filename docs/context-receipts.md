@@ -52,7 +52,10 @@ portable signature: receipts cannot be verified outside the issuing instance. Se
 
 1. **Issued** by `POST /v1/resolve`.
 2. **Verified** any number of times by its consumer (`POST /v1/receipts/:id/verify`);
-   each result is appended to `contextverity_verifications`.
+   each result, including the verifying principal, is appended to
+   `contextverity_verifications`. Attempts that fail binding (another consumer,
+   another issuer, failed integrity) return DENY but are **not** recorded, so they
+   cannot alter the receipt's history.
 3. **Inspected** by operators with `contextverity.receipt.read`
    (`POST /v1/receipts/:id/inspect`) — not recorded, permissions not re-evaluated.
 4. **Expired** at `validUntil` (verification then returns `TTL_EXPIRED`). Expiry does
