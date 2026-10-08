@@ -37,16 +37,16 @@ broken package fails before a release is attempted.
 3. Tag with a signed tag and push: `git tag -s vX.Y.Z -m "vX.Y.Z" && git push origin vX.Y.Z`.
 4. Watch the Release workflow; verify on npm that each version shows provenance.
 
-## One-time npm setup
+## npm setup (done for v0.1.0)
 
-1. An npm organization named `contextverity` owns the `@contextverity` scope.
-2. Trusted publishing is configured for each package — either run
-   `npm login && scripts/release/configure-trusted-publishing.sh` (npm ≥ 11.15, 2FA
-   approval in the browser), or set it on npmjs.com (package →
-   Settings → Trusted publisher → GitHub Actions): organization `contextverity`,
-   repository `contextverity`, workflow `release.yml`, environment `npm`.
-3. npm only offers that setting once a package exists. For the first release only, an
-   npm granular access token with publish rights for `@contextverity` can be stored as
-   the repository secret `NPM_TOKEN`; the workflow uses it if present (provenance is
-   still attached). After the first release, configure trusted publishing for every
-   package, delete the secret, and revoke the token.
+1. The npm organization `contextverity` owns the `@contextverity` scope; its owners
+   have 2FA enabled.
+2. Every package trusts `contextverity/contextverity` → `.github/workflows/release.yml`
+   → environment `npm` (configured with `scripts/release/configure-trusted-publishing.sh`,
+   which needs `npm login` and 2FA). New packages must be published once before they
+   can be trusted; add them to the script afterwards.
+3. No npm token is stored anywhere. v0.1.0 was published once with a short-lived token,
+   which was then removed from GitHub and revoked.
+4. Recommended: on each package's npm settings, set **Publishing access** to
+   "Require two-factor authentication and disallow tokens". Trusted publishing keeps
+   working; tokens cannot publish.

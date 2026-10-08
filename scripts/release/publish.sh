@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Publishes the tarballs in dist-packages/ to npm, in dependency order. Runs in
-# GitHub Actions: with npm trusted publishing (OIDC, no token) when configured,
-# otherwise with NODE_AUTH_TOKEN for a first release. Provenance is attached.
+# GitHub Actions with npm trusted publishing (OIDC, no token); provenance is
+# attached.
 # Versions already on the registry are skipped, so a re-run is safe.
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
