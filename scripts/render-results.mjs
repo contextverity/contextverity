@@ -20,6 +20,7 @@ const k8s = read('scenarios-kubernetes.json');
 const benchCore = read('benchmarks-core.json');
 const benchLive = read('benchmarks-backstage.json');
 const telemetry = read('telemetry-backstage.json');
+const network = read('kubernetes-network.json');
 
 const pct = r =>
   r.value === null
@@ -168,6 +169,18 @@ if (telemetry) {
       .map(n => `\`${n}\``)
       .join(', ')}`,
     `- Check passed: **${telemetry.pass}**`,
+    '',
+  );
+}
+if (network) {
+  out.push(
+    '## Kubernetes network policy — live cluster',
+    '',
+    `Generated ${network.generatedAt}, commit ${sha(network.commit)}.`,
+    '',
+    '| Check | Observed | Result |',
+    '| --- | --- | --- |',
+    ...network.checks.map(c => `| ${c.name} | \`${c.observed}\` | ${c.pass ? 'pass' : 'FAIL'} |`),
     '',
   );
 }

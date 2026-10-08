@@ -37,9 +37,15 @@ service:
   metricsPort: 9464
 
 networkPolicy:
-  # Allow ingress to the HTTP and metrics ports; allow egress to DNS only.
-  # The backend calls its own plugins over loopback, which policies do not affect.
+  # Ingress to the HTTP and metrics ports only from pods in the release's
+  # namespace (plus extraIngressFrom); egress to DNS only. The backend calls its
+  # own plugins over loopback, which policies do not affect.
   enabled: true
+  # Additional NetworkPolicyPeer entries, e.g. a monitoring namespace:
+  # - namespaceSelector:
+  #     matchLabels:
+  #       kubernetes.io/metadata.name: monitoring
+  extraIngressFrom: []
 
 podAnnotations: {}
 nodeSelector: {}

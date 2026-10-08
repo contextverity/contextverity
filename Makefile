@@ -117,6 +117,7 @@ k8s-up: check-node ## Build with Podman, deploy the lab to kind (Podman provider
 
 k8s-test: check-node ## Scenarios against the lab on Kubernetes (requires make k8s-up)
 	$(TS) scripts/run-scenarios.ts --tier kubernetes
+	scripts/k8s/check-network.sh
 
 k8s-down: ## Delete the kind cluster
 	KIND_EXPERIMENTAL_PROVIDER=podman kind delete cluster --name contextverity

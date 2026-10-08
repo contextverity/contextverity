@@ -23,13 +23,14 @@ const files = {
   benchmarksCore: read('benchmarks-core.json'),
   benchmarksBackstage: read('benchmarks-backstage.json'),
   telemetryBackstage: read('telemetry-backstage.json'),
+  kubernetesNetwork: read('kubernetes-network.json'),
 };
 
 const problems = [];
 for (const [name, f] of Object.entries(files)) {
   if (!f) continue;
   if (f.schemaVersion !== 1) problems.push(`${name}: schemaVersion must be 1`);
-  if (!f.environment?.commit)
+  if (!(f.environment?.commit ?? f.commit))
     problems.push(`${name}: environment.commit missing`);
 }
 if (!files.scenariosCore) problems.push('scenarios-core.json is required');

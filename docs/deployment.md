@@ -38,20 +38,22 @@ within one minor version of the cluster (kind 0.32 runs Kubernetes 1.36).
 
 What the chart does:
 
-| Concern      | Choice                                                                                                                                 |
-| ------------ | -------------------------------------------------------------------------------------------------------------------------------------- |
-| Identity     | Dedicated ServiceAccount, `automountServiceAccountToken: false`; no Role or ClusterRole (ContextVerity never calls the Kubernetes API) |
-| Pod security | `runAsNonRoot`, uid/gid 1000, `readOnlyRootFilesystem`, all capabilities dropped, no privilege escalation, `RuntimeDefault` seccomp    |
-| Health       | startup, liveness and readiness probes on `/.backstage/health/v1/*`                                                                    |
-| Resources    | requests 250m / 512Mi, limits 1 CPU / 1Gi (values)                                                                                     |
-| Storage      | SQLite on a ReadWriteOnce PersistentVolumeClaim; one replica, `Recreate` strategy                                                      |
-| Network      | NetworkPolicy: ingress to the HTTP and metrics ports, egress to DNS only (the backend calls its own plugins over loopback)             |
-| Secrets      | Agent tokens and the integrity secret generated once into a Secret (kept across upgrades), or supplied via `existingSecret`            |
-| Supply chain | Node 22 base image pinned by digest; build context is an allowlist (`.containerignore`)                                                |
-| Test         | `helm test` checks readiness from inside the cluster                                                                                   |
+| Concern      | Choice                                                                                                                                                                                                                                                 |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Identity     | Dedicated ServiceAccount, `automountServiceAccountToken: false`; no Role or ClusterRole (ContextVerity never calls the Kubernetes API)                                                                                                                 |
+| Pod security | `runAsNonRoot`, uid/gid 1000, `readOnlyRootFilesystem`, all capabilities dropped, no privilege escalation, `RuntimeDefault` seccomp                                                                                                                    |
+| Health       | startup, liveness and readiness probes on `/.backstage/health/v1/*`                                                                                                                                                                                    |
+| Resources    | requests 250m / 512Mi, limits 1 CPU / 1Gi (values)                                                                                                                                                                                                     |
+| Storage      | SQLite on a ReadWriteOnce PersistentVolumeClaim; one replica, `Recreate` strategy                                                                                                                                                                      |
+| Network      | NetworkPolicy: ingress to the HTTP and metrics ports **only from pods in the release namespace** (plus `networkPolicy.extraIngressFrom`), egress to DNS only; the backend calls its own plugins over loopback and `kubectl port-forward` is unaffected |
+| Secrets      | Agent tokens and the integrity secret generated once into a Secret (kept across upgrades), or supplied via `existingSecret`                                                                                                                            |
+| Supply chain | Node 22 base image pinned by digest; build context is an allowlist (`.containerignore`)                                                                                                                                                                |
+| Test         | `helm test` checks readiness from inside the cluster                                                                                                                                                                                                   |
 
-Verified in the lab: `helm test` passes; the backend pod cannot open outbound HTTPS
-connections while DNS resolves (the NetworkPolicy is enforced by kind's CNI); and the
+Verified in the lab (`scripts/k8s/check-network.sh`, `test-results/kubernetes-network.json`):
+`helm test` passes; a pod in another namespace cannot reach the lab while a pod in the
+release namespace can; the backend pod cannot open outbound connections while DNS
+resolves (the NetworkPolicy is enforced by kind's CNI); and the
 scenario suite passes against the cluster, including **S29** (the pod is deleted and the
 receipt survives on the volume) and **S30** (a row edited inside the pod verifies as
 `DENY`). See [results.md](results.md).
