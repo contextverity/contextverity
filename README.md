@@ -106,11 +106,11 @@ statistical confidence. Full tables: [docs/results.md](docs/results.md) and the
 
 **In-process core** (synthetic catalog, Knex/SQLite store): 50/50 scenarios passed. Stale-context detection 100.0% (34/34), false invalidation 0.0% (0/11), false acceptance 0.0% (0/34).
 
-**In-process verification latency** (p50 / p95): 1 source 0.381 / 1.762 ms; 5 sources 0.47 / 0.805 ms; 10 sources 0.527 / 0.821 ms.
+**In-process verification latency** (p50 / p95): 1 source 5.399 / 13.305 ms; 5 sources 0.496 / 0.796 ms; 10 sources 6.076 / 14.306 ms.
 
-**Live-lab verification latency, end-to-end HTTP, development-mode backend** (p50 / p95): 1 source 15.502 / 26.163 ms; 5 sources 18.092 / 28.632 ms; 10 sources 19.131 / 30.303 ms.
+**Live-lab verification latency, end-to-end HTTP, development-mode backend** (p50 / p95): 1 source 13.126 / 23.696 ms; 5 sources 5.545 / 6.695 ms; 10 sources 6.106 / 34.79 ms.
 
-_Commit [`20c14ecba2f0`](https://github.com/contextverity/contextverity/commit/20c14ecba2f01832b7f1887f4a8a7dc512234012), generated 2026-10-08T10:44:11.049Z._
+_Commit [`2dc7303615d8`](https://github.com/contextverity/contextverity/commit/2dc7303615d8be433db4aa916909bba53d6fb4ec), generated 2026-10-08T10:48:38.122Z._
 
 <!-- results:end -->
 
