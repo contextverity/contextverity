@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "kind": "contextverity.kubernetes-network",
+  "generatedAt": "2026-10-08T12:00:01.870Z",
+  "commit": "07d37e4051a72e541d1eb56bbdd8100ab44fb655",
+  "checks": [
+    {
+      "name": "ingress from another namespace is blocked",
+      "observed": "BLOCKED",
+      "pass": true
+    },
+    {
+      "name": "ingress from the release namespace is allowed",
+      "observed": "REACHED 200",
+      "pass": true
+    },
+    {
+      "name": "egress from the backend to the internet is blocked",
+      "observed": "BLOCKED",
+      "pass": true
+    },
+    {
+      "name": "DNS from the backend resolves",
+      "observed": "RESOLVED",
+      "pass": true
+    }
+  ],
+  "pass": true
+}

@@ -296,3 +296,14 @@ _Live lab with the OpenTelemetry Node SDK loaded via --require (HTTP + undici in
 - Metric label keys: `drift_type`, `le`, `otel_scope_name`, `provider`, `verdict`
 - Check passed: **true**
 
+## Kubernetes network policy — live cluster
+
+Generated 2026-10-08T12:00:01.870Z, commit [`07d37e4051a7`](https://github.com/contextverity/contextverity/commit/07d37e4051a72e541d1eb56bbdd8100ab44fb655).
+
+| Check | Observed | Result |
+| --- | --- | --- |
+| ingress from another namespace is blocked | `BLOCKED` | pass |
+| ingress from the release namespace is allowed | `REACHED 200` | pass |
+| egress from the backend to the internet is blocked | `BLOCKED` | pass |
+| DNS from the backend resolves | `RESOLVED` | pass |
+
