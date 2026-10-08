@@ -299,7 +299,12 @@ export function environment(
     contextverityVersion: pkg('plugins/contextverity-core/package.json')
       .version,
     commit: git('rev-parse HEAD') ?? 'uncommitted',
-    dirtyWorkingTree: git('status --porcelain') ? true : false,
+    // Generated outputs are excluded: they change while results are produced.
+    dirtyWorkingTree: git(
+      "status --porcelain -- . ':!test-results' ':!docs/results.md' ':!README.md'",
+    )
+      ? true
+      : false,
     backstageRelease: pkg('backstage.json').version,
     node: process.version,
     platform: `${platform()} ${arch()}`,
