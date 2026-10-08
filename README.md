@@ -21,6 +21,7 @@
   <a href="LICENSE"><img alt="License: Apache-2.0" src="https://img.shields.io/badge/license-Apache--2.0-3b82f6"></a>
   <img alt="Backstage 1.55" src="https://img.shields.io/badge/Backstage-1.55-7c3aed">
   <img alt="Node 22 | 24" src="https://img.shields.io/badge/node-22%20%7C%2024-16a34a">
+  <a href="https://www.npmjs.com/package/@contextverity/core"><img alt="npm" src="https://img.shields.io/npm/v/@contextverity/core?label=npm&color=cb3837"></a>
   <img alt="Status: v0.1, early" src="https://img.shields.io/badge/status-v0.1%20early-f59e0b">
 </p>
 
@@ -181,6 +182,15 @@ Backstage 1.55.
 | [`@contextverity/plugin-contextverity-node`](plugins/contextverity-node)       | Backstage catalog source provider, Permission Framework authorizer, Knex receipt store.                                                                        |
 | [`@contextverity/plugin-contextverity-backend`](plugins/contextverity-backend) | Backend plugin: HTTP API, policies, retention, Actions Registry actions.                                                                                       |
 | [`@contextverity/plugin-contextverity`](plugins/contextverity)                 | Frontend plugin: receipts list and receipt detail (provenance, permissions, drift).                                                                            |
+
+```sh
+yarn --cwd packages/backend add @contextverity/plugin-contextverity-backend
+yarn --cwd packages/app add @contextverity/plugin-contextverity
+```
+
+The packages are on npm with
+[provenance](https://docs.npmjs.com/generating-provenance-statements) linking each
+version to the GitHub Actions run that built it.
 
 ```ts
 // packages/backend/src/index.ts

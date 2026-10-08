@@ -6,6 +6,10 @@ follow [Semantic Versioning](https://semver.org/) once it reaches 1.0.
 
 ## [Unreleased]
 
+## [0.1.0] - 2026-10-08
+
+First release, published to npm with provenance.
+
 ### Added
 
 - `@contextverity/core`: canonical JSON (RFC 8785 subset) and SHA-256 digests,
@@ -22,5 +26,11 @@ follow [Semantic Versioning](https://semver.org/) once it reaches 1.0.
   recorded. Service principals can read others' receipts only via
   `contextverity.receiptReaders`, and non-consumer readers need read access to every
   source.
+- Lab image built with Podman and a Helm chart validated on kind (Podman provider),
+  with a Kubernetes scenario tier and a NetworkPolicy check.
+- Demo videos recorded from the lab.
 - Backstage lab, 50 deterministic scenarios in two tiers, benchmarks, telemetry
   check, reference MCP client, generated results.
+
+[Unreleased]: https://github.com/contextverity/contextverity/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/contextverity/contextverity/releases/tag/v0.1.0

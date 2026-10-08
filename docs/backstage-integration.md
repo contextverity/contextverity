@@ -17,7 +17,12 @@ export default createApp({
 });
 ```
 
-The packages are not yet published to npm; use the workspace for now.
+Install from npm (published with provenance):
+
+```sh
+yarn --cwd packages/backend add @contextverity/plugin-contextverity-backend
+yarn --cwd packages/app add @contextverity/plugin-contextverity
+```
 
 ## Configure
 
