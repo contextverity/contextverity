@@ -180,7 +180,9 @@ if (network) {
     '',
     '| Check | Observed | Result |',
     '| --- | --- | --- |',
-    ...network.checks.map(c => `| ${c.name} | \`${c.observed}\` | ${c.pass ? 'pass' : 'FAIL'} |`),
+    ...network.checks.map(
+      c => `| ${c.name} | \`${c.observed}\` | ${c.pass ? 'pass' : 'FAIL'} |`,
+    ),
     '',
   );
 }
