@@ -1,15 +1,15 @@
 {
   "schemaVersion": 1,
   "kind": "contextverity.summary",
-  "generatedAt": "2026-10-08T10:52:31.794Z",
+  "generatedAt": "2026-10-08T11:00:59.919Z",
   "contextverityVersion": "0.1.0",
   "backstageRelease": "1.55.0",
   "scenarios": {
     "core": {
       "tier": "core",
       "scope": "In-process: ContextVerity core + Backstage provider mapping + Knex/SQLite store, against a synthetic in-memory catalog that emulates Backstage relation stitching. Controllable clock. Synthetic data only.",
-      "generatedAt": "2026-10-08T10:48:38.122Z",
-      "commit": "2dc7303615d8be433db4aa916909bba53d6fb4ec",
+      "generatedAt": "2026-10-08T10:58:34.075Z",
+      "commit": "3066e49849cac84e074419f106474ed920c7c4f3",
       "summary": {
         "total": 50,
         "executed": 50,
@@ -59,8 +59,8 @@
     "backstage": {
       "tier": "backstage",
       "scope": "Live: a local Backstage backend (catalog, permission framework, MCP actions, ContextVerity) on SQLite, driven over HTTP. Catalog changes go through a demo-only entity provider and are awaited until the real catalog reflects them. Synthetic data only; single machine.",
-      "generatedAt": "2026-10-08T10:51:25.405Z",
-      "commit": "2dc7303615d8be433db4aa916909bba53d6fb4ec",
+      "generatedAt": "2026-10-08T10:59:44.779Z",
+      "commit": "3066e49849cac84e074419f106474ed920c7c4f3",
       "summary": {
         "total": 50,
         "executed": 45,
@@ -110,7 +110,7 @@
   },
   "benchmarks": {
     "core": {
-      "scope": "In-process, single Node.js process. 2000 measured samples per row after 200 warm-up calls. Knex + better-sqlite3 file store with HMAC integrity tags; synthetic in-memory catalog; allow-all synthetic authorizer. Excludes HTTP, Backstage catalog and permission-backend cost. Concurrency rows use 5-source receipts.",
+      "scope": "In-process, single Node.js process, lab stopped. 2000 measured samples per row after 200 warm-up calls. Knex + better-sqlite3 file store with HMAC integrity tags (each verification is a durable insert); synthetic in-memory catalog; allow-all synthetic authorizer. Excludes HTTP, Backstage catalog and permission-backend cost. 'receipt.verify.memory-store' repeats verification on an in-memory SQLite store to separate compute from disk-write latency. Measured on a developer workstation running desktop applications and an endpoint-security agent that inspects file writes; tail latencies of file-store rows vary between runs because of it. Concurrency rows use 5-source receipts.",
       "results": [
         {
           "operation": "receipt.issue",
@@ -118,13 +118,13 @@
           "concurrency": 1,
           "samples": 2000,
           "unit": "ms",
-          "p50": 6.979,
-          "p95": 15.656,
-          "p99": 31.304,
-          "mean": 7.752,
-          "min": 0.411,
-          "max": 190.623,
-          "throughputPerSec": 129
+          "p50": 0.51,
+          "p95": 0.758,
+          "p99": 0.947,
+          "mean": 0.539,
+          "min": 0.34,
+          "max": 1.65,
+          "throughputPerSec": 1853.5
         },
         {
           "operation": "receipt.verify",
@@ -132,13 +132,13 @@
           "concurrency": 1,
           "samples": 2000,
           "unit": "ms",
-          "p50": 5.399,
-          "p95": 13.305,
-          "p99": 25.088,
-          "mean": 6.225,
-          "min": 0.34,
-          "max": 170.65,
-          "throughputPerSec": 160.6
+          "p50": 0.395,
+          "p95": 0.622,
+          "p99": 0.821,
+          "mean": 0.432,
+          "min": 0.297,
+          "max": 3.648,
+          "throughputPerSec": 2315.2
         },
         {
           "operation": "source.fetch",
@@ -146,13 +146,13 @@
           "concurrency": 1,
           "samples": 2000,
           "unit": "ms",
-          "p50": 0.036,
-          "p95": 0.049,
-          "p99": 0.111,
-          "mean": 0.04,
+          "p50": 0.034,
+          "p95": 0.045,
+          "p99": 0.133,
+          "mean": 0.037,
           "min": 0.03,
-          "max": 0.472,
-          "throughputPerSec": 24930.8
+          "max": 0.262,
+          "throughputPerSec": 26696.1
         },
         {
           "operation": "drift.compare",
@@ -161,12 +161,12 @@
           "samples": 2000,
           "unit": "ms",
           "p50": 0.005,
-          "p95": 0.007,
-          "p99": 0.016,
+          "p95": 0.006,
+          "p99": 0.012,
           "mean": 0.006,
           "min": 0.004,
-          "max": 0.261,
-          "throughputPerSec": 165599.5
+          "max": 0.281,
+          "throughputPerSec": 175038.8
         },
         {
           "operation": "drift.compare.changed",
@@ -175,12 +175,12 @@
           "samples": 2000,
           "unit": "ms",
           "p50": 0.007,
-          "p95": 0.008,
-          "p99": 0.013,
-          "mean": 0.007,
+          "p95": 0.009,
+          "p99": 0.022,
+          "mean": 0.008,
           "min": 0.006,
-          "max": 0.225,
-          "throughputPerSec": 134906.9
+          "max": 0.242,
+          "throughputPerSec": 130198.8
         },
         {
           "operation": "receipt.issue",
@@ -188,13 +188,13 @@
           "concurrency": 1,
           "samples": 2000,
           "unit": "ms",
-          "p50": 0.815,
-          "p95": 12.976,
-          "p99": 21.595,
-          "mean": 4.071,
-          "min": 0.442,
-          "max": 85.598,
-          "throughputPerSec": 245.6
+          "p50": 0.572,
+          "p95": 0.811,
+          "p99": 1.107,
+          "mean": 0.604,
+          "min": 0.424,
+          "max": 3.309,
+          "throughputPerSec": 1654.9
         },
         {
           "operation": "receipt.verify",
@@ -202,13 +202,13 @@
           "concurrency": 1,
           "samples": 2000,
           "unit": "ms",
-          "p50": 0.496,
-          "p95": 0.796,
-          "p99": 1.078,
-          "mean": 0.545,
-          "min": 0.365,
-          "max": 5.125,
-          "throughputPerSec": 1834.3
+          "p50": 0.51,
+          "p95": 0.747,
+          "p99": 0.899,
+          "mean": 0.535,
+          "min": 0.37,
+          "max": 1.407,
+          "throughputPerSec": 1868.3
         },
         {
           "operation": "source.fetch",
@@ -217,12 +217,12 @@
           "samples": 2000,
           "unit": "ms",
           "p50": 0.058,
-          "p95": 0.088,
-          "p99": 0.276,
-          "mean": 0.064,
-          "min": 0.049,
-          "max": 0.594,
-          "throughputPerSec": 15555.8
+          "p95": 0.077,
+          "p99": 0.252,
+          "mean": 0.063,
+          "min": 0.05,
+          "max": 0.545,
+          "throughputPerSec": 15742.8
         },
         {
           "operation": "drift.compare",
@@ -232,11 +232,11 @@
           "unit": "ms",
           "p50": 0.005,
           "p95": 0.006,
-          "p99": 0.009,
+          "p99": 0.016,
           "mean": 0.006,
           "min": 0.004,
-          "max": 0.26,
-          "throughputPerSec": 176609.5
+          "max": 0.264,
+          "throughputPerSec": 174881.2
         },
         {
           "operation": "drift.compare.changed",
@@ -245,12 +245,12 @@
           "samples": 2000,
           "unit": "ms",
           "p50": 0.01,
-          "p95": 0.013,
-          "p99": 0.031,
+          "p95": 0.015,
+          "p99": 0.032,
           "mean": 0.011,
           "min": 0.008,
-          "max": 0.231,
-          "throughputPerSec": 87048.6
+          "max": 0.212,
+          "throughputPerSec": 87034.4
         },
         {
           "operation": "receipt.issue",
@@ -258,13 +258,13 @@
           "concurrency": 1,
           "samples": 2000,
           "unit": "ms",
-          "p50": 6.822,
-          "p95": 13.129,
-          "p99": 19.059,
-          "mean": 6.902,
-          "min": 0.576,
-          "max": 192.393,
-          "throughputPerSec": 144.9
+          "p50": 0.642,
+          "p95": 0.971,
+          "p99": 1.42,
+          "mean": 0.793,
+          "min": 0.5,
+          "max": 190.792,
+          "throughputPerSec": 1260.9
         },
         {
           "operation": "receipt.verify",
@@ -272,13 +272,13 @@
           "concurrency": 1,
           "samples": 2000,
           "unit": "ms",
-          "p50": 6.076,
-          "p95": 14.306,
-          "p99": 25.562,
-          "mean": 7.256,
-          "min": 0.47,
-          "max": 194.446,
-          "throughputPerSec": 137.8
+          "p50": 0.518,
+          "p95": 0.803,
+          "p99": 0.998,
+          "mean": 0.556,
+          "min": 0.413,
+          "max": 1.867,
+          "throughputPerSec": 1798.6
         },
         {
           "operation": "source.fetch",
@@ -286,13 +286,13 @@
           "concurrency": 1,
           "samples": 2000,
           "unit": "ms",
-          "p50": 0.087,
-          "p95": 0.157,
-          "p99": 0.337,
-          "mean": 0.099,
-          "min": 0.074,
-          "max": 0.637,
-          "throughputPerSec": 10060.6
+          "p50": 0.086,
+          "p95": 0.111,
+          "p99": 0.323,
+          "mean": 0.093,
+          "min": 0.075,
+          "max": 0.669,
+          "throughputPerSec": 10726.4
         },
         {
           "operation": "drift.compare",
@@ -302,11 +302,11 @@
           "unit": "ms",
           "p50": 0.005,
           "p95": 0.007,
-          "p99": 0.016,
+          "p99": 0.01,
           "mean": 0.006,
-          "min": 0.004,
-          "max": 0.267,
-          "throughputPerSec": 164698.9
+          "min": 0.005,
+          "max": 0.245,
+          "throughputPerSec": 176668.7
         },
         {
           "operation": "drift.compare.changed",
@@ -314,13 +314,55 @@
           "concurrency": 1,
           "samples": 2000,
           "unit": "ms",
-          "p50": 0.014,
-          "p95": 0.016,
-          "p99": 0.027,
+          "p50": 0.013,
+          "p95": 0.017,
+          "p99": 0.029,
           "mean": 0.015,
           "min": 0.012,
-          "max": 0.254,
-          "throughputPerSec": 68713.1
+          "max": 0.214,
+          "throughputPerSec": 68028
+        },
+        {
+          "operation": "receipt.verify.memory-store",
+          "sources": 1,
+          "concurrency": 1,
+          "samples": 2000,
+          "unit": "ms",
+          "p50": 0.095,
+          "p95": 0.16,
+          "p99": 0.467,
+          "mean": 0.107,
+          "min": 0.079,
+          "max": 0.768,
+          "throughputPerSec": 9326.5
+        },
+        {
+          "operation": "receipt.verify.memory-store",
+          "sources": 5,
+          "concurrency": 1,
+          "samples": 2000,
+          "unit": "ms",
+          "p50": 0.136,
+          "p95": 0.249,
+          "p99": 0.561,
+          "mean": 0.155,
+          "min": 0.122,
+          "max": 0.872,
+          "throughputPerSec": 6456.4
+        },
+        {
+          "operation": "receipt.verify.memory-store",
+          "sources": 10,
+          "concurrency": 1,
+          "samples": 2000,
+          "unit": "ms",
+          "p50": 0.192,
+          "p95": 0.324,
+          "p99": 0.631,
+          "mean": 0.216,
+          "min": 0.167,
+          "max": 0.737,
+          "throughputPerSec": 4637.8
         },
         {
           "operation": "receipt.verify",
@@ -328,13 +370,13 @@
           "concurrency": 1,
           "samples": 2000,
           "unit": "ms",
-          "p50": 0.622,
-          "p95": 9.652,
-          "p99": 11.811,
-          "mean": 2.349,
-          "min": 0.379,
-          "max": 20.998,
-          "throughputPerSec": 425.7
+          "p50": 0.48,
+          "p95": 0.767,
+          "p99": 1.056,
+          "mean": 0.549,
+          "min": 0.365,
+          "max": 26.944,
+          "throughputPerSec": 1821.6
         },
         {
           "operation": "receipt.verify",
@@ -342,13 +384,13 @@
           "concurrency": 10,
           "samples": 2000,
           "unit": "ms",
-          "p50": 66.67,
-          "p95": 106.313,
-          "p99": 146.192,
-          "mean": 55.971,
-          "min": 1.973,
-          "max": 282.742,
-          "throughputPerSec": 178.6
+          "p50": 5.501,
+          "p95": 7.966,
+          "p99": 10.874,
+          "mean": 5.77,
+          "min": 2.241,
+          "max": 14.295,
+          "throughputPerSec": 1729.7
         },
         {
           "operation": "receipt.verify",
@@ -356,13 +398,13 @@
           "concurrency": 50,
           "samples": 2000,
           "unit": "ms",
-          "p50": 328.123,
-          "p95": 426.553,
-          "p99": 483.497,
-          "mean": 292.552,
-          "min": 8.5,
-          "max": 584.08,
-          "throughputPerSec": 168.8
+          "p50": 26.855,
+          "p95": 48.475,
+          "p99": 51.992,
+          "mean": 28.611,
+          "min": 7.96,
+          "max": 52.738,
+          "throughputPerSec": 1735.8
         },
         {
           "operation": "receipt.verify",
@@ -370,13 +412,13 @@
           "concurrency": 100,
           "samples": 2000,
           "unit": "ms",
-          "p50": 501.2,
-          "p95": 586.584,
-          "p99": 653.871,
-          "mean": 348.552,
-          "min": 24.498,
-          "max": 670.742,
-          "throughputPerSec": 286.2
+          "p50": 47.644,
+          "p95": 50.395,
+          "p99": 50.976,
+          "mean": 46.872,
+          "min": 15.144,
+          "max": 51.38,
+          "throughputPerSec": 2098.6
         }
       ]
     },
@@ -389,13 +431,13 @@
           "concurrency": 1,
           "samples": 300,
           "unit": "ms",
-          "p50": 17.971,
-          "p95": 26.19,
+          "p50": 20.008,
+          "p95": 33.816,
           "p99": null,
-          "mean": 16.352,
-          "min": 4.329,
-          "max": 93.291,
-          "throughputPerSec": 61.2
+          "mean": 18.939,
+          "min": 5.686,
+          "max": 183.145,
+          "throughputPerSec": 52.8
         },
         {
           "operation": "receipt.verify",
@@ -403,13 +445,13 @@
           "concurrency": 1,
           "samples": 300,
           "unit": "ms",
-          "p50": 13.126,
-          "p95": 23.696,
+          "p50": 18.943,
+          "p95": 28.052,
           "p99": null,
-          "mean": 12.345,
-          "min": 3.166,
-          "max": 51.466,
-          "throughputPerSec": 81
+          "mean": 18.94,
+          "min": 5.661,
+          "max": 41.842,
+          "throughputPerSec": 52.8
         },
         {
           "operation": "receipt.issue",
@@ -417,13 +459,13 @@
           "concurrency": 1,
           "samples": 300,
           "unit": "ms",
-          "p50": 8.049,
-          "p95": 9.34,
+          "p50": 29.717,
+          "p95": 41.549,
           "p99": null,
-          "mean": 8.124,
-          "min": 6.376,
-          "max": 14.027,
-          "throughputPerSec": 123.1
+          "mean": 27.84,
+          "min": 7.145,
+          "max": 172.724,
+          "throughputPerSec": 35.9
         },
         {
           "operation": "receipt.verify",
@@ -431,13 +473,13 @@
           "concurrency": 1,
           "samples": 300,
           "unit": "ms",
-          "p50": 5.545,
-          "p95": 6.695,
+          "p50": 20.204,
+          "p95": 29.316,
           "p99": null,
-          "mean": 5.557,
-          "min": 3.562,
-          "max": 12.183,
-          "throughputPerSec": 179.9
+          "mean": 20.641,
+          "min": 7.325,
+          "max": 41.469,
+          "throughputPerSec": 48.4
         },
         {
           "operation": "receipt.issue",
@@ -445,13 +487,13 @@
           "concurrency": 1,
           "samples": 300,
           "unit": "ms",
-          "p50": 31.67,
-          "p95": 48.536,
+          "p50": 37.627,
+          "p95": 47.821,
           "p99": null,
-          "mean": 29.786,
-          "min": 5.865,
-          "max": 90.218,
-          "throughputPerSec": 33.6
+          "mean": 37.215,
+          "min": 8.618,
+          "max": 63.846,
+          "throughputPerSec": 26.9
         },
         {
           "operation": "receipt.verify",
@@ -459,13 +501,13 @@
           "concurrency": 1,
           "samples": 300,
           "unit": "ms",
-          "p50": 6.106,
-          "p95": 34.79,
+          "p50": 5.879,
+          "p95": 10.609,
           "p99": null,
-          "mean": 12.26,
-          "min": 3.676,
-          "max": 184.983,
-          "throughputPerSec": 81.6
+          "mean": 6.579,
+          "min": 4.129,
+          "max": 25.57,
+          "throughputPerSec": 152
         },
         {
           "operation": "receipt.verify",
@@ -473,13 +515,13 @@
           "concurrency": 1,
           "samples": 300,
           "unit": "ms",
-          "p50": 20.712,
-          "p95": 35.812,
+          "p50": 6.012,
+          "p95": 10.794,
           "p99": null,
-          "mean": 22.043,
-          "min": 9.844,
-          "max": 60.216,
-          "throughputPerSec": 45.4
+          "mean": 7.272,
+          "min": 3.769,
+          "max": 64.525,
+          "throughputPerSec": 137.5
         },
         {
           "operation": "receipt.verify",
@@ -487,13 +529,13 @@
           "concurrency": 10,
           "samples": 300,
           "unit": "ms",
-          "p50": 31.747,
-          "p95": 125.549,
+          "p50": 32.421,
+          "p95": 45.647,
           "p99": null,
-          "mean": 40.735,
-          "min": 19.276,
-          "max": 213.912,
-          "throughputPerSec": 244
+          "mean": 34.025,
+          "min": 17.89,
+          "max": 52.466,
+          "throughputPerSec": 292
         },
         {
           "operation": "receipt.verify",
@@ -501,13 +543,13 @@
           "concurrency": 50,
           "samples": 300,
           "unit": "ms",
-          "p50": 812.931,
-          "p95": 1001.979,
+          "p50": 130.594,
+          "p95": 258.848,
           "p99": null,
-          "mean": 690.601,
-          "min": 49.19,
-          "max": 1480.943,
-          "throughputPerSec": 67.4
+          "mean": 137.261,
+          "min": 54.434,
+          "max": 446.959,
+          "throughputPerSec": 349.7
         },
         {
           "operation": "receipt.verify",
@@ -515,13 +557,13 @@
           "concurrency": 100,
           "samples": 300,
           "unit": "ms",
-          "p50": 1501.142,
-          "p95": 3129.471,
+          "p50": 299.772,
+          "p95": 1685.127,
           "p99": null,
-          "mean": 1558.297,
-          "min": 616.779,
-          "max": 3163.58,
-          "throughputPerSec": 59.1
+          "mean": 511.063,
+          "min": 120.547,
+          "max": 2045.659,
+          "throughputPerSec": 141.4
         }
       ]
     }
