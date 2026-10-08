@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "kind": "contextverity.summary",
-  "generatedAt": "2026-10-08T11:47:11.778Z",
+  "generatedAt": "2026-10-08T11:56:17.610Z",
   "contextverityVersion": "0.1.0",
   "backstageRelease": "1.55.0",
   "scenarios": {
@@ -110,8 +110,8 @@
     "kubernetes": {
       "tier": "kubernetes",
       "scope": "Live on Kubernetes: the lab image (built with Podman) deployed by the Helm chart to a single-node kind cluster running on Podman; non-root, read-only root filesystem, NetworkPolicy, SQLite on a persistent volume. Driven over kubectl port-forward. Restarts delete the pod; storage tampering edits the row inside the pod. Synthetic data only; single machine.",
-      "generatedAt": "2026-10-08T11:44:43.398Z",
-      "commit": "e67e8f711727958c486807174a05151d0098ee2e",
+      "generatedAt": "2026-10-08T11:56:17.420Z",
+      "commit": "7c14e5e3b22201c229cee5a2508280d3cd915844",
       "summary": {
         "total": 50,
         "executed": 46,

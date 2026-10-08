@@ -3,11 +3,11 @@
   "kind": "contextverity.scenarios",
   "tier": "kubernetes",
   "scope": "Live on Kubernetes: the lab image (built with Podman) deployed by the Helm chart to a single-node kind cluster running on Podman; non-root, read-only root filesystem, NetworkPolicy, SQLite on a persistent volume. Driven over kubectl port-forward. Restarts delete the pod; storage tampering edits the row inside the pod. Synthetic data only; single machine.",
-  "generatedAt": "2026-10-08T11:48:24.087Z",
+  "generatedAt": "2026-10-08T11:56:17.420Z",
   "environment": {
     "contextverityVersion": "0.1.0",
-    "commit": "e67e8f711727958c486807174a05151d0098ee2e",
-    "dirtyWorkingTree": true,
+    "commit": "7c14e5e3b22201c229cee5a2508280d3cd915844",
+    "dirtyWorkingTree": false,
     "backstageRelease": "1.55.0",
     "node": "v22.23.1",
     "platform": "darwin arm64",
@@ -81,7 +81,7 @@
         "informational": [],
         "checks": []
       },
-      "durationMs": 60.02,
+      "durationMs": 54.7,
       "replay": {
         "actor": "alex",
         "subject": "component:default/payments",
@@ -187,7 +187,7 @@
         "informational": [],
         "checks": []
       },
-      "durationMs": 2015.63,
+      "durationMs": 1717.16,
       "replay": {
         "actor": "alex",
         "subject": "component:default/payments",
@@ -304,7 +304,7 @@
         "informational": [],
         "checks": []
       },
-      "durationMs": 2052.18,
+      "durationMs": 2051.94,
       "replay": {
         "actor": "alex",
         "subject": "component:default/payments",
@@ -421,7 +421,7 @@
         "informational": [],
         "checks": []
       },
-      "durationMs": 2024.72,
+      "durationMs": 2028.42,
       "replay": {
         "actor": "alex",
         "subject": "component:default/payments",
@@ -538,7 +538,7 @@
         "informational": [],
         "checks": []
       },
-      "durationMs": 2049.32,
+      "durationMs": 1961.09,
       "replay": {
         "actor": "alex",
         "subject": "component:default/payments",
@@ -655,7 +655,7 @@
         "informational": [],
         "checks": []
       },
-      "durationMs": 2021.25,
+      "durationMs": 1960.94,
       "replay": {
         "actor": "alex",
         "subject": "component:default/payments",
@@ -780,7 +780,7 @@
         "informational": [],
         "checks": []
       },
-      "durationMs": 2035.8,
+      "durationMs": 1961.66,
       "replay": {
         "actor": "alex",
         "subject": "component:default/payments",
@@ -901,7 +901,7 @@
         "informational": [],
         "checks": []
       },
-      "durationMs": 2034,
+      "durationMs": 2052.49,
       "replay": {
         "actor": "alex",
         "subject": "component:default/inventory",
@@ -1007,7 +1007,7 @@
         "informational": [],
         "checks": []
       },
-      "durationMs": 1996.17,
+      "durationMs": 1942.76,
       "replay": {
         "actor": "alex",
         "subject": "component:default/payments",
@@ -1089,7 +1089,7 @@
         "informational": [],
         "checks": []
       },
-      "durationMs": 104.36,
+      "durationMs": 26.62,
       "replay": {
         "actor": "alex",
         "subject": "component:default/payments",
@@ -1172,7 +1172,7 @@
         "informational": [],
         "checks": []
       },
-      "durationMs": 19.65,
+      "durationMs": 30.28,
       "replay": {
         "actor": "alex",
         "subject": "component:default/payments",
@@ -1284,7 +1284,7 @@
         "informational": [],
         "checks": []
       },
-      "durationMs": 2138.28,
+      "durationMs": 2124.91,
       "replay": {
         "actor": "alex",
         "subject": "component:default/payments",
@@ -1371,9 +1371,9 @@
           {
             "code": "TTL_EXPIRED",
             "effect": "REFRESH",
-            "before": "2026-10-08T11:47:29.355Z",
-            "after": "2026-10-08T11:47:29.475Z",
-            "detail": "context expired at 2026-10-08T11:47:29.355Z"
+            "before": "2026-10-08T11:55:16.942Z",
+            "after": "2026-10-08T11:55:17.056Z",
+            "detail": "context expired at 2026-10-08T11:55:16.942Z"
           }
         ],
         "verdict": "REFRESH"
@@ -1395,7 +1395,7 @@
         "informational": [],
         "checks": []
       },
-      "durationMs": 1410.61,
+      "durationMs": 1691.67,
       "replay": {
         "actor": "alex",
         "subject": "component:default/payments",
@@ -1498,7 +1498,7 @@
         "informational": [],
         "checks": []
       },
-      "durationMs": 1952.06,
+      "durationMs": 2044.6,
       "replay": {
         "actor": "alex",
         "subject": "component:default/payments",
@@ -1605,7 +1605,7 @@
         "informational": [],
         "checks": []
       },
-      "durationMs": 22.62,
+      "durationMs": 32.43,
       "replay": {
         "actor": "alex",
         "subject": "component:default/payments",
@@ -1719,7 +1719,7 @@
         "informational": [],
         "checks": []
       },
-      "durationMs": 77.31,
+      "durationMs": 28.31,
       "replay": {
         "actor": "alex",
         "subject": "component:default/payments",
@@ -1799,7 +1799,7 @@
         "informational": [],
         "checks": []
       },
-      "durationMs": 1094.5,
+      "durationMs": 1085.47,
       "replay": {
         "actor": "alex",
         "subject": "component:default/payments",
@@ -1887,8 +1887,8 @@
             "code": "ENTITY_RECREATED",
             "effect": "REFRESH",
             "sourceId": "catalog:component:default/payments",
-            "before": "712148a1-b72a-45c1-8650-8596d01d0c06",
-            "after": "4952003e-0a02-449a-8abd-afd6aaad5359",
+            "before": "2ee0abdd-2837-4b5f-a614-b096f794a136",
+            "after": "13002dca-92cc-47cd-9473-8b55b6d75292",
             "detail": "same reference now points to a different object (deleted and recreated)"
           }
         ],
@@ -1911,7 +1911,7 @@
         "informational": [],
         "checks": []
       },
-      "durationMs": 25.21,
+      "durationMs": 39.26,
       "replay": {
         "actor": "alex",
         "subject": "component:default/payments",
@@ -2018,7 +2018,7 @@
         "informational": [],
         "checks": []
       },
-      "durationMs": 23,
+      "durationMs": 27.57,
       "replay": {
         "actor": "alex",
         "subject": "component:default/payments",
@@ -2110,7 +2110,7 @@
           }
         ]
       },
-      "durationMs": 32.01,
+      "durationMs": 69.45,
       "replay": {
         "actor": "alex",
         "subject": "component:default/payments",
@@ -2203,7 +2203,7 @@
         "informational": [],
         "checks": []
       },
-      "durationMs": 654.83,
+      "durationMs": 440.53,
       "replay": {
         "actor": "alex",
         "subject": "component:default/payments",
@@ -2280,7 +2280,7 @@
         "denialCode": "CATEGORY_NOT_GRANTED",
         "checks": []
       },
-      "durationMs": 3.72,
+      "durationMs": 3.27,
       "replay": {
         "actor": "alex",
         "subject": "component:default/inventory",
@@ -2312,7 +2312,7 @@
         "denialCode": "SOURCE_NOT_PERMITTED",
         "checks": []
       },
-      "durationMs": 13.96,
+      "durationMs": 13.37,
       "replay": {
         "actor": "alex",
         "subject": "component:default/payments",
@@ -2347,7 +2347,7 @@
         "informational": [],
         "checks": []
       },
-      "durationMs": 903.49,
+      "durationMs": 907.45,
       "replay": {
         "actor": "alex",
         "subject": "component:default/payments",
@@ -2434,7 +2434,7 @@
           }
         ]
       },
-      "durationMs": 989.83,
+      "durationMs": 1986.04,
       "replay": {
         "actor": "alex",
         "subject": "component:default/payments",
@@ -2556,7 +2556,7 @@
           }
         ]
       },
-      "durationMs": 1107.71,
+      "durationMs": 2245.88,
       "replay": {
         "actor": "alex",
         "subject": "component:default/payments",
@@ -2668,7 +2668,7 @@
         "informational": [],
         "checks": []
       },
-      "durationMs": 6416.68,
+      "durationMs": 7066.19,
       "replay": {
         "actor": "alex",
         "subject": "component:default/payments",
@@ -2780,7 +2780,7 @@
           }
         ]
       },
-      "durationMs": 100.13,
+      "durationMs": 93.57,
       "replay": {
         "actor": "alex",
         "subject": "component:default/payments",
@@ -2893,7 +2893,7 @@
         "informational": [],
         "checks": []
       },
-      "durationMs": 37.08,
+      "durationMs": 36.92,
       "replay": {
         "actor": "alex",
         "subject": "component:default/payments",
@@ -2972,7 +2972,7 @@
         "informational": [],
         "checks": []
       },
-      "durationMs": 3595.34,
+      "durationMs": 3577.55,
       "replay": {
         "actor": "alex",
         "subject": "component:default/payments",
@@ -3075,7 +3075,7 @@
         "informational": [],
         "checks": []
       },
-      "durationMs": 27.07,
+      "durationMs": 27.62,
       "replay": {
         "actor": "alex",
         "subject": "component:default/payments",
@@ -3178,7 +3178,7 @@
         "informational": [],
         "checks": []
       },
-      "durationMs": 1870.79,
+      "durationMs": 1778.9,
       "replay": {
         "actor": "alex",
         "subject": "component:default/payments",
@@ -3315,7 +3315,7 @@
         "informational": [],
         "checks": []
       },
-      "durationMs": 23.08,
+      "durationMs": 24.5,
       "replay": {
         "actor": "alex",
         "subject": "component:default/payments",
@@ -3429,7 +3429,7 @@
         "informational": [],
         "checks": []
       },
-      "durationMs": 16.13,
+      "durationMs": 17.98,
       "replay": {
         "actor": "alex",
         "subject": "component:default/payments",
@@ -3495,7 +3495,7 @@
         "informational": [],
         "checks": []
       },
-      "durationMs": 1889.47,
+      "durationMs": 1844.03,
       "replay": {
         "actor": "alex",
         "subject": "component:default/payments",
@@ -3621,7 +3621,7 @@
           }
         ]
       },
-      "durationMs": 2047.6,
+      "durationMs": 1977.23,
       "replay": {
         "actor": "alex",
         "subject": "component:default/payments",
@@ -3739,7 +3739,7 @@
         "informational": [],
         "checks": []
       },
-      "durationMs": 37.94,
+      "durationMs": 37.37,
       "replay": {
         "actor": "alex",
         "subject": "component:default/payments",
@@ -3819,7 +3819,7 @@
         "informational": [],
         "checks": []
       },
-      "durationMs": 20.76,
+      "durationMs": 22.34,
       "replay": {
         "actor": "agent",
         "subject": "component:default/payments",
@@ -3901,7 +3901,7 @@
         ],
         "checks": []
       },
-      "durationMs": 1814.74,
+      "durationMs": 1731.98,
       "replay": {
         "actor": "alex",
         "subject": "component:default/inventory",
@@ -3968,7 +3968,7 @@
         "informational": [],
         "checks": []
       },
-      "durationMs": 1928.66,
+      "durationMs": 2061.7,
       "replay": {
         "actor": "alex",
         "subject": "component:default/payments",
@@ -4082,7 +4082,7 @@
         "denialCode": "CLASSIFICATION_EXCEEDS_GRANT",
         "checks": []
       },
-      "durationMs": 15.94,
+      "durationMs": 13.76,
       "replay": {
         "actor": "alex",
         "subject": "component:default/identity",
@@ -4114,7 +4114,7 @@
         "denialCode": "NO_MATCHING_POLICY",
         "checks": []
       },
-      "durationMs": 3.09,
+      "durationMs": 2.94,
       "replay": {
         "actor": "other",
         "subject": "component:default/payments",
@@ -4146,7 +4146,7 @@
         "denialCode": "PERMISSION_DENIED",
         "checks": []
       },
-      "durationMs": 13.84,
+      "durationMs": 15.49,
       "replay": {
         "actor": "alex",
         "subject": "component:default/payments",
@@ -4182,7 +4182,7 @@
         "informational": [],
         "checks": []
       },
-      "durationMs": 1728.68,
+      "durationMs": 1819.55,
       "replay": {
         "actor": "alex",
         "subject": "airesource:default/incident-triage-skill",
@@ -4257,7 +4257,7 @@
         "informational": [],
         "checks": []
       },
-      "durationMs": 2037.16,
+      "durationMs": 2046.45,
       "replay": {
         "actor": "alex",
         "subject": "api:default/platform-mcp",
@@ -4345,7 +4345,7 @@
           }
         ]
       },
-      "durationMs": 17.82,
+      "durationMs": 26.55,
       "replay": {
         "actor": "agent",
         "subject": "component:default/payments",

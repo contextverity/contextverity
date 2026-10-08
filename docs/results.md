@@ -86,7 +86,7 @@ Generated 2026-10-08T10:59:44.779Z. ContextVerity 0.1.0 · commit [`3066e49849ca
 
 _Live on Kubernetes: the lab image (built with Podman) deployed by the Helm chart to a single-node kind cluster running on Podman; non-root, read-only root filesystem, NetworkPolicy, SQLite on a persistent volume. Driven over kubectl port-forward. Restarts delete the pod; storage tampering edits the row inside the pod. Synthetic data only; single machine._
 
-Generated 2026-10-08T11:44:43.398Z. ContextVerity 0.1.0 · commit [`e67e8f711727`](https://github.com/contextverity/contextverity/commit/e67e8f711727958c486807174a05151d0098ee2e) (with uncommitted changes) · Backstage 1.55.0 · Node v22.23.1 · darwin arm64 · Apple M4 Max (14 cores, 36 GiB)
+Generated 2026-10-08T11:56:17.420Z. ContextVerity 0.1.0 · commit [`7c14e5e3b222`](https://github.com/contextverity/contextverity/commit/7c14e5e3b22201c229cee5a2508280d3cd915844) · Backstage 1.55.0 · Node v22.23.1 · darwin arm64 · Apple M4 Max (14 cores, 36 GiB)
 
 | Measure | Value |
 | --- | --- |
