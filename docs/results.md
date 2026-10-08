@@ -10,7 +10,7 @@ Machine-generated from [`test-results/`](../test-results/). Regenerate with `mak
 
 _Live: a local Backstage backend (catalog, permission framework, MCP actions, ContextVerity) on SQLite, driven over HTTP. Catalog changes go through a demo-only entity provider and are awaited until the real catalog reflects them. Synthetic data only; single machine._
 
-Generated 2026-10-08T10:34:37.746Z. ContextVerity 0.1.0 · commit [`f40f4629cfe9`](https://github.com/contextverity/contextverity/commit/f40f4629cfe9163d291bdfb7e062216c4e966bf2) (with uncommitted changes) · Backstage 1.55.0 · Node v22.23.1 · darwin arm64 · Apple M4 Max (14 cores, 36 GiB)
+Generated 2026-10-08T10:46:27.333Z. ContextVerity 0.1.0 · commit [`20c14ecba2f0`](https://github.com/contextverity/contextverity/commit/20c14ecba2f01832b7f1887f4a8a7dc512234012) (with uncommitted changes) · Backstage 1.55.0 · Node v22.23.1 · darwin arm64 · Apple M4 Max (14 cores, 36 GiB)
 
 | Measure | Value |
 | --- | --- |
@@ -86,7 +86,7 @@ Generated 2026-10-08T10:34:37.746Z. ContextVerity 0.1.0 · commit [`f40f4629cfe9
 
 _In-process: ContextVerity core + Backstage provider mapping + Knex/SQLite store, against a synthetic in-memory catalog that emulates Backstage relation stitching. Controllable clock. Synthetic data only._
 
-Generated 2026-10-08T10:32:31.635Z. ContextVerity 0.1.0 · commit [`f40f4629cfe9`](https://github.com/contextverity/contextverity/commit/f40f4629cfe9163d291bdfb7e062216c4e966bf2) · Backstage 1.55.0 · Node v22.23.1 · darwin arm64 · Apple M4 Max (14 cores, 36 GiB)
+Generated 2026-10-08T10:44:11.049Z. ContextVerity 0.1.0 · commit [`20c14ecba2f0`](https://github.com/contextverity/contextverity/commit/20c14ecba2f01832b7f1887f4a8a7dc512234012) · Backstage 1.55.0 · Node v22.23.1 · darwin arm64 · Apple M4 Max (14 cores, 36 GiB)
 
 | Measure | Value |
 | --- | --- |
@@ -162,48 +162,48 @@ Generated 2026-10-08T10:32:31.635Z. ContextVerity 0.1.0 · commit [`f40f4629cfe9
 
 _End-to-end HTTP from a client on the same machine to a local Backstage backend in development mode (SQLite, real catalog and permission framework, guest user principal, logging enabled). 300 measured samples per row after 20 warm-up calls; p99 omitted below 1000 samples. Concurrency rows use 5-source receipts._
 
-Generated 2026-10-08T10:35:36.773Z. ContextVerity 0.1.0 · commit [`f40f4629cfe9`](https://github.com/contextverity/contextverity/commit/f40f4629cfe9163d291bdfb7e062216c4e966bf2) (with uncommitted changes) · Backstage 1.55.0 · Node v22.23.1 · darwin arm64 · Apple M4 Max (14 cores, 36 GiB)
+Generated 2026-10-08T10:47:38.880Z. ContextVerity 0.1.0 · commit [`20c14ecba2f0`](https://github.com/contextverity/contextverity/commit/20c14ecba2f01832b7f1887f4a8a7dc512234012) (with uncommitted changes) · Backstage 1.55.0 · Node v22.23.1 · darwin arm64 · Apple M4 Max (14 cores, 36 GiB)
 
 | Operation | Sources | Concurrency | Samples | p50 ms | p95 ms | p99 ms | Ops/s |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| receipt.issue | 1 | 1 | 300 | 16.846 | 34.987 | — | 59 |
-| receipt.verify | 1 | 1 | 300 | 13.715 | 24.551 | — | 77.2 |
-| receipt.issue | 5 | 1 | 300 | 8.236 | 34.041 | — | 60.3 |
-| receipt.verify | 5 | 1 | 300 | 5.223 | 19.368 | — | 141.6 |
-| receipt.issue | 10 | 1 | 300 | 27.661 | 42.622 | — | 39.8 |
-| receipt.verify | 10 | 1 | 300 | 5.228 | 6.219 | — | 188.8 |
-| receipt.verify | 5 | 1 | 300 | 5.047 | 5.886 | — | 197.4 |
-| receipt.verify | 5 | 10 | 300 | 25.818 | 28.713 | — | 384.9 |
-| receipt.verify | 5 | 50 | 300 | 441.715 | 676.217 | — | 121.6 |
-| receipt.verify | 5 | 100 | 300 | 1042.265 | 3511.687 | — | 75 |
+| receipt.issue | 1 | 1 | 300 | 18.81 | 34.808 | — | 50.7 |
+| receipt.verify | 1 | 1 | 300 | 15.502 | 26.163 | — | 68 |
+| receipt.issue | 5 | 1 | 300 | 29.406 | 43.521 | — | 33.6 |
+| receipt.verify | 5 | 1 | 300 | 18.092 | 28.632 | — | 53.6 |
+| receipt.issue | 10 | 1 | 300 | 29.498 | 46.965 | — | 32.7 |
+| receipt.verify | 10 | 1 | 300 | 19.131 | 30.303 | — | 51 |
+| receipt.verify | 5 | 1 | 300 | 16.872 | 26.008 | — | 62.5 |
+| receipt.verify | 5 | 10 | 300 | 156.396 | 187.727 | — | 69.4 |
+| receipt.verify | 5 | 50 | 300 | 116.076 | 237.595 | — | 394.9 |
+| receipt.verify | 5 | 100 | 300 | 178.346 | 742.86 | — | 342 |
 
 ## Benchmarks — In-process core
 
 _In-process, single Node.js process. 2000 measured samples per row after 200 warm-up calls. Knex + better-sqlite3 file store with HMAC integrity tags; synthetic in-memory catalog; allow-all synthetic authorizer. Excludes HTTP, Backstage catalog and permission-backend cost. Concurrency rows use 5-source receipts._
 
-Generated 2026-10-08T10:33:31.916Z. ContextVerity 0.1.0 · commit [`f40f4629cfe9`](https://github.com/contextverity/contextverity/commit/f40f4629cfe9163d291bdfb7e062216c4e966bf2) (with uncommitted changes) · Backstage 1.55.0 · Node v22.23.1 · darwin arm64 · Apple M4 Max (14 cores, 36 GiB)
+Generated 2026-10-08T10:45:23.372Z. ContextVerity 0.1.0 · commit [`20c14ecba2f0`](https://github.com/contextverity/contextverity/commit/20c14ecba2f01832b7f1887f4a8a7dc512234012) (with uncommitted changes) · Backstage 1.55.0 · Node v22.23.1 · darwin arm64 · Apple M4 Max (14 cores, 36 GiB)
 
 | Operation | Sources | Concurrency | Samples | p50 ms | p95 ms | p99 ms | Ops/s |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| receipt.issue | 1 | 1 | 2000 | 0.552 | 8.907 | 16.759 | 551.9 |
-| receipt.verify | 1 | 1 | 2000 | 4.196 | 10.505 | 12.201 | 253.6 |
-| source.fetch | 1 | 1 | 2000 | 0.034 | 0.041 | 0.086 | 27709.5 |
-| drift.compare | 1 | 1 | 2000 | 0.005 | 0.006 | 0.011 | 177687 |
-| drift.compare.changed | 1 | 1 | 2000 | 0.007 | 0.008 | 0.014 | 133439.3 |
-| receipt.issue | 5 | 1 | 2000 | 0.581 | 1.281 | 5.425 | 1335.6 |
-| receipt.verify | 5 | 1 | 2000 | 4.21 | 14.141 | 25.594 | 200.3 |
-| source.fetch | 5 | 1 | 2000 | 0.057 | 0.072 | 0.238 | 16105.6 |
-| drift.compare | 5 | 1 | 2000 | 0.005 | 0.006 | 0.012 | 182103.8 |
-| drift.compare.changed | 5 | 1 | 2000 | 0.01 | 0.013 | 0.026 | 88664.8 |
-| receipt.issue | 10 | 1 | 2000 | 0.87 | 11.709 | 13.904 | 269.1 |
-| receipt.verify | 10 | 1 | 2000 | 0.568 | 1.121 | 10.247 | 1110.7 |
-| source.fetch | 10 | 1 | 2000 | 0.085 | 0.108 | 0.337 | 10882.4 |
-| drift.compare | 10 | 1 | 2000 | 0.005 | 0.007 | 0.014 | 174680.1 |
-| drift.compare.changed | 10 | 1 | 2000 | 0.013 | 0.019 | 0.046 | 65982.5 |
-| receipt.verify | 5 | 1 | 2000 | 4.483 | 13.472 | 27.939 | 200.9 |
-| receipt.verify | 5 | 10 | 2000 | 43.733 | 64.96 | 74.94 | 210.5 |
-| receipt.verify | 5 | 50 | 2000 | 23.593 | 274.109 | 321.419 | 922.3 |
-| receipt.verify | 5 | 100 | 2000 | 47.97 | 54.438 | 55.504 | 2055.7 |
+| receipt.issue | 1 | 1 | 2000 | 1.418 | 11.568 | 13.65 | 227 |
+| receipt.verify | 1 | 1 | 2000 | 0.381 | 1.762 | 3.628 | 1782.5 |
+| source.fetch | 1 | 1 | 2000 | 0.034 | 0.041 | 0.074 | 28018.1 |
+| drift.compare | 1 | 1 | 2000 | 0.005 | 0.006 | 0.008 | 177371.1 |
+| drift.compare.changed | 1 | 1 | 2000 | 0.007 | 0.008 | 0.016 | 136169.8 |
+| receipt.issue | 5 | 1 | 2000 | 0.58 | 1.987 | 4.77 | 1255.7 |
+| receipt.verify | 5 | 1 | 2000 | 0.47 | 0.805 | 3.105 | 1773.9 |
+| source.fetch | 5 | 1 | 2000 | 0.057 | 0.065 | 0.194 | 15755.5 |
+| drift.compare | 5 | 1 | 2000 | 0.005 | 0.006 | 0.009 | 184956.8 |
+| drift.compare.changed | 5 | 1 | 2000 | 0.009 | 0.013 | 0.026 | 90574.6 |
+| receipt.issue | 10 | 1 | 2000 | 9.15 | 16.324 | 34.208 | 112.9 |
+| receipt.verify | 10 | 1 | 2000 | 0.527 | 0.821 | 1.475 | 1692.9 |
+| source.fetch | 10 | 1 | 2000 | 0.086 | 0.1 | 0.276 | 11033.9 |
+| drift.compare | 10 | 1 | 2000 | 0.005 | 0.007 | 0.009 | 174593.7 |
+| drift.compare.changed | 10 | 1 | 2000 | 0.013 | 0.017 | 0.019 | 69099.6 |
+| receipt.verify | 5 | 1 | 2000 | 0.452 | 9.804 | 13.661 | 523.7 |
+| receipt.verify | 5 | 10 | 2000 | 65.571 | 99.097 | 130.342 | 150.7 |
+| receipt.verify | 5 | 50 | 2000 | 317.39 | 503.131 | 595.334 | 161.1 |
+| receipt.verify | 5 | 100 | 2000 | 581.716 | 726.142 | 764.94 | 219.3 |
 
 ## Telemetry — live lab
 
