@@ -283,6 +283,42 @@ async function core(): Promise<{ results: Result[]; scope: string }> {
     results.push(summarize('drift.compare.changed', k, 1, m.samples, m.wallMs));
   }
 
+  // Same verification against an in-memory SQLite store: separates
+  // ContextVerity's compute cost from durable-write (fsync) latency.
+  const memDb = knexFactory({
+    client: 'better-sqlite3',
+    connection: { filename: ':memory:' },
+    useNullAsDefault: true,
+  });
+  const memService = new ContextVerity({
+    issuer: 'bench',
+    provider,
+    authorizer: {
+      authorize: async (p, ids) =>
+        ids.map(sourceId => ({
+          permission: 'catalog.entity.read',
+          sourceId,
+          result: 'ALLOW' as const,
+          principal: p.ref,
+          basis: 'permission-policy' as const,
+        })),
+    },
+    policies: { list: async () => policies },
+    store: await KnexReceiptStore.create({
+      getClient: async () => memDb,
+    } as unknown as DatabaseService),
+    integritySecret: 'bench',
+  });
+  for (const k of SOURCE_COUNTS) {
+    const { receipt: r } = await memService.resolve(alex, benchRequest(k));
+    for (let i = 0; i < WARMUP; i++) await memService.verify(alex, r.receiptId);
+    const m = await measure(N, 1, () => memService.verify(alex, r.receiptId));
+    results.push(
+      summarize('receipt.verify.memory-store', k, 1, m.samples, m.wallMs),
+    );
+  }
+  await memDb.destroy();
+
   const { receipt } = await service.resolve(alex, benchRequest(5));
   for (const c of [1, 10, 50, 100]) {
     const m = await measure(N, c, () =>
@@ -294,7 +330,7 @@ async function core(): Promise<{ results: Result[]; scope: string }> {
   rmSync(dir, { recursive: true, force: true });
   return {
     results,
-    scope: `In-process, single Node.js process. ${N} measured samples per row after ${WARMUP} warm-up calls. Knex + better-sqlite3 file store with HMAC integrity tags; synthetic in-memory catalog; allow-all synthetic authorizer. Excludes HTTP, Backstage catalog and permission-backend cost. Concurrency rows use 5-source receipts.`,
+    scope: `In-process, single Node.js process, lab stopped. ${N} measured samples per row after ${WARMUP} warm-up calls. Knex + better-sqlite3 file store with HMAC integrity tags (each verification is a durable insert); synthetic in-memory catalog; allow-all synthetic authorizer. Excludes HTTP, Backstage catalog and permission-backend cost. 'receipt.verify.memory-store' repeats verification on an in-memory SQLite store to separate compute from disk-write latency. Measured on a developer workstation running desktop applications and an endpoint-security agent that inspects file writes; tail latencies of file-store rows vary between runs because of it. Concurrency rows use 5-source receipts.`,
   };
 }
 
